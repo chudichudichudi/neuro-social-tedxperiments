@@ -1,12 +1,15 @@
 
 from flask.ext.security import UserMixin, RoleMixin
+from marshmallow import Serializer
 
 from . import db
 
 
 roles_users = db.Table('roles_users',
-    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
-    db.Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
+                       db.Column('user_id', db.Integer(),
+                       db.ForeignKey('users.id')),
+                       db.Column('role_id', db.Integer(),
+                       db.ForeignKey('roles.id')))
 
 
 class Role(db.Model, RoleMixin):
@@ -32,9 +35,10 @@ class User(db.Model, UserMixin):
     current_login_ip = db.Column(db.String(100))
     login_count = db.Column(db.Integer)
     roles = db.relationship('Role', secondary=roles_users,
-            backref=db.backref('users', lazy='dynamic'))
+                            backref=db.backref('users', lazy='dynamic'))
     connections = db.relationship('Connection',
-            backref=db.backref('user', lazy='joined'), cascade="all")
+                                  backref=db.backref('user', lazy='joined'),
+                                  cascade="all")
 
 
 class Connection(db.Model):
@@ -52,3 +56,15 @@ class Connection(db.Model):
     profile_url = db.Column(db.String(512))
     image_url = db.Column(db.String(512))
     rank = db.Column(db.Integer)
+
+
+class Experiment(db.Model):
+    __tablename__ = 'experiment'
+    id = db.Column('id', db.Integer, primary_key=True)
+    test_subject = db.Column(db.String(60))
+    experiment_log = db.Column(db.String)
+    experiment_name = db.Column(db.String)
+
+class ExperimentSerializer(Serializer):
+    class Meta:
+        fields = ('id', 'test_subject', 'experiment_log', "experiment_name")

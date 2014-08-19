@@ -8,13 +8,10 @@ from flask.ext.social.utils import get_connection_values_from_oauth_response
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from .helpers import Flask
-from .middleware import MethodRewriteMiddleware
-
 
 app = Flask(__name__)
 app.config.from_yaml(app.root_path)
-app.config.from_heroku()
-#app.wsgi_app = MethodRewriteMiddleware(app.wsgi_app)
+
 
 db = SQLAlchemy(app)
 webassets = Environment(app)

@@ -1,0 +1,42 @@
+{% from '_macros.html' import render_field %}
+
+{% extends '/layouts/boilerplate.html' %}
+
+{% block body_class %}main{% endblock %}
+
+{% block layout %}
+<div class="page-header">
+  <h1>Cronotipos</h1>
+</div>
+
+<div class="row">
+  <div class="span12 offset2">
+    <form class="well" action="{{ url_for('cronotipos') }}" method="POST">
+      {{ form.hidden_tag() }}
+      {{ render_field(form.pregunta_1) }}
+      {{ render_field(form.pregunta_2) }}
+      {{ render_field(form.pregunta_3) }}
+      {{ render_field(form.pregunta_4) }}
+      {{ render_field(form.pregunta_5) }}
+      {{ render_field(form.pregunta_6) }}
+      {{ render_field(form.pregunta_7) }}
+      {{ render_field(form.pregunta_8) }}
+      {{ render_field(form.pregunta_9) }}
+      {{ render_field(form.pregunta_10) }}
+      {{ render_field(form.pregunta_11) }}
+      {{ render_field(form.pregunta_12) }}
+      {{ render_field(form.pregunta_13) }}
+      {{ render_field(form.pregunta_14) }}
+      {{ render_field(form.pregunta_15) }}
+      {{ render_field(form.pregunta_16) }}
+      {{ render_field(form.pregunta_17) }}
+      {{ render_field(form.pregunta_18) }}
+      {{ render_field(form.pregunta_19) }}
+      {{ render_field(form.pregunta_20) }}
+      {{ render_field(form.pregunta_21) }}
+
+      <button type="submit" class="btn btn-primary btn-large">Terminar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

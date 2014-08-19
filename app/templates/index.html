@@ -12,41 +12,43 @@
     <p>Un total de <strong>{{ total_users }}</strong> personas se registraron y experimentaron con nosotros!.</p>
   </div>
   <div class="row-fluid">
-    <div class="span12">
+    <div class="span4">
       <div class="well repo-info">
-        <h2>Flask-Security</h2>
-        <ul class="repo-actions">
-          <li>
-            <iframe src="http://ghbtns.com/github-btn.html?user=mattupstate&repo=flask-security&type=watch&count=true&size=large"
-                    allowtransparency="true" frameborder="0" scrolling="0" width="130px" height="30px"></iframe>
-          </li>
-        </ul>
+        <a href="{{ url_for('metacog_html')}}">
+          <h2>Metacognition</h2>
+        </a>
+        <div>
+          <a href="{{ url_for('metacog_html')}}">
+            <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_1.png') }}" class="img-responsive" alt=" TEDExperiments">
+          </a>  
+        </div>
+        
       </div>
     </div>
-  </div>
-  <div class="row-fluid">
-    <div class="span12">
+    <div class="span4">
       <div class="well repo-info">
-        <h2>Flask-Social</h2>
-        <ul class="repo-actions">
+        <h2>Cronotipos</h2>
+        <div>
+          <a href="{{ url_for('cronotipos')}}">
+            <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_2.png') }}" class="img-responsive" alt=" TEDExperiments">
+          </a>  
+        </div>
+<!--         <ul class="repo-actions">
           <li>
             <iframe src="http://ghbtns.com/github-btn.html?user=mattupstate&repo=flask-social&type=watch&count=true&size=large"
                     allowtransparency="true" frameborder="0" scrolling="0" width="130px" height="30px"></iframe>
           </li>
         </ul>
-      </div>
+ -->      </div>
     </div>
-  </div>
-  <div class="row-fluid">
-    <div class="span12">
+    <div class="span4">
       <div class="well repo-info">
-        <h2>This Website</h2>
-        <ul class="repo-actions">
-          <li>
-            <iframe src="http://ghbtns.com/github-btn.html?user=mattupstate&repo=flask-social-example&type=watch&count=true&size=large"
-                    allowtransparency="true" frameborder="0" scrolling="0" width="130px" height="30px"></iframe>
-          </li>
-        </ul>
+        <h2>Circles</h2>
+        <div>
+          <a href="{{ url_for('metacog_html')}}">
+            <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_3.png') }}" class="img-responsive" alt=" TEDExperiments">
+          </a>  
+        </div>
       </div>
     </div>
   </div>
