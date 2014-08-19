@@ -14,7 +14,7 @@ from .middleware import MethodRewriteMiddleware
 app = Flask(__name__)
 app.config.from_yaml(app.root_path)
 app.config.from_heroku()
-app.wsgi_app = MethodRewriteMiddleware(app.wsgi_app)
+#app.wsgi_app = MethodRewriteMiddleware(app.wsgi_app)
 
 db = SQLAlchemy(app)
 webassets = Environment(app)

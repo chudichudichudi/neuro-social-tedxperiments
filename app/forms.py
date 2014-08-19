@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
 
 from flask import current_app
 from flask.ext.wtf import Form
 from wtforms import TextField, PasswordField, ValidationError
 from wtforms.validators import Required, Email, Length, Regexp, EqualTo
 
+
 class UniqueUser(object):
-    def __init__(self, message="User exists"):
+    def __init__(self, message="Usuario ya existente"):
         self.message = message
 
     def __call__(self, form, field):
@@ -17,20 +19,19 @@ validators = {
     'email': [
         Required(),
         Email(),
-        UniqueUser(message='Email address is associated with '
-                           'an existing account')
+        UniqueUser(message=u'El email está asociado con una cuenta existente.')
     ],
     'password': [
         Required(),
         Length(min=6, max=50),
-        EqualTo('confirm', message='Passwords must match'),
+        EqualTo('confirm', message=u'Las contraseñas deben coincidir.'),
         Regexp(r'[A-Za-z0-9@#$%^&+=]',
-               message='Password contains invalid characters')
+               message=u'La contraseña tiene que tener caracteres válidos')
     ]
 }
 
 
 class RegisterForm(Form):
     email = TextField('Email', validators['email'])
-    password = PasswordField('Password', validators['password'], )
-    confirm = PasswordField('Confirm Password')
+    password = PasswordField(u'Contraseña', validators['password'], )
+    confirm = PasswordField(u'Confirmar contraseña')
