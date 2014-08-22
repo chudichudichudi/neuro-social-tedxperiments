@@ -172,7 +172,10 @@ def metacog_js():
 
 
 #Cronotipos
-@app.route('/cronotipos')
+@app.route('/cronotipos', methods=('GET', 'POST'))
 @login_required
 def cronotipos():
+    form = CronotiposForm()
+    if form.validate_on_submit():
+        return redirect('/cronotipos_results')
     return render_template('cronotipos.html', form=CronotiposForm())

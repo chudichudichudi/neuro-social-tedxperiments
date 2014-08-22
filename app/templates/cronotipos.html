@@ -1,4 +1,4 @@
-{% from '_macros.html' import render_field %}
+{% from '_macros.html' import render_field, form_field %}
 
 {% extends '/layouts/boilerplate.html' %}
 
@@ -34,6 +34,7 @@
       {{ render_field(form.pregunta_19) }}
       {{ render_field(form.pregunta_20) }}
       {{ render_field(form.pregunta_21) }}
+      {{ render_field(form.pregunta_22) }}
 
       <button type="submit" class="btn btn-primary btn-large">Terminar</button>
     </form>
