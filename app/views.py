@@ -179,3 +179,13 @@ def cronotipos():
     if form.validate_on_submit():
         return redirect('/cronotipos_results')
     return render_template('cronotipos.html', form=CronotiposForm())
+
+
+#Circles
+@app.route('/circles', methods=('GET', 'POST'))
+@login_required
+def circles():
+    form = CronotiposForm()
+    if form.validate_on_submit():
+        return redirect('/cronotipos_results')
+    return redirect('http://circles-experiment.meteor.com', 302)

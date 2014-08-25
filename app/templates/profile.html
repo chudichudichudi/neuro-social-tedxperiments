@@ -8,13 +8,13 @@
     <hr />
     {% if conn %}
       <form action="{{ url_for('social.remove_connection', provider_id=conn.provider_id, provider_user_id=conn.provider_user_id) }}?__METHOD_OVERRIDE__=DELETE" method="POST" class="remove-connection">
-        <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Remove {{ display_name }} Connection</button>
+        <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Desconectar el perfil de {{ display_name }}</button>
       </form>
     {% else %}
       <form action="{{ url_for('social.connect', provider_id=provider_id) }}" method="POST" class="create-connection">
         <fieldset>
           <div class="control-group">
-            <button type="submit" class="btn btn-success btn-large"><i class="icon-share icon-white"></i> Connect with {{ display_name }}</button>
+            <button type="submit" class="btn btn-success btn-large"><i class="icon-share icon-white"></i> Asociar perfil con {{ display_name }}</button>
           </div>
         </fieldset>
       </form>
@@ -23,10 +23,10 @@
 {% endmacro %}
 
 {% block layout %}
-<div class="page-header">
+<div class="page-header centered-text">
   <h1>Hola!, {{ current_user.email }}!</h1>
 </div>
-<div class="row">
+<div class="row-fluid centered-text">
   {{ show_provider_button('twitter', 'Twitter', twitter_conn) }}
   {{ show_provider_button('facebook', 'Facebook', facebook_conn) }}
 </div>
