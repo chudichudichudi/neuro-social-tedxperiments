@@ -1,6 +1,5 @@
 COMMON: &common
   SECRET_KEY: insecure
-  SECURITY_POST_LOGIN_VIEW: '/profile'
   SQLALCHEMY_DATABASE_URI: 'sqlite:///dev.db'
   ADMIN_CREDENTIALS: 'admin,password'
 
