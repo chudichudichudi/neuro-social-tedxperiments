@@ -25,4 +25,3 @@ PRODUCTION: &production
   <<: *common
   DEBUG: True
   SECURITY_PASSWORD_HASH: bcrypt
-  SOCIAL_APP_URL: http://flask-social-example.herokuapp.com/

@@ -4,15 +4,22 @@
 
 {% block layout %}
 <div class="container-fluid">
-  <div class="hero-unit centered-text">
+  <div class="well centered-text">
     <h1>Bienvenidos</h1>
     <p>
       Este sitio contiene los experimentos del <a href="http://www.neuro.org.ar/">Laboratorio Neurociencia Integrativa</a> para <a href="http://www.tedxriodelaplata.org/">TEDXRíodelaPlata</a>
     </p>
     <!-- <p>Un total de <strong>{{ total_users }}</strong> personas se registraron y experimentaron con nosotros!.</p> -->
   </div>
-  <div class="row-fluid">
+  <div class="row-fluid custom-row">
     <div class="span2">&nbsp;</div>
+    <div class="span4">
+      <div>
+        <a href="{{ url_for('metacog_html')}}">
+          <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_1.png') }}" class="centered img-responsive" alt=" TEDExperiments">
+        </a>  
+      </div>
+    </div>
     <div class="span4">
       <div>
         <a href="{{ url_for('metacog_html')}}">
@@ -30,35 +37,26 @@
         </div>
       </div>
     </div>
-    <div class="span4">
-      <div>
-        <a href="{{ url_for('metacog_html')}}">
-          <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_1.png') }}" class="centered img-responsive" alt=" TEDExperiments">
-        </a>  
-      </div>
-    </div>
     <div class="span2">&nbsp;</div>
   </div>
   
 
-  <div class="row-fluid">
+  <div class="row-fluid custom-row well">
     <div class="span2">&nbsp;</div>
     <div class="span4">
-      <a href="{{ url_for('cronotipos')}}">
+      <a href="{{ url_for('consentimiento_cronotipos')}}">
         <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_2.png') }}" class="centered img-responsive" alt="TEDExperiments">
       </a>  
     </div>
     <div class="span4">
       <div class="repo-info">
-        <a href="{{ url_for('cronotipos')}}">
+        <a href="{{ url_for('consentimiento_cronotipos')}}">
           <h2 class="titulo centered-text">Cronotipos</h2>
         </a>
         <p class="descripcion centered-text">
           ¿Cuál es la hora de tu reloj biológico? Descubri si sos buho o alondra...
-<!-- 
-          El funcionamiento de los seres humanos varía a lo largo del día. Además, hay personas que son claramente matutinas y otras más nocturnas: su cronotipo es diferente. Contestando este cuestionario podrás conocer tu cronotipo. -->
         </p>
-        <a href="{{ url_for('cronotipos')}}">
+        <a href="{{ url_for('consentimiento_cronotipos')}}">
           <div class="centered-text">
             <button class="btn btn-large button-custom blue">
               Averiguá tu cronotipo.
@@ -70,8 +68,17 @@
     <div class="span2">&nbsp;</div>
   </div>
 
-  <div class="row-fluid">
+  <div class="row-fluid custom-row">
     <div class="span2">&nbsp;</div>
+    <div class="span4">
+      <div class="">
+        <div>
+          <a href="{{ url_for('circles')}}">
+            <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_3.png') }}" class=" centered img-responsive" alt=" TEDExperiments">
+          </a>  
+        </div>
+      </div>
+    </div>
     <div class="span4">
       <div>
         <a href="{{ url_for('circles')}}">
@@ -89,20 +96,7 @@
         </a>
       </div>
     </div>
-    <div class="span4">
-      <div class="">
-        <div>
-          <a href="{{ url_for('circles')}}">
-            <img src="{{ url_for('static', filename='img/TEDxperiments_Ico_3.png') }}" class=" centered img-responsive" alt=" TEDExperiments">
-          </a>  
-        </div>
-      </div>
-    </div>
     <div class="span2"></div>
-  </div>
-  <div class="row">
-    <div class="span10 offset1">
-    </div>
   </div>
 </div>
 {% endblock %}

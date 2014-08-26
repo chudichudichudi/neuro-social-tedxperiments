@@ -57,14 +57,14 @@ class CronotiposForm(Form):
 
     pregunta_3 = FormField(HourForm, label=u'3 - Me despierto a las ... (Ejemplo 22:00)')
 
-    pregunta_4 = RadioField(u'4 - Indique qué tan buena es la calidad de su sueño en los días hábiles', choices=[('1', 'Muy mala 1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'),('6', '6'),('7', '7'),('8', '8'),('9', '9'),('10', '10 Excelente')])
+    pregunta_4 = RadioField(u'4 - Indique qué tan buena es la calidad de su sueño en los días hábiles (Ejemplo: 1 Muy Mala, 10 Excelente)', choices=[('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'),('6', '6'),('7', '7'),('8', '8'),('9', '9'),('10', '10')])
 
     pregunta_5 = FormField(HourForm, label=u'5 - Me acuesto a las ... (Ejemplo 22:00)')
     pregunta_6 = FormField(HourForm, label=u'6 - Necesito ... minutos para quedarme dormido (Ejemplo: 05 para 5 minutos)')
     pregunta_7 = FormField(HourForm, label=u'7 - Me despierto a las ... (Ejemplo 08:00)')
 
-    pregunta_8 = RadioField(u'8 - Indique qué tan buena es la calidad de su sueño en los días libres',
-                            choices=[('1', 'Muy mala 1'),
+    pregunta_8 = RadioField(u'8 - Indique qué tan buena es la calidad de su sueño en los días libres (Ejemplo: 1 Muy Mala, 10 Excelente)',
+                            choices=[('1', '1'),
                                      ('2', '2'),
                                      ('3', '3'),
                                      ('4', '4'),
@@ -73,7 +73,7 @@ class CronotiposForm(Form):
                                      ('7', '7'),
                                      ('8', '8'),
                                      ('9', '9'),
-                                     ('10', '10 Excelente')])
+                                     ('10', '10')])
 
     pregunta_9 = FormField(HourForm,
                            label=u'9 - Si pudiera planear libremente su día ¿A qué hora se levantaría?')

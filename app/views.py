@@ -58,7 +58,7 @@ def register(provider_id=None):
         if login_user(user):
             ds.commit()
             flash('Account created successfully', 'info')
-            return redirect(url_for('profile'))
+            return redirect(url_for(request.args.get('next') or 'index'))
 
         return render_template('thanks.html', user=user)
 
@@ -105,7 +105,7 @@ def get_all_experiments():
     return jsonify({"experiments": ExperimentSerializer(experiments, many=True).data}), 200
 
 
-@app.route('/experiments/create', methods=['POST'])
+@app.route('/experiments/create/', methods=['POST'])
 @cross_origin()
 def create_log():
     if not request.json or not 'test_subject' in request.json \
@@ -179,6 +179,12 @@ def cronotipos():
     if form.validate_on_submit():
         return redirect('/cronotipos_results')
     return render_template('cronotipos.html', form=CronotiposForm())
+
+
+@app.route('/consentimiento_cronotipos', methods=('GET', 'POST'))
+@login_required
+def consentimiento_cronotipos():
+    return render_template('consentimiento_cronotipos.html')
 
 
 #Circles
