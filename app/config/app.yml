@@ -7,8 +7,8 @@ COMMON: &common
   SOCIAL_CONNECT_ALLOW_VIEW: '/profile'
 
   SOCIAL_TWITTER:
-    consumer_key: 'ZoawS5ESmcN9TGtNRxGidUEXL'
-    consumer_secret: 'sxQO6bGjrG05eAAgYxvTb2utSb8Ar2PLqnZFLjmSeY9odQjOtw'
+    consumer_key: 'PkGO6dLiwip0Y0zvDEbrSP1cK'
+    consumer_secret: 'r2dfffMhxJzEB1gzIjdFcZmrL5IPZm1qt789jyV36M10wJSjgV'
 
   SOCIAL_FACEBOOK:
     consumer_key: '282525155285510'
