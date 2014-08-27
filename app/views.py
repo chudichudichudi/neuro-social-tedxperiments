@@ -21,9 +21,9 @@ def index():
 @app.route('/login')
 def login():
     if current_user.is_authenticated():
-        return redirect(request.referrer or '/')
+        return redirect(redirect(request.args.get("next") or "/"))
 
-    return render_template('login.html', form=LoginForm())
+    return render_template('login.html', form=LoginForm(), next=request.args.get("next"))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -194,4 +194,4 @@ def circles():
     form = CronotiposForm()
     if form.validate_on_submit():
         return redirect('/cronotipos_results')
-    return redirect('http://circles-experiment.meteor.com', 302)
+    return redirect('http://circles-experiment.meteor.com?tedx_user_id=' + str(current_user.get_id()), 302)

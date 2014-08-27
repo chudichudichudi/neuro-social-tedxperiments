@@ -33,7 +33,7 @@ a{color:#0088cc;text-decoration:none;}
 a:hover{color:#005580;text-decoration:underline;}
 .row{margin-left:-20px;*zoom:1;}.row:before,.row:after{display:table;content:"";}
 .row:after{clear:both;}
-[class*="span"]{float:left;margin-left:20px;}
+/*[class*="span"]{float:left;margin-left:20px;}*/
 .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{width:940px;}
 .span12{width:940px;}
 .span11{width:860px;}
@@ -61,7 +61,8 @@ a:hover{color:#005580;text-decoration:underline;}
 .offset1{margin-left:100px;}
 .row-fluid{width:100%;*zoom:1; padding-top: 20px; padding-bottom: 20px;}.row-fluid:before,.row-fluid:after{display:table;content:"";}
 .row-fluid:after{clear:both;}
-.row-fluid>[class*="span"]{float:left;margin-left:2.127659574%;}
+/*.row-fluid>[class*="span"]{float:left;margin-left:2.127659574%;}*/
+.row-fluid>[class*="span"]{float:left;}
 .row-fluid>[class*="span"]:first-child{margin-left:0;}
 .row-fluid > .span12{width:99.99999998999999%;}
 .row-fluid > .span11{width:91.489361693%;}
@@ -729,19 +730,19 @@ a.thumbnail:hover{border-color:#0088cc;-webkit-box-shadow:0 1px 4px rgba(0, 105,
 	padding-right: 0px !important;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
 	.col { 
 		margin: 1% 0 1% 0%;
 	}
 }
 
-@media only screen and (max-width: 480px) {
-	.row-fluid > .span1 { width: 100%;}
-	.row-fluid > .span2 { width: 100%;}
-	.row-fluid > .span3 { width: 100%;}
-	.row-fluid > .span4 { width: 100%;}
-	.row-fluid > .span5 { width: 100%;}
-	.row-fluid > .span6 { width: 100%;}
+@media only screen and (max-width: 600px) {
+	.row-fluid > .span1 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
+	.row-fluid > .span2 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
+	.row-fluid > .span3 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
+	.row-fluid > .span4 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
+	.row-fluid > .span5 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
+	.row-fluid > .span6 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
 }
 div.my-boxed-outer {
 	border: thin gray solid;
