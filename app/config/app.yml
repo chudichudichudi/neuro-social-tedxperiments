@@ -11,8 +11,8 @@ COMMON: &common
     consumer_secret: 'r2dfffMhxJzEB1gzIjdFcZmrL5IPZm1qt789jyV36M10wJSjgV'
 
   SOCIAL_FACEBOOK:
-    consumer_key: '282525155285510'
-    consumer_secret: '3affe132dab12abbccc5d5a98d2598eb'
+    consumer_key: '661404867289872'
+    consumer_secret: 'c04a8fa667e55be12c803943e4087cad'
     request_token_params:
       scope: 'email'
 
