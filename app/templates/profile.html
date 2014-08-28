@@ -6,19 +6,15 @@
   <div class="span6">
     <h2>{{ display_name }}</h2>
     <hr />
-    {% if conn %}
-      <form action="{{ url_for('social.remove_connection', provider_id=conn.provider_id, provider_user_id=conn.provider_user_id) }}?__METHOD_OVERRIDE__=DELETE" method="POST" class="remove-connection">
-        <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Desconectar el perfil de {{ display_name }}</button>
-      </form>
-    {% else %}
-      <form action="{{ url_for('social.connect', provider_id=provider_id) }}" method="POST" class="create-connection">
-        <fieldset>
-          <div class="control-group">
-            <button type="submit" class="btn btn-success btn-large"><i class="icon-share icon-white"></i> Asociar perfil con {{ display_name }}</button>
-          </div>
-        </fieldset>
-      </form>
-    {% endif %}
+
+    <form action="{{ url_for('social.connect', provider_id=provider_id) }}" method="POST" class="create-connection">
+      <fieldset>
+        <div class="control-group">
+          <button type="submit" class="btn btn-success btn-large"><i class="icon-share icon-white"></i> Asociar perfil con {{ display_name }}</button>
+        </div>
+      </fieldset>
+    </form>
+
   </div>
 {% endmacro %}
 
