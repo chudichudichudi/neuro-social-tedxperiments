@@ -65,26 +65,61 @@
 
 {% block layout %}
 <div class="page-header centered-text">
-  <h1>Cronotipos</h1>
+  <h1>Cuestionario de preferencias diarias y hábitos de sueño</h1>
+  <p>Todos los datos ingresados serán confidenciales y tratados de manera anónima.</p>
 </div>
 
 
-<form class="well form-horizontal" action="{{ url_for('cronotipos') }}" method="POST">
+<form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" method="POST">
   {{ form.hidden_tag() }}
 
+  <div class="row-fluid">
+    <div class="span3">&nbsp;</div>
+    <div class="span6">
+      <h2>PRIMERA PARTE</h2>
+      <p>En esta sección le haremos preguntas sobre sus hábitos del sueño. Por favor, responda de acuerdo a lo que usted considere una semana estándar, basándose en sus condiciones de vida actuales. Responda a todas las preguntas, excepto cuando se le indique lo contrario.</p>
+      <h3>Días Hábiles</h3>
+      <p>Por favor complete todas las siguientes secciones, independientemente de si usted trabaja regularmente o no.</p>
+    </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+  
   {{ render_row(form.pregunta_1) }}
   {{ render_row(form.pregunta_2) }}
   {{ render_row(form.pregunta_3) }}
-
   {{ render_radio(form.pregunta_4) }}
 
+  
+  <div class="row-fluid">
+    <div class="span3">&nbsp;</div>
+    <div class="span6">
+      <h3>Días Libres</h3>
+      <p>Por favor complete todas las siguientes secciones, independientemente de si usted trabaja regularmente o no.</p>
+    </div>
+    <div class="span3">&nbsp;</div>
+  </div>
 
+  
   {{ render_row(form.pregunta_5) }}
   {{ render_row(form.pregunta_6) }}
   {{ render_row(form.pregunta_7) }}
-
   {{ render_radio(form.pregunta_8) }}
 
+  
+  <div class="row-fluid">
+    <div class="span3">&nbsp;</div>
+    <div class="span6">
+      <h2>SEGUNDA PARTE</h2>
+      <ul>
+        <li>Responda todas las preguntas en orden.</li>
+        <li>Lea primero detenidamente cada una de las opciones, esto le garantizará una mayor comprensión de la pregunta y su significado.</li>
+        <li>Responda cada pregunta en forma independiente de las demás. No vuelva atrás a chequear las respuestas dadas anteriormente.</li>
+        <li>Seleccione sólo una respuesta.</li>
+      </ul>
+    </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+  
   {{ render_row(form.pregunta_9) }}
   {{ render_row(form.pregunta_10) }}
   {{ render_radio_horizontal(form.pregunta_11) }}
@@ -99,6 +134,11 @@
   {{ render_radio_horizontal(form.pregunta_20) }}
   {{ render_radio_horizontal(form.pregunta_21) }}
   {{ render_radio_horizontal(form.pregunta_22) }}
+  {{ render_radio_horizontal(form.pregunta_23) }}
+  {{ render_radio_horizontal(form.pregunta_24) }}
+  {{ render_row(form.pregunta_25) }}
+  {{ render_row(form.pregunta_26) }}
+  {{ render_radio_horizontal(form.pregunta_27) }}
 
   <div class="centered-text">
     

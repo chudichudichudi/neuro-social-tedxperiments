@@ -1,9 +1,11 @@
 COMMON: &common
   SECRET_KEY: insecure
-  SQLALCHEMY_DATABASE_URI: 'sqlite:///dev.db'
+  # SQLALCHEMY_DATABASE_URI: 'sqlite:///dev.db'
+  SQLALCHEMY_DATABASE_URI: 'postgres://postgres:postgres@localhost/tedx'
   ADMIN_CREDENTIALS: 'admin,password'
 
   SECURITY_TRACKABLE: True
+  SECURITY_CONFIRM_ERROR_VIEW: '/'
   SOCIAL_CONNECT_ALLOW_VIEW: '/profile'
 
   SOCIAL_TWITTER:
