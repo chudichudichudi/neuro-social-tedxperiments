@@ -81,7 +81,7 @@ def on_login_failed(sender, provider, oauth_response):
     connection_values['user_id'] = user.id
     connect_handler(connection_values, provider)
     login_user(user)
-    db.commit()
+    ds.commit()
     return redirect(url_for('index'))
 
 
