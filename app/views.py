@@ -57,7 +57,7 @@ def register(provider_id=None):
 
         if login_user(user):
             ds.commit()
-            flash('Account created successfully', 'info')
+            flash('Cuenta creada correctamente!', 'info')
             return redirect(url_for(request.args.get('next') or 'index'))
 
         return render_template('thanks.html', user=user)
@@ -231,4 +231,4 @@ def consentimiento_cronotipos():
 @app.route('/circles', methods=('GET', 'POST'))
 @login_required
 def circles():
-    return redirect('http://circles-experiment.meteor.com?tedx_user_id=' + str(current_user.get_id()), 302)
+    return redirect('http://circles-experiment.meteor.com?tedx_user_id=' + str(current_user.get_id()), 303)

@@ -20,7 +20,7 @@
 
 {% block layout %}
 <div class="page-header centered-text">
-  <h1>Hola!, {{ current_user.email }}!</h1>
+  <h1>Hola!, {{ current_user.connections.display_name }}!</h1>
 </div>
 <div class="row-fluid centered-text">
   {{ show_provider_button('twitter', 'Twitter', twitter_conn) }}

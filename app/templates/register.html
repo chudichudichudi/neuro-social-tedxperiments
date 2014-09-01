@@ -15,11 +15,12 @@
   <h1>Registrarte</h1>
 </div>
 {% if login_failed %}
-<h3>Register with your {{ provider.name }} account: {{ connection_values['display_name'] }}</h3>
+<h3>Registrarse con la cuenta de {{ provider.name }}: {{ connection_values['display_name'] }}</h3>
 {% endif %}
 <div class="row-fluid content">
   
-  <div class="span6">
+  <div class="span1">&nbsp;</div>
+  <div class="span5 centered-text">
     <form class="well" action="{{ url_for('register', provider_id=provider.id if provider else None) }}" method="POST">
       {{ form.hidden_tag() }}
       {{ render_field(form.email) }}
@@ -29,12 +30,12 @@
     </form>
   </div>
   {% if not login_failed %}
-  <div class="span6 col3">
+  <div class="span5 centered-text " style="margin-top:60px;">
     {{ social_register('twitter', 'Twitter' )}}
     {{ social_register('facebook', 'Facebook' )}}
     <!-- {{ social_register('github', 'GitHub' )}} -->
   </div>
-  
+  <div class="span1">&nbsp;</div>
   {% endif %}
 </div>
 {% endblock %}

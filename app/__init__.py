@@ -1,11 +1,10 @@
 
 from flask import redirect, url_for, session
 from flask.ext.assets import Environment
-from flask.ext.security import Security, SQLAlchemyUserDatastore, login_user
+from flask.ext.security import Security, SQLAlchemyUserDatastore, login_user, core
 from flask.ext.social import Social, SQLAlchemyConnectionDatastore, \
-     login_failed
+    login_failed
 from flask.ext.admin import Admin
-from flask.ext.admin.contrib.sqla import ModelView
 
 from flask.ext.social.utils import get_connection_values_from_oauth_response
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -13,8 +12,6 @@ from werkzeug.contrib.fixers import ProxyFix
 
 from .helpers import Flask
 import uuid
-
-
 
 
 app = Flask(__name__)
@@ -39,6 +36,9 @@ from flask.ext.social.views import connect_handler
 security_ds = SQLAlchemyUserDatastore(db, models.User, models.Role)
 social_ds = SQLAlchemyConnectionDatastore(db, models.Connection)
 
+
+
+core._default_messages['LOGIN'] = ('Por favor ingresa tu usuario y clave.','info')
 app.security = Security(app, security_ds)
 app.social = Social(app, social_ds)
 

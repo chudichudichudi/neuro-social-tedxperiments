@@ -1,7 +1,9 @@
 {%- with messages = get_flashed_messages(with_categories=true) -%}
   {% if messages %}
-  <div class="row">
-    <div class="span8 offset2">
+  <div class="row-fluid centered-text">
+
+  	<div class="span2">&nbsp;</div>
+    <div class="span8 centered-text">
 	  {% for category, message in messages %}
 	  <div class="alert alert-{{ category }}">
 	    <a class="close" data-dismiss="alert">×</a>
@@ -9,6 +11,7 @@
 	  </div>
 	  {% endfor %}
     </div>
+    <div class="span2">&nbsp;</div>
   </div>
   {% endif %}
 {%- endwith %}
