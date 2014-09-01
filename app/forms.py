@@ -129,7 +129,7 @@ class CronotiposForm(Form):
                              choices=[('A', u'Mucho'),
                                       ('B', u'Bastante'),
                                       ('C', u'Poco'),
-                                      ('D', u'Mucho')])
+                                      ('D', u'Nada')])
 
     pregunta_16 = RadioField(u'16 - Cuando no tiene nada que hacer al día siguiente ¿a qué hora se acuesta en comparación con lo que acostumbra?',
                              choices=[('A', u'A la misma hora'),
@@ -176,8 +176,8 @@ class CronotiposForm(Form):
                  (u'B', u'Razonable'),
                  (u'C', u'Pobre'),
                  (u'D', u'Malo')])
-    pregunta_25 = FormField(HourFormPregunta18, u'25 - Si Ud. pudiera elegir los horarios de su trabajo, el cual es realmente entretenido y en el cual se le paga de acuerdo a su rendimiento, suponiendo que trabaja 5 horas corridas, ¿qué horario elegiría? ')
-    pregunta_26 = FormField(HourFormPregunta18, u'26 - ¿A qué hora del día se siente mejor habitualmente (más fresco, más activo, más despierto, más capaz, etc.)?')
+    pregunta_25 = FormField(HourForm, u'25 - Si Ud. pudiera elegir los horarios de su trabajo, el cual es realmente entretenido y en el cual se le paga de acuerdo a su rendimiento, suponiendo que trabaja 5 horas corridas, ¿qué horario elegiría? ')
+    pregunta_26 = FormField(HourForm, u'26 - ¿A qué hora del día se siente mejor habitualmente (más fresco, más activo, más despierto, más capaz, etc.)?')
     pregunta_27 = RadioField(u'27 - Si tuviera que definirse como un tipo de persona “matutina (mañanera)” o “vespertina (nocturna)”, ¿Cómo se definiría?',
                              choices=[(u'A', u'Definitivamente mañanera'),
                                       (u'B', u'Más mañanera que vespertina'),

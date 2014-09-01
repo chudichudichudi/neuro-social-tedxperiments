@@ -31,8 +31,8 @@ from . import assets, models, views
 
 
 admin = Admin(app)
-admin.add_view(ModelView(models.Cronotipos, db.session))
 
+admin.add_view(models.CronotiposAdminView(models.Cronotipos, db.session))
 from flask.ext.social.views import connect_handler
 
 security_ds = SQLAlchemyUserDatastore(db, models.User, models.Role)
