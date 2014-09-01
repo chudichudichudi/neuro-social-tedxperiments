@@ -37,26 +37,34 @@ validators = {
 
 
 class RegisterForm(Form):
+    class Meta:
+        locales = ['es_ES', 'es']
     email = TextField('Email', validators['email'])
     password = PasswordField(u'Contraseña', validators['password'], )
     confirm = PasswordField(u'Confirmar contraseña')
 
 
-class HourForm(wtfForm):
+class HourForm(Form):
+    class Meta:
+        locales = ['es_ES', 'es']
     hour_choices = [(unicode(x), unicode(x)) for x in range(0, 24)]
     minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
 
-class HourFormPregunta9(wtfForm):
+class HourFormPregunta9(Form):
+    class Meta:
+        locales = ['es_ES', 'es']
     hour_choices = [(unicode(x), unicode(x)) for x in range(5, 13)]
     minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
 
-class HourFormPregunta10(wtfForm):
+class HourFormPregunta10(Form):
+    class Meta:
+        locales = ['es_ES', 'es']
     hour_choices = [(u'20', u'20'), (u'21', u'21'), (u'22', u'22'),
                     (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
                     (u'2', u'2'), (u'3', u'3')]
@@ -64,7 +72,10 @@ class HourFormPregunta10(wtfForm):
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
-class HourFormPregunta18(wtfForm):
+
+class HourFormPregunta18(Form):
+    class Meta:
+        locales = ['es_ES', 'es']
     hour_choices = [(u'20', u'20'), (u'21', u'21'), (u'22', u'22'),
                     (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
                     (u'2', u'2'), (u'3', u'3')]
@@ -75,6 +86,8 @@ class HourFormPregunta18(wtfForm):
 
 
 class CronotiposForm(Form):
+    class Meta:
+        locales = ['es_ES', 'es']
     pregunta_1 = FormField(HourForm, label=u'1 - Me acuesto a las ... (Ejemplo 22:00)')
 
     pregunta_2 = FormField(HourForm, label=u'2 - Necesito ... minutos para quedarme dormido')

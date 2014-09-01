@@ -69,6 +69,24 @@
   <p>Todos los datos ingresados serán confidenciales y tratados de manera anónima.</p>
 </div>
 
+{% if form.errors %}
+  {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+      {% for error in field_errors %}
+      <div class="row-fluid centered-text">
+        <div class="span2">&nbsp;</div>
+        <div class="span8 centered-text">
+
+          <div class="alert alert-error">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ form[field_name].label }} Elija una opción
+          </div>
+        </div>
+        <div class="span2">&nbsp;</div>
+      </div>            
+      {% endfor %}
+  {% endfor %}        
+{% endif %}
+
 
 <form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" method="POST">
   {{ form.hidden_tag() }}
