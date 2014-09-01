@@ -1,7 +1,6 @@
-
 from flask.ext.security import UserMixin, RoleMixin
 from marshmallow import Serializer
-from datetime import date, datetime, time, timedelta
+from datetime import timedelta
 from flask.ext.admin.contrib.sqla import ModelView
 
 

@@ -12,6 +12,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug.contrib.fixers import ProxyFix
 
 from .helpers import Flask
+import uuid
 
 
 
@@ -75,7 +76,7 @@ def template_extras():
 def on_login_failed(sender, provider, oauth_response):
     connection_values = get_connection_values_from_oauth_response(provider,oauth_response)
     ds = app.security.datastore
-    user = ds.create_user(email="", password="123")
+    user = ds.create_user(email=str(uuid.uuid1()), password="123")
     ds.commit()
     connection_values['user_id'] = user.id
     connect_handler(connection_values, provider)
