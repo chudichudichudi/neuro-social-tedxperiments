@@ -31,6 +31,11 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(120))
     active = db.Column(db.Boolean())
+    name = db.Column(db.String(255))
+    twitter_handle = db.Column(db.String(255))
+    work = db.Column(db.String(255))
+    study = db.Column(db.String(255))
+    age = db.Column(db.String(255))
     last_login_at = db.Column(db.DateTime())
     current_login_at = db.Column(db.DateTime())
     last_login_ip = db.Column(db.String(100))
@@ -102,7 +107,9 @@ class CronotiposAdminView(ModelView):
                    'pregunta_24',
                    'pregunta_25',
                    'pregunta_26',
-                   'pregunta_27')
+                   'pregunta_27',
+                   'result',
+                   'result_type')
 
 
 class Cronotipos(db.Model):
@@ -136,6 +143,22 @@ class Cronotipos(db.Model):
     pregunta_25 = db.Column(db.String)
     pregunta_26 = db.Column(db.String)
     pregunta_27 = db.Column(db.String)
+    result = db.Column(db.String)
+    result_type = db.Column(db.String)
+
+    def get_crono_type(self, crono_result):
+        if crono_result >= 70 and crono_result <= 86:
+            return 'Definitivamente matutino'
+        elif crono_result >= 59 and crono_result <= 69:
+            return 'Moderadamente matutino'
+        elif crono_result >= 42 and crono_result <= 58:
+            return 'Intermedio'
+        elif crono_result >= 31 and crono_result <= 41:
+            return 'Moderadamente Nocturno'
+        elif crono_result >= 16 and crono_result <= 30:
+            return 'Definitivamente nocturno'
+        else:
+            return 'fuera de escala'
 
     @staticmethod
     def res_question_9(hs, mn):

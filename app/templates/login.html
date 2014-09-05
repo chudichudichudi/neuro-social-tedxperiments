@@ -15,8 +15,8 @@
   <h1>Entrar</h1>
 </div>
 <div class="row-fluid container-fluid centered-text">
-  <div class="span1">&nbsp;</div>
-  <div class="span5">
+  <div class="span2">&nbsp;</div>
+  <div class="span8">
 
   <form class="well" action="{{ url_for('security.login') }}" method="POST">
     <input type="hidden" name="next" value="{{ next or '' }}">
@@ -26,13 +26,7 @@
     <label class="checkbox" style="text-align: initial;">Recordarme {{ form.remember()|safe }}</label>
     <button type="submit" class="btn btn-primary btn-large">Entrar</button>
   </form>  
-
-    
   </div>
-  <div class="span5" style="margin-top:60px;">
-    {{ social_login('twitter', 'Twitter' )}}
-    {{ social_login('facebook', 'Facebook' )}}
-  </div>
-  <div class="span1">&nbsp;</div>
+  <div class="span2">&nbsp;</div>
 </div>
 {% endblock %}

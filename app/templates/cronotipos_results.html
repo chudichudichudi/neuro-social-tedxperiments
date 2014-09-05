@@ -25,7 +25,45 @@
     <p>felicitaciones!</p>
   </div>
   <div class="span3">&nbsp;</div>
-</div>  
+</div>
+
+<script type="text/javascript">
+$(function () {
+  $('#container').highcharts({
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Cronotipos de TEDx Rio de la plata'
+      },
+      xAxis: {
+          categories: [
+              'Definitivamente matutino',
+              'Moderadamente matutino',
+              'Intermedio',
+              'Moderadamente Nocturno',
+              'Definitivamente nocturno'
+          ]
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text: 'Cantidad de Personas'
+          }
+      },
+      plotOptions: {
+          column: {
+              pointPadding: 0.2,
+              borderWidth: 0
+          }
+      },
+      series: [{
+          name: 'El cronotipo de TEDx',
+          data: [{{ if crono_chart[u'Definitivamente matutino'] crono_chart[u'Definitivamente matutino'] }}, {{ crono_chart[u'Moderadamente matutino'] }}, {{ crono_chart[u'Intermedio'] }}, {{ crono_chart[u'Moderadamente Nocturno'] }}, {{ crono_chart[u'Definitivamente nocturno'] }}]
+      }]
+  });
+});
+</script>
 
 {% endblock %}
 

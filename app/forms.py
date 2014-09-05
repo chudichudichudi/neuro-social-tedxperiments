@@ -3,8 +3,9 @@
 from flask import current_app
 from flask.ext.wtf import Form
 from wtforms import TextField, PasswordField, ValidationError, \
-    RadioField, FormField, SelectField, Form as wtfForm
-from wtforms.validators import Required, Email, Length, Regexp, EqualTo
+    RadioField, FormField, SelectField, IntegerField
+from wtforms.validators import Required, Email, Length, Regexp, EqualTo, \
+    Optional, NumberRange
 
 
 class UniqueUser(object):
@@ -15,7 +16,6 @@ class UniqueUser(object):
         if current_app.security.datastore.find_user(email=field.data):
             raise ValidationError(self.message)
 
-
 validators = {
     'email': [
         Required(),
@@ -24,7 +24,7 @@ validators = {
     ],
     'password': [
         Required(),
-        Length(min=6, max=50),
+        Length(min=6, max=50, message=u'La contraseña tiene que ser de al menos 6 caracteres'),
         EqualTo('confirm', message=u'Las contraseñas deben coincidir.'),
         Regexp(r'[A-Za-z0-9@#$%^&+=]',
                message=u'La contraseña tiene que tener caracteres válidos')
@@ -32,6 +32,14 @@ validators = {
     'hora': [
         Required(),
         Length(min=4, max=4)
+    ],
+    'age': [
+        Optional(),
+        NumberRange(min=0, max=100,
+                    message=u'Por favor ingresa tu edad entre 0 y 100 años')
+    ],
+    'edad': [
+        Required()
     ]
 }
 
@@ -42,53 +50,82 @@ class RegisterForm(Form):
     email = TextField('Email', validators['email'])
     password = PasswordField(u'Contraseña', validators['password'], )
     confirm = PasswordField(u'Confirmar contraseña')
+    name = TextField('Nombre', validators['edad'])
+    twitter_handle = TextField('Twitter (Opcional)')
+    work = SelectField(u'¿Trabajas?',
+                       choices=[(u'Si', u'Si'), (u'No', u'No')])
+    study = SelectField(u'¿Estudias?',
+                        choices=[(u'Si', u'Si'), (u'No', u'No')])
+    age = IntegerField('Edad (Opcional)', validators['age'])
 
 
 class HourForm(Form):
+    def __init__(self, *args, **kwargs):
+        kwargs['csrf_enabled'] = False
+        super(HourForm, self).__init__(*args, **kwargs)
+
     class Meta:
         locales = ['es_ES', 'es']
     hour_choices = [(unicode(x), unicode(x)) for x in range(0, 24)]
     minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+    minute_choices.insert(0, (u'empty', u'--'))
+    hour_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
 
 class HourFormPregunta9(Form):
+    def __init__(self, *args, **kwargs):
+        kwargs['csrf_enabled'] = False
+        super(HourFormPregunta9, self).__init__(*args, **kwargs)
+
     class Meta:
         locales = ['es_ES', 'es']
     hour_choices = [(unicode(x), unicode(x)) for x in range(5, 13)]
     minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+    minute_choices.insert(0, (u'empty', u'--'))
+    hour_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
 
 class HourFormPregunta10(Form):
+    def __init__(self, *args, **kwargs):
+        kwargs['csrf_enabled'] = False
+        super(HourFormPregunta10, self).__init__(*args, **kwargs)
+
     class Meta:
         locales = ['es_ES', 'es']
-    hour_choices = [(u'20', u'20'), (u'21', u'21'), (u'22', u'22'),
-                    (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
+    hour_choices = [(u'empty', u'--'), (u'20', u'20'), (u'21', u'21'),
+                    (u'22', u'22'), (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
                     (u'2', u'2'), (u'3', u'3')]
     minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+    minute_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
 
 class HourFormPregunta18(Form):
+    def __init__(self, *args, **kwargs):
+        kwargs['csrf_enabled'] = False
+        super(HourFormPregunta18, self).__init__(*args, **kwargs)
+
     class Meta:
         locales = ['es_ES', 'es']
-    hour_choices = [(u'20', u'20'), (u'21', u'21'), (u'22', u'22'),
-                    (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
+    hour_choices = [(u'empty', u'--'), (u'20', u'20'), (u'21', u'21'),
+                    (u'22', u'22'), (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
                     (u'2', u'2'), (u'3', u'3')]
     minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+    minute_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
-
 
 
 class CronotiposForm(Form):
     class Meta:
         locales = ['es_ES', 'es']
-    pregunta_1 = FormField(HourForm, label=u'1 - Me acuesto a las ... (Ejemplo 22:00)')
+    pregunta_1 = FormField(HourForm,
+                           label=u'1 - Me acuesto a las ... (Ejemplo 22:00)')
 
     pregunta_2 = FormField(HourForm, label=u'2 - Necesito ... minutos para quedarme dormido')
 
@@ -113,7 +150,7 @@ class CronotiposForm(Form):
                                      ('10', '10')])
 
     pregunta_9 = FormField(HourFormPregunta9,
-                           label=u'9 - Si pudiera planear libremente su día ¿A qué hora se levantaría?')
+                           label=u'9 - Si pudiera planear libremente su día ¿A qué hora se levantaría?', )
 
     pregunta_10 = FormField(HourFormPregunta10,
                             label=u'10 - Si pudiera planear libremente su día ¿A qué hora se acostaría?')

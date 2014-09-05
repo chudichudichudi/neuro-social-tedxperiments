@@ -17,25 +17,36 @@
 {% if login_failed %}
 <h3>Registrarse con la cuenta de {{ provider.name }}: {{ connection_values['display_name'] }}</h3>
 {% endif %}
+
+{% if form.errors %}
+  {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+      {% for error in field_errors %}
+          <div class="alert alert-error centered-text" style="width: 50%; margin: 10px auto;">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ error }}
+          </div>
+      </div>            
+      {% endfor %}
+  {% endfor %}        
+{% endif %}
 <div class="row-fluid content">
   
-  <div class="span1">&nbsp;</div>
-  <div class="span5 centered-text">
+  <div class="span2">&nbsp;</div>
+  <div class="span8 centered-text">
     <form class="well" action="{{ url_for('register', provider_id=provider.id if provider else None) }}" method="POST">
       {{ form.hidden_tag() }}
       {{ render_field(form.email) }}
       {{ render_field(form.password) }}
       {{ render_field(form.confirm) }}
+      {{ render_field(form.name) }}
+      {{ render_field(form.work) }}
+      {{ render_field(form.study) }}
+      {{ render_field(form.age) }}
+      {{ render_field(form.twitter_handle) }}
       <button type="submit" class="btn btn-primary btn-large">Crear Usuario</button>
     </form>
   </div>
-  {% if not login_failed %}
-  <div class="span5 centered-text " style="margin-top:60px;">
-    {{ social_register('twitter', 'Twitter' )}}
-    {{ social_register('facebook', 'Facebook' )}}
-    <!-- {{ social_register('github', 'GitHub' )}} -->
-  </div>
-  <div class="span1">&nbsp;</div>
-  {% endif %}
+  
+  <div class="span2">&nbsp;</div>
 </div>
 {% endblock %}

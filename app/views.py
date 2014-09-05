@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask import render_template, redirect, request, current_app, session, \
     flash, url_for, jsonify
 from flask.ext.security import LoginForm, current_user, login_required, \
@@ -10,7 +12,6 @@ import json
 from . import app, db
 from .forms import RegisterForm, CronotiposForm
 from .models import User, Experiment, ExperimentSerializer, Cronotipos
-from .tools import requires_auth
 
 
 @app.route('/')
@@ -18,12 +19,16 @@ def index():
     return render_template('index.html', total_users=User.query.count())
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    if current_user.is_authenticated():
-        return redirect(redirect(request.args.get("next") or "/"))
+    form = LoginForm()
+    if form.validate_on_submit():
+        # login and validate the user...
+        login_user(form.user, remember=form.remember.data)
+        flash("Bienvenido!")
+        return redirect(request.args.get("next") or "/")
 
-    return render_template('login.html', form=LoginForm(), next=request.args.get("next"))
+    return render_template("login.html", form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -42,9 +47,15 @@ def register(provider_id=None):
         connection_values = None
 
     if form.validate_on_submit():
+        print "era valida"
         ds = current_app.security.datastore
         user = ds.create_user(email=form.email.data,
                               password=form.password.data)
+        user.age = form.age.data
+        user.twitter_handle = form.twitter_handle.data
+        user.name = form.name.data
+        user.study = form.study.data
+        user.work = form.work.data
         ds.commit()
 
         # See if there was an attempted social login prior to registering
@@ -61,7 +72,7 @@ def register(provider_id=None):
             return redirect(url_for(request.args.get('next') or 'index'))
 
         return render_template('thanks.html', user=user)
-
+    print form.errors
     login_failed = int(request.args.get('login_failed', 0))
 
     return render_template('register.html',
@@ -175,7 +186,7 @@ def metacog_js():
 @app.route('/cronotipos')
 @login_required
 def cronotipos():
-    form = CronotiposForm()
+    form = CronotiposForm(csrf_enabled=False)
     if form.validate_on_submit():
         return redirect('/cronotipos_results')
     return render_template('cronotipos.html', form=CronotiposForm())
@@ -185,9 +196,8 @@ def cronotipos():
 @login_required
 def cronotipos_results():
     form = CronotiposForm(csrf_enabled=False)
-    crono = Cronotipos()
-
     if form.validate():
+        crono = Cronotipos()
         crono.user_id = current_user.get_id()
         crono.pregunta_1 = form.pregunta_1.data['hours_field'] + u':' + form.pregunta_1.data['minutes_field']
         crono.pregunta_2 = form.pregunta_2.data['hours_field'] + u':' + form.pregunta_2.data['minutes_field']
@@ -218,12 +228,22 @@ def cronotipos_results():
         crono.pregunta_25 = form.pregunta_25.data['hours_field'] + u':' + form.pregunta_25.data['minutes_field']
         crono.pregunta_26 = form.pregunta_26.data['hours_field'] + u':' + form.pregunta_26.data['minutes_field']
         crono.pregunta_27 = form.pregunta_27.data
+        crono.result = crono.process_data()
+        crono.result_type = crono.get_crono_type(crono.process_data())
         db.session.add(crono)
         db.session.commit()
-        return render_template('cronotipos_results.html', crono_result=crono.process_data())
+        print get_crono_chart()
+        return render_template('cronotipos_results.html',
+                               crono_result=crono.process_data(),
+                               crono_chart=dict(get_crono_chart()))
     print form.errors
     flash(u'Por favor completa todos los campos')
     return render_template('cronotipos.html', form=form)
+
+
+def get_crono_chart():
+    return db.session.query(Cronotipos.result_type, db.func.count(Cronotipos.id).label("count")).group_by(Cronotipos.result_type).all()
+
 
 @app.route('/consentimiento_cronotipos', methods=('GET', 'POST'))
 @login_required

@@ -1,3 +1,15 @@
+{% macro render_hour_field(field) %}
+  <div class="row-fluid cronotipos_form" >
+    <div class="span3">&nbsp;</div>
+    <div class="span6">
+      {{ field.label }}
+      {{ field.hours_field }} : {{ field.minutes_field}}
+    </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+{% endmacro %}
+
+
 {% macro render_radio(radio_field) %}
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
@@ -57,7 +69,7 @@
   </div>
 {% endmacro %}
 
-{% from '_macros.html' import render_field, form_field %}
+{% from '_macros.html' import render_field %}
 
 {% extends '/layouts/boilerplate.html' %}
 
@@ -72,16 +84,10 @@
 {% if form.errors %}
   {% for field_name, field_errors in form.errors|dictsort if field_errors %}
       {% for error in field_errors %}
-      <div class="row-fluid centered-text">
-        <div class="span2">&nbsp;</div>
-        <div class="span8 centered-text">
-
-          <div class="alert alert-error">
+          <div class="alert alert-error centered-text" style="margin-left: 10px; margin-right: 10px;">
             <a class="close" data-dismiss="alert">×</a>
             {{ form[field_name].label }} Elija una opción
           </div>
-        </div>
-        <div class="span2">&nbsp;</div>
       </div>            
       {% endfor %}
   {% endfor %}        
@@ -102,9 +108,9 @@
     <div class="span3">&nbsp;</div>
   </div>
   
-  {{ render_row(form.pregunta_1) }}
-  {{ render_row(form.pregunta_2) }}
-  {{ render_row(form.pregunta_3) }}
+  {{ render_hour_field(form.pregunta_1) }}
+  {{ render_hour_field(form.pregunta_2) }}
+  {{ render_hour_field(form.pregunta_3) }}
   {{ render_radio(form.pregunta_4) }}
 
   
@@ -118,9 +124,9 @@
   </div>
 
   
-  {{ render_row(form.pregunta_5) }}
-  {{ render_row(form.pregunta_6) }}
-  {{ render_row(form.pregunta_7) }}
+  {{ render_hour_field(form.pregunta_5) }}
+  {{ render_hour_field(form.pregunta_6) }}
+  {{ render_hour_field(form.pregunta_7) }}
   {{ render_radio(form.pregunta_8) }}
 
   
@@ -138,8 +144,8 @@
     <div class="span3">&nbsp;</div>
   </div>
   
-  {{ render_row(form.pregunta_9) }}
-  {{ render_row(form.pregunta_10) }}
+  {{ render_hour_field(form.pregunta_9) }}
+  {{ render_hour_field(form.pregunta_10) }}
   {{ render_radio_horizontal(form.pregunta_11) }}
   {{ render_radio_horizontal(form.pregunta_12) }}
   {{ render_radio_horizontal(form.pregunta_13) }}
@@ -147,15 +153,15 @@
   {{ render_radio_horizontal(form.pregunta_15) }}
   {{ render_radio_horizontal(form.pregunta_16) }}
   {{ render_radio_horizontal(form.pregunta_17) }}
-  {{ render_row(form.pregunta_18) }}
+  {{ render_hour_field(form.pregunta_18) }}
   {{ render_radio_horizontal(form.pregunta_19) }}
   {{ render_radio_horizontal(form.pregunta_20) }}
   {{ render_radio_horizontal(form.pregunta_21) }}
   {{ render_radio_horizontal(form.pregunta_22) }}
   {{ render_radio_horizontal(form.pregunta_23) }}
   {{ render_radio_horizontal(form.pregunta_24) }}
-  {{ render_row(form.pregunta_25) }}
-  {{ render_row(form.pregunta_26) }}
+  {{ render_hour_field(form.pregunta_25) }}
+  {{ render_hour_field(form.pregunta_26) }}
   {{ render_radio_horizontal(form.pregunta_27) }}
 
   <div class="centered-text">

@@ -743,6 +743,8 @@ a.thumbnail:hover{border-color:#0088cc;-webkit-box-shadow:0 1px 4px rgba(0, 105,
 	.row-fluid > .span4 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
 	.row-fluid > .span5 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
 	.row-fluid > .span6 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
+	.row-fluid > .span7 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
+	.row-fluid > .span8 { width: 100%; padding-top: 3px; padding-bottom: 3px;}
 }
 div.my-boxed-outer {
 	border: thin gray solid;
@@ -758,3 +760,4 @@ div.my-boxed-inner {
 	overflow: auto;
 	padding-right: 10px;
 }
+.cronotipos_form select{width:60px;background-color:#ffffff;}
