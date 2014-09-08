@@ -1,4 +1,3 @@
-from flask.ext.assets import ManageAssets
 from flask.ext.script import Manager
 from flask.ext.security.script import CreateUserCommand
 from flask.ext.migrate import MigrateCommand
