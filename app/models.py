@@ -146,6 +146,20 @@ class Cronotipos(db.Model):
     result = db.Column(db.String)
     result_type = db.Column(db.String)
 
+    def get_crono_type_human(self, crono_result):
+        if crono_result >= 70 and crono_result <= 86:
+            return 'Definitivamente Matutino'
+        elif crono_result >= 59 and crono_result <= 69:
+            return 'Moderadamente Matutino'
+        elif crono_result >= 42 and crono_result <= 58:
+            return 'Intermedio'
+        elif crono_result >= 31 and crono_result <= 41:
+            return 'Moderadamente Nocturno'
+        elif crono_result >= 16 and crono_result <= 30:
+            return 'Definitivamente Nocturno'
+        else:
+            return 'Fuera De Escala'
+
     def get_crono_type(self, crono_result):
         if crono_result >= 70 and crono_result <= 86:
             return 'definitivamente_matutino'

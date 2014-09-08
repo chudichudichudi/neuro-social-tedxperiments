@@ -87,25 +87,8 @@ def profile():
                     twitter_conn=current_app.social.twitter.get_connection(),
                     facebook_conn=current_app.social.facebook.get_connection())
 
-
-# @app.route('/admin')
-# @requires_auth
-# def admin():
-#     users = User.query.all()
-#     return render_template('admin.html', users=users)
-
-
-# @app.route('/admin/users/<user_id>', methods=['DELETE'])
-# @requires_auth
-# def delete_user(user_id):
-#     user = User.query.get_or_404(user_id)
-#     db.session.delete(user)
-#     db.session.commit()
-#     flash('User deleted successfully', 'info')
-#     return redirect(url_for('admin'))
-
-
 ###Experiments Log
+
 
 @app.route('/experiments/', methods=['GET'])
 @cross_origin()
@@ -233,7 +216,7 @@ def cronotipos_results():
         crono_dict = dict(get_crono_chart())
         crono_dict = defaultdict(lambda: 0, crono_dict)
         return render_template('cronotipos_results.html',
-                               crono_result=crono.process_data(),
+                               crono_result=crono.get_crono_type_human(crono.result),
                                crono_chart=crono_dict)
     flash(u'Por favor completa todos los campos')
     return render_template('cronotipos.html', form=form)
