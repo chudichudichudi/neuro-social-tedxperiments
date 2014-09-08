@@ -216,7 +216,7 @@ def cronotipos_results():
         crono_dict = dict(get_crono_chart())
         crono_dict = defaultdict(lambda: 0, crono_dict)
         return render_template('cronotipos_results.html',
-                               crono_result=crono.get_crono_type_human(crono.result),
+                               crono_result=crono.get_crono_type_human(crono.process_data()),
                                crono_chart=crono_dict)
     flash(u'Por favor completa todos los campos')
     return render_template('cronotipos.html', form=form)
