@@ -5,70 +5,50 @@
 {% block layout %}
 <div class="page-header centered-text">
   <h1>Resultado del experimento!</h1>
-</div>
-<div class="row-fluid centered-text">
-  <div class="span3">&nbsp;</div>
-  <div class="span6">
-  {%- if crono_result >= 70 and crono_result <= 86 -%}
-  	<h3> Sos: Definitivamente matutino</h3>
-  {%- elif crono_result >= 59 and crono_result <= 69 -%}
-  	<h3> Sos: Moderadamente matutino</h3>
-  {%- elif crono_result >= 42 and crono_result <= 58 -%}
-  	<h3> Sos: Intermedio</h3>
-  {%- elif crono_result >= 31 and crono_result <= 41 -%}
-	<h3> Sos: Moderadamente Nocturno</h3>
-  {%- elif crono_result >= 16 and crono_result <= 30 -%}
-	<h3> Sos: Definitivamente nocturno</h3>
-  {%- else -%}
-  	<h3> Sos: fuera de escala</h3>
-  {%- endif -%}
-    <p>felicitaciones!</p>
-  </div>
-  <div class="span3">&nbsp;</div>
+  <div id="container"></div>
 </div>
 
 <script type="text/javascript">
-$(function () {
-  $('#container').highcharts({
-      chart: {
-          type: 'column'
-      },
-      title: {
-          text: 'Cronotipos de TEDx Rio de la plata'
-      },
-      xAxis: {
-          categories: [
-              'Definitivamente matutino',
-              'Moderadamente matutino',
-              'Intermedio',
-              'Moderadamente Nocturno',
-              'Definitivamente nocturno'
-          ]
-      },
-      yAxis: {
-          min: 0,
+$(function () { 
+  chart = new Highcharts.Chart({
+          chart: {
+            type: 'column',
+            renderTo: 'container'
+          },
           title: {
-              text: 'Cantidad de Personas'
-          }
-      },
-      plotOptions: {
-          column: {
-              pointPadding: 0.2,
-              borderWidth: 0
-          }
-      },
-      series: [{
-          name: 'El cronotipo de TEDx',
-          data: [{{ if crono_chart[u'Definitivamente matutino'] crono_chart[u'Definitivamente matutino'] }}, {{ crono_chart[u'Moderadamente matutino'] }}, {{ crono_chart[u'Intermedio'] }}, {{ crono_chart[u'Moderadamente Nocturno'] }}, {{ crono_chart[u'Definitivamente nocturno'] }}]
-      }]
-  });
+              text: 'Cronotipos de TEDx Rio de la plata'
+          },
+          xAxis: {
+              categories: [
+                  'Definitivamente matutino',
+                  'Moderadamente matutino',
+                  'Intermedio',
+                  'Moderadamente Nocturno',
+                  'Definitivamente nocturno'
+              ]
+          },
+          yAxis: {
+              min: 0,
+              title: {
+                  text: 'Cantidad de Personas'
+              }
+          },
+          plotOptions: {
+              column: {
+                  pointPadding: 0.2,
+                  borderWidth: 0
+              }
+          },
+          series: [{
+              name: 'El cronotipo de TEDx',
+              data: [{{ crono_chart.definitivamente_matutino }},
+                     {{ crono_chart.moderadamente_matutino }}, 
+                     {{ crono_chart.intermedio }},
+                     {{ crono_chart.moderadamente_nocturno }}, 
+                     {{ crono_chart.definitivamente_nocturno }}]
+          }]
+  })
 });
 </script>
 
 {% endblock %}
-
-Definitivamente matutino
-Moderadamente matutino
-Intermedio
-Moderadamente Nocturno
-Definitivamente nocturno

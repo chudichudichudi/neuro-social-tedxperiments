@@ -170,4 +170,11 @@
     
   </div>
 </form>
+<script type="text/javascript">
+$(function () {
+  $.each($('option[value="empty"]'), function (i, val) {
+    $(val).attr('disabled', 'disabled');
+  });
+});
+</script>
 {% endblock %}

@@ -148,17 +148,17 @@ class Cronotipos(db.Model):
 
     def get_crono_type(self, crono_result):
         if crono_result >= 70 and crono_result <= 86:
-            return 'Definitivamente matutino'
+            return 'definitivamente_matutino'
         elif crono_result >= 59 and crono_result <= 69:
-            return 'Moderadamente matutino'
+            return 'moderadamente_matutino'
         elif crono_result >= 42 and crono_result <= 58:
-            return 'Intermedio'
+            return 'intermedio'
         elif crono_result >= 31 and crono_result <= 41:
-            return 'Moderadamente Nocturno'
+            return 'moderadamente_nocturno'
         elif crono_result >= 16 and crono_result <= 30:
-            return 'Definitivamente nocturno'
+            return 'definitivamente_nocturno'
         else:
-            return 'fuera de escala'
+            return 'fuera_de_escala'
 
     @staticmethod
     def res_question_9(hs, mn):

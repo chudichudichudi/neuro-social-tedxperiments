@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from collections import defaultdict
 from flask import render_template, redirect, request, current_app, session, \
     flash, url_for, jsonify
 from flask.ext.security import LoginForm, current_user, login_required, \
@@ -232,10 +232,12 @@ def cronotipos_results():
         crono.result_type = crono.get_crono_type(crono.process_data())
         db.session.add(crono)
         db.session.commit()
-        print get_crono_chart()
+        crono_dict = dict(get_crono_chart())
+        crono_dict = defaultdict(lambda: 0, crono_dict)
+        print crono_dict[u'Definitivamente matutino']
         return render_template('cronotipos_results.html',
                                crono_result=crono.process_data(),
-                               crono_chart=dict(get_crono_chart()))
+                               crono_chart=crono_dict)
     print form.errors
     flash(u'Por favor completa todos los campos')
     return render_template('cronotipos.html', form=form)
