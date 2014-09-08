@@ -47,7 +47,6 @@ def register(provider_id=None):
         connection_values = None
 
     if form.validate_on_submit():
-        print "era valida"
         ds = current_app.security.datastore
         user = ds.create_user(email=form.email.data,
                               password=form.password.data)
@@ -72,7 +71,6 @@ def register(provider_id=None):
             return redirect(url_for(request.args.get('next') or 'index'))
 
         return render_template('thanks.html', user=user)
-    print form.errors
     login_failed = int(request.args.get('login_failed', 0))
 
     return render_template('register.html',
@@ -234,11 +232,9 @@ def cronotipos_results():
         db.session.commit()
         crono_dict = dict(get_crono_chart())
         crono_dict = defaultdict(lambda: 0, crono_dict)
-        print crono_dict[u'Definitivamente matutino']
         return render_template('cronotipos_results.html',
                                crono_result=crono.process_data(),
                                crono_chart=crono_dict)
-    print form.errors
     flash(u'Por favor completa todos los campos')
     return render_template('cronotipos.html', form=form)
 
