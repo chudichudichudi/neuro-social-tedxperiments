@@ -22,13 +22,16 @@ def index():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    print request.args
     if form.validate_on_submit():
         # login and validate the user...
         login_user(form.user, remember=form.remember.data)
         flash("Bienvenido!")
-        return redirect(request.args.get("next") or "/")
-
-    return render_template("login.html", form=form)
+        return redirect(form.next.data)
+    next_s = request.args.get("next")
+    if request.method == "POST":
+        flash(u"Contraseña o Usuario incorrecto. Intente nuevamente.")
+    return render_template("login.html", form=form, next=next_s)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -181,11 +184,13 @@ def cronotipos_results():
         crono = Cronotipos()
         crono.user_id = current_user.get_id()
         crono.pregunta_1 = form.pregunta_1.data['hours_field'] + u':' + form.pregunta_1.data['minutes_field']
-        crono.pregunta_2 = form.pregunta_2.data['hours_field'] + u':' + form.pregunta_2.data['minutes_field']
+        #crono.pregunta_2 = form.pregunta_2.data['hours_field'] + u':' + form.pregunta_2.data['minutes_field']
+        crono.pregunta_2 = form.pregunta_2.data
         crono.pregunta_3 = form.pregunta_3.data['hours_field'] + u':' + form.pregunta_3.data['minutes_field']
         crono.pregunta_4 = form.pregunta_4.data
         crono.pregunta_5 = form.pregunta_5.data['hours_field'] + u':' + form.pregunta_5.data['minutes_field']
-        crono.pregunta_6 = form.pregunta_6.data['hours_field'] + u':' + form.pregunta_6.data['minutes_field']
+        # crono.pregunta_6 = form.pregunta_6.data['hours_field'] + u':' + form.pregunta_6.data['minutes_field']
+        crono.pregunta_6 = form.pregunta_6.data
         crono.pregunta_7 = form.pregunta_7.data['hours_field'] + u':' + form.pregunta_7.data['minutes_field']
         crono.pregunta_8 = form.pregunta_8.data
         crono.pregunta_9 = form.pregunta_9.data['hours_field'] + u':' + form.pregunta_9.data['minutes_field']

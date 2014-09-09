@@ -10,6 +10,18 @@
 {% endmacro %}
 
 
+{% macro render_minutes_field(field) %}
+  <div class="row-fluid cronotipos_form" >
+    <div class="span3">&nbsp;</div>
+    <div class="span6">
+      {{ field.label }}
+      {{ field }}
+    </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+{% endmacro %}
+
+
 {% macro render_radio(radio_field) %}
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
@@ -102,14 +114,14 @@
     <div class="span6">
       <h2>PRIMERA PARTE</h2>
       <p>En esta sección le haremos preguntas sobre sus hábitos del sueño. Por favor, responda de acuerdo a lo que usted considere una semana estándar, basándose en sus condiciones de vida actuales. Responda a todas las preguntas, excepto cuando se le indique lo contrario.</p>
-      <h3>Días Hábiles</h3>
+      <h3 style="padding-top:10px">Días Hábiles</h3>
       <p>Por favor complete todas las siguientes secciones, independientemente de si usted trabaja regularmente o no.</p>
     </div>
     <div class="span3">&nbsp;</div>
   </div>
   
   {{ render_hour_field(form.pregunta_1) }}
-  {{ render_hour_field(form.pregunta_2) }}
+  {{ render_minutes_field(form.pregunta_2) }}
   {{ render_hour_field(form.pregunta_3) }}
   {{ render_radio(form.pregunta_4) }}
 
@@ -125,7 +137,7 @@
 
   
   {{ render_hour_field(form.pregunta_5) }}
-  {{ render_hour_field(form.pregunta_6) }}
+  {{ render_minutes_field(form.pregunta_6) }}
   {{ render_hour_field(form.pregunta_7) }}
   {{ render_radio(form.pregunta_8) }}
 

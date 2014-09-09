@@ -10,6 +10,19 @@
   </form>
 {% endmacro %}
 
+{% if form.errors %}
+  {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+      {% for error in field_errors %}
+          <div class="alert alert-error centered-text" style="margin-left: 10px; margin-right: 10px;">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ form[field_name].label }} Elija una opción
+          </div>
+      </div>            
+      {% endfor %}
+  {% endfor %}        
+{% endif %}
+
+
 {% block layout %}
 <div class="page-header centered-text">
   <h1>Entrar</h1>
@@ -18,12 +31,14 @@
   <div class="span2">&nbsp;</div>
   <div class="span8">
 
-  <form class="well" action="{{ url_for('security.login') }}" method="POST">
+  <form class="well" action="{{ url_for('login') }}" method="POST">
     <input type="hidden" name="next" value="{{ next or '' }}">
     {{ form.hidden_tag() }}
     {{ render_field(form.email) }}
     {{ render_field(form.password) }}
-    <label class="checkbox" style="text-align: initial;">Recordarme {{ form.remember()|safe }}</label>
+    <div class="centered">
+    <label class="checkbox" style="display: inherit;">Recordarme <input id="remember" name="remember" type="checkbox" value="y" style=" float: initial; display: initial; margin: 0 0;"></label>
+    </div>
     <button type="submit" class="btn btn-primary btn-large">Entrar</button>
   </form>  
   </div>

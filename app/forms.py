@@ -34,7 +34,6 @@ validators = {
         Length(min=4, max=4)
     ],
     'age': [
-        Optional(),
         NumberRange(min=0, max=100,
                     message=u'Por favor ingresa tu edad entre 0 y 100 años')
     ],
@@ -56,7 +55,7 @@ class RegisterForm(Form):
                        choices=[(u'Si', u'Si'), (u'No', u'No')])
     study = SelectField(u'¿Estudias?',
                         choices=[(u'Si', u'Si'), (u'No', u'No')])
-    age = IntegerField('Edad (Opcional)', validators['age'])
+    age = IntegerField('Edad', validators['age'])
 
 
 class HourForm(Form):
@@ -66,8 +65,8 @@ class HourForm(Form):
 
     class Meta:
         locales = ['es_ES', 'es']
-    hour_choices = [(unicode(x), unicode(x)) for x in range(0, 24)]
-    minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+    hour_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 24)]
+    minute_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
     minute_choices.insert(0, (u'empty', u'--'))
     hour_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
@@ -81,8 +80,8 @@ class HourFormPregunta9(Form):
 
     class Meta:
         locales = ['es_ES', 'es']
-    hour_choices = [(unicode(x), unicode(x)) for x in range(5, 13)]
-    minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+    hour_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(5, 13)]
+    minute_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
     minute_choices.insert(0, (u'empty', u'--'))
     hour_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
@@ -97,9 +96,9 @@ class HourFormPregunta10(Form):
     class Meta:
         locales = ['es_ES', 'es']
     hour_choices = [(u'empty', u'--'), (u'20', u'20'), (u'21', u'21'),
-                    (u'22', u'22'), (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
-                    (u'2', u'2'), (u'3', u'3')]
-    minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+                    (u'22', u'22'), (u'23', u'23'), (u'00', u'00'), (u'01', u'01'),
+                    (u'02', u'02'), (u'03', u'03')]
+    minute_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
     minute_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
@@ -113,9 +112,9 @@ class HourFormPregunta18(Form):
     class Meta:
         locales = ['es_ES', 'es']
     hour_choices = [(u'empty', u'--'), (u'20', u'20'), (u'21', u'21'),
-                    (u'22', u'22'), (u'23', u'23'), (u'0', u'0'), (u'1', u'1'),
-                    (u'2', u'2'), (u'3', u'3')]
-    minute_choices = [(unicode(x), unicode(x)) for x in range(0, 60)]
+                    (u'22', u'22'), (u'23', u'23'), (u'00', u'00'), (u'01', u'01'),
+                    (u'02', u'02'), (u'03', u'03')]
+    minute_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
     minute_choices.insert(0, (u'empty', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
@@ -127,14 +126,25 @@ class CronotiposForm(Form):
     pregunta_1 = FormField(HourForm,
                            label=u'1 - Me acuesto a las ... (Ejemplo 22:00)')
 
-    pregunta_2 = FormField(HourForm, label=u'2 - Necesito ... minutos para quedarme dormido')
+    #pregunta_2 = FormField(HourForm, label=u'2 - Necesito ... minutos para quedarme dormido')
+    minute_choices2 = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
+    minute_choices2.insert(0, (u'empty', u'--'))
+
+    pregunta_2 = SelectField(u'2 - Necesito ... minutos para quedarme dormido', choices=minute_choices2)
+    
 
     pregunta_3 = FormField(HourForm, label=u'3 - Me despierto a las ... (Ejemplo 22:00)')
 
     pregunta_4 = RadioField(u'4 - Indique qué tan buena es la calidad de su sueño en los días hábiles (Ejemplo: 1 Muy Mala, 10 Excelente)', choices=[('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'),('6', '6'),('7', '7'),('8', '8'),('9', '9'),('10', '10')])
 
     pregunta_5 = FormField(HourForm, label=u'5 - Me acuesto a las ... (Ejemplo 22:00)')
-    pregunta_6 = FormField(HourForm, label=u'6 - Necesito ... minutos para quedarme dormido (Ejemplo: 05 para 5 minutos)')
+
+
+    #pregunta_6 = FormField(HourForm, label=u'6 - Necesito ... minutos para quedarme dormido (Ejemplo: 05 para 5 minutos)')
+    minute_choices6 = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
+    minute_choices6.insert(0, (u'empty', u'--'))
+    pregunta_6 = SelectField(u'6 - Necesito ... minutos para quedarme dormido (Ejemplo: 05 para 5 minutos)', choices=minute_choices6)
+
     pregunta_7 = FormField(HourForm, label=u'7 - Me despierto a las ... (Ejemplo 08:00)')
 
     pregunta_8 = RadioField(u'8 - Indique qué tan buena es la calidad de su sueño en los días libres (Ejemplo: 1 Muy Mala, 10 Excelente)',
@@ -150,10 +160,10 @@ class CronotiposForm(Form):
                                      ('10', '10')])
 
     pregunta_9 = FormField(HourFormPregunta9,
-                           label=u'9 - Si pudiera planear libremente su día ¿A qué hora se levantaría?', )
+                           label=u'9 - Si pudiera planear libremente su día ¿A qué hora se levantaría? (Ejemplo 08:00)', )
 
     pregunta_10 = FormField(HourFormPregunta10,
-                            label=u'10 - Si pudiera planear libremente su día ¿A qué hora se acostaría?')
+                            label=u'10 - Si pudiera planear libremente su día ¿A qué hora se acostaría? (Ejemplo 22:00)')
 
 
     pregunta_11 = RadioField(u'11 - Si tiene que levantarse a una hora específica en la mañana ¿Cuánto depende de un reloj despertador?', choices=[('A', u'Nada'),('B', u'Poco'),('C', u'Bastante'),('D', u'Mucho')])
@@ -226,10 +236,11 @@ class CronotiposForm(Form):
                  (u'B', u'Razonable'),
                  (u'C', u'Pobre'),
                  (u'D', u'Malo')])
-    pregunta_25 = FormField(HourForm, u'25 - Si Ud. pudiera elegir los horarios de su trabajo, el cual es realmente entretenido y en el cual se le paga de acuerdo a su rendimiento, suponiendo que trabaja 5 horas corridas, ¿qué horario elegiría? ')
+    pregunta_25 = FormField(HourForm, u'25 - Si Ud. pudiera elegir los horarios de su trabajo, el cual es realmente entretenido y en el cual se le paga de acuerdo a su rendimiento, suponiendo que trabaja 5 horas corridas, ¿Qué horario elegiría?. POR FAVOR, seleccione LA PRIMERA de las cinco horas corridas.')
     pregunta_26 = FormField(HourForm, u'26 - ¿A qué hora del día se siente mejor habitualmente (más fresco, más activo, más despierto, más capaz, etc.)?')
     pregunta_27 = RadioField(u'27 - Si tuviera que definirse como un tipo de persona “matutina (mañanera)” o “vespertina (nocturna)”, ¿Cómo se definiría?',
                              choices=[(u'A', u'Definitivamente mañanera'),
                                       (u'B', u'Más mañanera que vespertina'),
                                       (u'C', u'Más vespertina que mañanera'),
                                       (u'D', u'Definitivamente vespertina')])
+
