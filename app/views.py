@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from collections import defaultdict
 from flask import render_template, redirect, request, current_app, session, \
     flash, url_for, jsonify
@@ -64,6 +65,8 @@ def register(provider_id=None):
         # and if so use the provider connect_handler to save a connection
         connection_values = session.pop('failed_login_connection', None)
 
+        print form.next.data
+
         if connection_values:
             connection_values['user_id'] = user.id
             connect_handler(connection_values, provider)
@@ -71,7 +74,7 @@ def register(provider_id=None):
         if login_user(user):
             ds.commit()
             flash('Cuenta creada correctamente!', 'info')
-            return redirect(url_for(request.args.get('next') or 'index'))
+            return redirect(form.next.data or '/')
 
         return render_template('thanks.html', user=user)
     login_failed = int(request.args.get('login_failed', 0))
@@ -80,7 +83,8 @@ def register(provider_id=None):
                            form=form,
                            provider=provider,
                            login_failed=login_failed,
-                           connection_values=connection_values)
+                           connection_values=connection_values,
+                           next=request.args.get('next'))
 
 
 @app.route('/profile')
@@ -216,6 +220,7 @@ def cronotipos_results():
         crono.pregunta_27 = form.pregunta_27.data
         crono.result = crono.process_data()
         crono.result_type = crono.get_crono_type(crono.process_data())
+        crono.date = datetime.now()
         db.session.add(crono)
         db.session.commit()
         crono_dict = dict(get_crono_chart())

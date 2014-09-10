@@ -3,7 +3,7 @@
 from flask import current_app
 from flask.ext.wtf import Form
 from wtforms import TextField, PasswordField, ValidationError, \
-    RadioField, FormField, SelectField, IntegerField
+    RadioField, FormField, SelectField, IntegerField, HiddenField
 from wtforms.validators import Required, Email, Length, Regexp, EqualTo, \
     Optional, NumberRange
 
@@ -56,6 +56,7 @@ class RegisterForm(Form):
     study = SelectField(u'¿Estudias?',
                         choices=[(u'Si', u'Si'), (u'No', u'No')])
     age = IntegerField('Edad', validators['age'])
+    next = HiddenField()
 
 
 class HourForm(Form):

@@ -109,7 +109,8 @@ class CronotiposAdminView(ModelView):
                    'pregunta_26',
                    'pregunta_27',
                    'result',
-                   'result_type')
+                   'result_type',
+                   'date')
 
 
 class Cronotipos(db.Model):
@@ -145,6 +146,7 @@ class Cronotipos(db.Model):
     pregunta_27 = db.Column(db.String)
     result = db.Column(db.String)
     result_type = db.Column(db.String)
+    date = db.Column(db.DateTime)
 
     def get_crono_type_human(self, crono_result):
         if crono_result >= 70 and crono_result <= 86:

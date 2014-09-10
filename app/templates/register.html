@@ -34,6 +34,7 @@
   <div class="span2">&nbsp;</div>
   <div class="span8 centered-text">
     <form class="well" action="{{ url_for('register', provider_id=provider.id if provider else None) }}" method="POST">
+      <input type="hidden" name="next" value="{{ next or '' }}">
       {{ form.hidden_tag() }}
       {{ render_field(form.email) }}
       {{ render_field(form.password) }}
