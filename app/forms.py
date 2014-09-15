@@ -51,11 +51,13 @@ class RegisterForm(Form):
     confirm = PasswordField(u'Confirmar contraseña')
     name = TextField('Nombre', validators['edad'])
     twitter_handle = TextField('Twitter (Opcional)')
-    work = SelectField(u'¿Trabajas?',
-                       choices=[(u'Si', u'Si'), (u'No', u'No')])
-    study = SelectField(u'¿Estudias?',
-                        choices=[(u'Si', u'Si'), (u'No', u'No')])
+    # work = SelectField(u'¿Trabajas?',
+    #                    choices=[(u'Si', u'Si'), (u'No', u'No')])
+    # study = SelectField(u'¿Estudias?',
+    #                     choices=[(u'Si', u'Si'), (u'No', u'No')])
     age = IntegerField('Edad', validators['age'])
+    sex = SelectField(u'¿Genero?',
+                       choices=[(u'female', u'Femenino'), (u'male', u'Masculino'), (u'other', u'Otro')])
     next = HiddenField()
 
 

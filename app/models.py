@@ -36,6 +36,7 @@ class User(db.Model, UserMixin):
     work = db.Column(db.String(255))
     study = db.Column(db.String(255))
     age = db.Column(db.String(255))
+    sex = db.Column(db.String(255))
     last_login_at = db.Column(db.DateTime())
     current_login_at = db.Column(db.DateTime())
     last_login_ip = db.Column(db.String(100))

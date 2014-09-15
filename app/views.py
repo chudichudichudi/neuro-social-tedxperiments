@@ -57,8 +57,9 @@ def register(provider_id=None):
         user.age = form.age.data
         user.twitter_handle = form.twitter_handle.data
         user.name = form.name.data
-        user.study = form.study.data
-        user.work = form.work.data
+        user.study = u'no'
+        user.work = u'no'
+        user.sex = form.sex.data
         ds.commit()
 
         # See if there was an attempted social login prior to registering
@@ -246,4 +247,12 @@ def consentimiento_cronotipos():
 @app.route('/circles', methods=('GET', 'POST'))
 @login_required
 def circles():
-    return redirect('http://circles-experiment.meteor.com?tedx_user_id=' + str(current_user.get_id()), 303)
+    #variables = {'name': 'name', 'age': 'age', 'sex': 'sex', 'studying': 'study', 'working': 'work'}
+    name = current_user.name
+    age = str(current_user.age)
+    sex = current_user.sex
+    work = current_user.work
+    study = current_user.study
+    tedx_id = str(current_user.get_id())
+    params = 'name=' + name + '&age=' + age + '&sex=' + sex + '&work=' + work + '&study=' + study + '&tedx_user_id=' + tedx_id
+    return redirect('http://circles-experiment.meteor.com?' + params, 303)
