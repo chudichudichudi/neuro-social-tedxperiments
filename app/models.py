@@ -79,6 +79,18 @@ class ExperimentSerializer(Serializer):
         fields = ('id', 'test_subject', 'experiment_log', "experiment_name")
 
 
+class UsersAdminView(ModelView):
+    column_list = ('id',
+                   'email',
+                   'active',
+                   'name',
+                   'twitter_handle',
+                   'work',
+                   'study',
+                   'age',
+                   'sex')
+
+
 class CronotiposAdminView(ModelView):
     column_list = ('id',
                    'user_id',
