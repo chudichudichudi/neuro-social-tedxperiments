@@ -19,8 +19,6 @@ import uuid
 
 
 app = Flask(__name__)
-
-
 app.config.from_yaml(app.root_path)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 

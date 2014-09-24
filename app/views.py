@@ -99,14 +99,14 @@ def profile():
 
 
 @app.route('/experiments/', methods=['GET'])
-@cross_origin()
+@cross_origin(headers=['Content-Type'])
 def get_all_experiments():
     experiments = Experiment.query.all()
     return jsonify({"experiments": ExperimentSerializer(experiments, many=True).data}), 200
 
 
 @app.route('/experiments/create/', methods=['POST'])
-@cross_origin()
+@cross_origin(headers=['Content-Type'])
 def create_log():
     if not request.json or not 'test_subject' in request.json \
             or not 'experiment_name' in request.json:
@@ -128,14 +128,14 @@ def create_log():
 
 
 @app.route('/experiments/log/<int:id>', methods=['GET'])
-@cross_origin()
+@cross_origin(headers=['Content-Type'])
 def get_log(id):
     experiment = Experiment.query.get(id)
     return jsonify({"experiments": ExperimentSerializer(experiment).data}), 200
 
 
 @app.route('/experiments/append/', methods=['POST'])
-@cross_origin()
+@cross_origin(headers=['Content-Type'])
 def append_log():
     if not request.json or not 'id' in request.json \
             or not 'experiment_log' in request.json:
@@ -149,7 +149,7 @@ def append_log():
 
 
 @app.route('/experiments/<experiment>', methods=['GET'])
-@cross_origin()
+@cross_origin(headers=['Content-Type'])
 def get_experiment(experiment):
     experiments = db.session.query(Experiment)\
         .filter(Experiment.experiment_name
