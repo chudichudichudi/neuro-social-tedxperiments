@@ -2,13 +2,15 @@
 from datetime import datetime
 from collections import defaultdict
 from flask import render_template, redirect, request, current_app, session, \
-    flash, url_for, jsonify
+    flash, jsonify, send_file
 from flask.ext.security import LoginForm, current_user, login_required, \
     login_user
 from flask.ext.social.utils import get_provider_or_404
 from flask.ext.social.views import connect_handler
 from flask.ext.cors import cross_origin
 import json
+import csv
+import StringIO
 
 from . import app, db
 from .forms import RegisterForm, CronotiposForm
@@ -95,8 +97,6 @@ def profile():
                     twitter_conn=current_app.social.twitter.get_connection(),
                     facebook_conn=current_app.social.facebook.get_connection())
 
-###Experiments Log
-
 
 @app.route('/experiments/', methods=['GET'])
 @cross_origin(headers=['Content-Type'])
@@ -181,7 +181,24 @@ def cronotipos():
     return render_template('cronotipos.html', form=CronotiposForm())
 
 
-@app.route('/cronotipos/results', methods=('GET','POST'))
+@app.route('/cronotipos/csv')
+def cronotipos_csv():
+    buffer = StringIO.StringIO()
+    outcsv = csv.writer(buffer)
+    records = Cronotipos.query.all()
+    for row in records:
+        lst = []
+        for column in row.__table__.columns:
+            lst.append(getattr(row, column.name))
+        outcsv.writerow(lst)
+    buffer.seek(0)
+    return send_file(buffer,
+                     as_attachment=True,
+                     attachment_filename='cronotipos.csv',
+                     mimetype='text/csv')
+
+
+@app.route('/cronotipos/results', methods=('GET', 'POST'))
 @login_required
 def cronotipos_results():
     form = CronotiposForm(csrf_enabled=False)
