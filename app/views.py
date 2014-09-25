@@ -186,9 +186,16 @@ def cronotipos_csv():
     buffer = StringIO.StringIO()
     outcsv = csv.writer(buffer)
     records = Cronotipos.query.all()
+    columns_names = Cronotipos.__mapper__.columns
+
+    lst_columns = []
+    for column in columns_names:
+        lst_columns.append(column.name)
+    outcsv.writerow(lst_columns)
+
     for row in records:
         lst = []
-        for column in row.__table__.columns:
+        for column in columns_names:
             lst.append(getattr(row, column.name))
         outcsv.writerow(lst)
     buffer.seek(0)
