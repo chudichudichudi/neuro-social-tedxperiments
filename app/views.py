@@ -209,7 +209,7 @@ def cronotipos():
 @login_required
 @roles_required('users')
 def users_csv():
-    buffer = io.BytesIO()
+    buffer = StringIO.StringIO()
     outcsv = UnicodeWriter(buffer, quoting=csv.QUOTE_ALL)
     # outcsv = csv.writer(buffer)
     records = User.query.all()
