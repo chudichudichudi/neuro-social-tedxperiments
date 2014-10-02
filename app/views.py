@@ -11,6 +11,7 @@ from flask.ext.cors import cross_origin
 import json
 import csv
 import StringIO
+import io
 
 from . import app, db
 from .forms import RegisterForm, CronotiposForm
@@ -208,7 +209,7 @@ def cronotipos():
 @login_required
 @roles_required('users')
 def users_csv():
-    buffer = StringIO.StringIO()
+    buffer = io.BytesIO()
     outcsv = csv.writer(buffer)
     records = User.query.all()
     columns_names = [u'id', u'email', u'name', u'age', u'sex', u'twitter_handle']
