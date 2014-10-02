@@ -16,7 +16,7 @@ import io
 from . import app, db
 from .forms import RegisterForm, CronotiposForm
 from .models import User, Experiment, ExperimentSerializer, Cronotipos
-
+from .tools import UnicodeWriter
 
 @app.route('/')
 def index():
@@ -210,7 +210,8 @@ def cronotipos():
 @roles_required('users')
 def users_csv():
     buffer = io.BytesIO()
-    outcsv = csv.writer(buffer)
+    outcsv = UnicodeWriter(buffer, quoting=csv.QUOTE_ALL)
+    # outcsv = csv.writer(buffer)
     records = User.query.all()
     columns_names = [u'id', u'email', u'name', u'age', u'sex', u'twitter_handle']
 
@@ -222,7 +223,7 @@ def users_csv():
     for row in records:
         lst = []
         for column in columns_names:
-            lst.append(getattr(row, column))
+            lst.append(unicode(getattr(row, column)))
         outcsv.writerow(lst)
     buffer.seek(0)
     return send_file(buffer,
