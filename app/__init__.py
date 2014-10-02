@@ -7,8 +7,9 @@ from flask.ext.security import Security, SQLAlchemyUserDatastore, \
     login_user, core
 from flask.ext.social import Social, SQLAlchemyConnectionDatastore, \
     login_failed
-from flask.ext.admin import Admin
-from flask.ext.admin.contrib.sqla import ModelView
+from flask.ext.admin import Admin, AdminIndexView, expose
+from flask.ext import login
+
 
 from flask.ext.social.utils import get_connection_values_from_oauth_response
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -16,6 +17,14 @@ from werkzeug.contrib.fixers import ProxyFix
 
 from .helpers import Flask
 import uuid
+
+
+class CustomAdminIndexView(AdminIndexView):
+    @expose('/')
+    def index(self):
+        if not login.current_user.is_authenticated():
+            return redirect(url_for('/'))
+        return super(CustomAdminIndexView, self).index()
 
 
 app = Flask(__name__)
@@ -29,11 +38,10 @@ migrate = Migrate(app, db)
 
 # Late import so modules can import their dependencies properly
 from . import assets, models, views
-
 admin = Admin(app, url='/its_a_secret')
 admin.add_view(models.CronotiposAdminView(models.Cronotipos, db.session))
 admin.add_view(models.UsersAdminView(models.User, db.session))
-admin.add_view(ModelView(models.Role, db.session))
+admin.add_view(models.CustomModelView(models.Role, db.session))
 
 
 from flask.ext.social.views import connect_handler

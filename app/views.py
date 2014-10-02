@@ -210,18 +210,18 @@ def cronotipos():
 def users_csv():
     buffer = StringIO.StringIO()
     outcsv = csv.writer(buffer)
-    records = Cronotipos.query.all()
-    columns_names = [u'id', u'email', u'name', u'age', u'sex', u'twitter']
+    records = User.query.all()
+    columns_names = [u'id', u'email', u'name', u'age', u'sex', u'twitter_handle']
 
     lst_columns = []
     for column in columns_names:
-        lst_columns.append(column.name)
+        lst_columns.append(column)
     outcsv.writerow(lst_columns)
 
     for row in records:
         lst = []
         for column in columns_names:
-            lst.append(getattr(row, column.name))
+            lst.append(getattr(row, column))
         outcsv.writerow(lst)
     buffer.seek(0)
     return send_file(buffer,

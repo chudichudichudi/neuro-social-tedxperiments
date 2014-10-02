@@ -2,7 +2,7 @@ from flask.ext.security import UserMixin, RoleMixin
 from marshmallow import Serializer
 from datetime import timedelta
 from flask.ext.admin.contrib.sqla import ModelView
-
+from flask.ext.login import current_user
 
 from . import db
 
@@ -85,7 +85,13 @@ class ExperimentSerializer(Serializer):
         fields = ('id', 'test_subject', 'experiment_log', "experiment_name")
 
 
-class UsersAdminView(ModelView):
+class CustomModelView(ModelView):
+
+    def is_accessible(self):
+        return current_user.is_authenticated()
+
+
+class UsersAdminView(CustomModelView):
     column_list = ('id',
                    'email',
                    'active',
@@ -98,7 +104,7 @@ class UsersAdminView(ModelView):
                    'roles')
 
 
-class CronotiposAdminView(ModelView):
+class CronotiposAdminView(CustomModelView):
     column_list = ('id',
                    'user_id',
                    'pregunta_1',
