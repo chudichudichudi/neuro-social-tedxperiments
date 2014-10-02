@@ -22,6 +22,9 @@ class Role(db.Model, RoleMixin):
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
 
+    def __str__(self):
+        return self.name
+
 
 class User(db.Model, UserMixin):
 
@@ -47,6 +50,9 @@ class User(db.Model, UserMixin):
     connections = db.relationship('Connection',
                                   backref=db.backref('user', lazy='joined'),
                                   cascade="all")
+
+    def __str__(self):
+        return self.email
 
 
 class Connection(db.Model):
@@ -88,7 +94,8 @@ class UsersAdminView(ModelView):
                    'work',
                    'study',
                    'age',
-                   'sex')
+                   'sex',
+                   'roles')
 
 
 class CronotiposAdminView(ModelView):

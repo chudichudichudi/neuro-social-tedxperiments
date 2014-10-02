@@ -4,7 +4,7 @@ from collections import defaultdict
 from flask import render_template, redirect, request, current_app, session, \
     flash, jsonify, send_file
 from flask.ext.security import LoginForm, current_user, login_required, \
-    login_user
+    login_user, roles_required
 from flask.ext.social.utils import get_provider_or_404
 from flask.ext.social.views import connect_handler
 from flask.ext.cors import cross_origin
@@ -181,7 +181,58 @@ def cronotipos():
     return render_template('cronotipos.html', form=CronotiposForm())
 
 
+# id = db.Column(db.Integer, primary_key=True)
+# email = db.Column(db.String(255), unique=True)
+# password = db.Column(db.String(120))
+# active = db.Column(db.Boolean())
+# name = db.Column(db.String(255))
+# twitter_handle = db.Column(db.String(255))
+# work = db.Column(db.String(255))
+# study = db.Column(db.String(255))
+# age = db.Column(db.String(255))
+# sex = db.Column(db.String(255))
+# last_login_at = db.Column(db.DateTime())
+# current_login_at = db.Column(db.DateTime())
+# last_login_ip = db.Column(db.String(100))
+# current_login_ip = db.Column(db.String(100))
+# login_count = db.Column(db.Integer)
+# roles = db.relationship('Role', secondary=roles_users,
+#                         backref=db.backref('users', lazy='dynamic'))
+# connections = db.relationship('Connection',
+#                               backref=db.backref('user', lazy='joined'),
+#                               cascade="all")
+
+
+
+@app.route('/users/csv')
+@login_required
+@roles_required('users')
+def users_csv():
+    buffer = StringIO.StringIO()
+    outcsv = csv.writer(buffer)
+    records = Cronotipos.query.all()
+    columns_names = [u'id', u'email', u'name', u'age', u'sex', u'twitter']
+
+    lst_columns = []
+    for column in columns_names:
+        lst_columns.append(column.name)
+    outcsv.writerow(lst_columns)
+
+    for row in records:
+        lst = []
+        for column in columns_names:
+            lst.append(getattr(row, column.name))
+        outcsv.writerow(lst)
+    buffer.seek(0)
+    return send_file(buffer,
+                     as_attachment=True,
+                     attachment_filename='users.csv',
+                     mimetype='text/csv')
+
+
 @app.route('/cronotipos/csv')
+@login_required
+@roles_required('cronotipos')
 def cronotipos_csv():
     buffer = StringIO.StringIO()
     outcsv = csv.writer(buffer)

@@ -30,9 +30,10 @@ migrate = Migrate(app, db)
 # Late import so modules can import their dependencies properly
 from . import assets, models, views
 
-admin = Admin(app, url='/its_a_secret/')
+admin = Admin(app, url='/its_a_secret')
 admin.add_view(models.CronotiposAdminView(models.Cronotipos, db.session))
 admin.add_view(models.UsersAdminView(models.User, db.session))
+admin.add_view(ModelView(models.Role, db.session))
 
 
 from flask.ext.social.views import connect_handler
