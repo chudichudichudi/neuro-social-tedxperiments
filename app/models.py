@@ -296,7 +296,7 @@ class Cronotipos(db.Model):
             return 1
 
         if t0 >= timedelta(hours=22, minutes=0) and \
-           t0 <= timedelta(hours=1, minutes=59):
+           t0 <= timedelta(days=1, hours=1, minutes=59):
             return 5
 
         if t0 >= timedelta(days=1, hours=2, minutes=0) and \
