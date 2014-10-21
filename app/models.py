@@ -286,7 +286,7 @@ class Cronotipos(db.Model):
 
     @staticmethod
     def res_question_25(hs, mn):
-        if hs < 10:
+        if hs <= 10:
             t0 = timedelta(hours=hs + 24, minutes=mn)
         else:
             t0 = timedelta(hours=hs, minutes=mn)
@@ -308,7 +308,7 @@ class Cronotipos(db.Model):
             return 3
 
         if t0 >= timedelta(days=1, hours=8, minutes=0) and \
-           t0 <= timedelta(days=1, hours=11, minutes=0):
+           t0 <= timedelta(days=1, hours=10, minutes=59):
             return 2
         return 0
 
@@ -405,11 +405,17 @@ class Cronotipos(db.Model):
         result += Cronotipos.res_question_10(int(hs_10), int(min_10))
 
         result += Cronotipos.res_question_abcd_4321(self.pregunta_11)
+
         result += Cronotipos.res_question_abcd_1234(self.pregunta_12)
+
         result += Cronotipos.res_question_abcd_1234(self.pregunta_13)
+
         result += Cronotipos.res_question_abcd_1234(self.pregunta_14)
+
         result += Cronotipos.res_question_abcd_1234(self.pregunta_15)
+
         result += Cronotipos.res_question_abcd_4321(self.pregunta_16)
+
         result += Cronotipos.res_question_abcd_4321(self.pregunta_17)
 
         hs_18, min_18 = self.pregunta_18.split(u':')
