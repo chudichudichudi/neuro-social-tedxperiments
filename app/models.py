@@ -94,14 +94,15 @@ class CustomModelView(ModelView):
 class UsersAdminView(CustomModelView):
     column_list = ('id',
                    'email',
-                   'active',
                    'name',
                    'twitter_handle',
                    'work',
                    'study',
                    'age',
                    'sex',
-                   'roles')
+                   'roles',
+                   'last_login_at')
+    column_sortable_list = (('id', User.id), ('last_login_at', User.last_login_at))
 
 
 class CronotiposAdminView(CustomModelView):
@@ -216,7 +217,7 @@ class Cronotipos(db.Model):
 
         if t0 >= timedelta(hours=7, minutes=45) and \
            t0 <= timedelta(hours=9, minutes=44):
-            return 4
+            return 3
 
         if t0 >= timedelta(hours=9, minutes=45) and \
            t0 <= timedelta(hours=10, minutes=59):
@@ -244,7 +245,7 @@ class Cronotipos(db.Model):
 
         if t0 >= timedelta(hours=22, minutes=15) and \
            t0 <= timedelta(days=1, hours=0, minutes=29):
-            return 4
+            return 3
 
         if t0 >= timedelta(days=1, hours=0, minutes=30) and \
            t0 <= timedelta(days=1, hours=1, minutes=44):
@@ -272,7 +273,7 @@ class Cronotipos(db.Model):
 
         if t0 >= timedelta(hours=22, minutes=15) and \
            t0 <= timedelta(days=1, hours=0, minutes=44):
-            return 4
+            return 3
 
         if t0 >= timedelta(days=1, hours=0, minutes=45) and \
            t0 <= timedelta(days=1, hours=1, minutes=59):
@@ -399,9 +400,6 @@ class Cronotipos(db.Model):
         result = 0
         hs_9, min_9 = self.pregunta_9.split(u':')
         result += Cronotipos.res_question_9(int(hs_9), int(min_9))
-
-        hs_10, min_10 = self.pregunta_10.split(u':')
-        result += Cronotipos.res_question_10(int(hs_10), int(min_10))
 
         hs_10, min_10 = self.pregunta_10.split(u':')
         result += Cronotipos.res_question_10(int(hs_10), int(min_10))
