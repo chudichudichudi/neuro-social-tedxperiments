@@ -8,6 +8,9 @@ COMMON: &common
   SECURITY_CONFIRM_ERROR_VIEW: '/'
   SECURITY_POST_LOGIN_VIEW: '/'
   SOCIAL_CONNECT_ALLOW_VIEW: '/profile'
+  CELERY_BROKER_URL: 'redis://localhost:6379/0'
+  CELERY_RESULT_BACKEND: 'redis://localhost:6379/0'
+
 
   SOCIAL_TWITTER:
     consumer_key: 'PkGO6dLiwip0Y0zvDEbrSP1cK'
