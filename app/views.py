@@ -1,11 +1,22 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, redirect, request, jsonify, send_file
+from datetime import datetime
+from collections import defaultdict
+from flask import render_template, redirect, request, current_app, session, \
+    flash, jsonify, send_file
+from flask.ext.security import LoginForm, current_user, login_required, \
+    login_user, roles_required
+from flask.ext.social.utils import get_provider_or_404
+from flask.ext.social.views import connect_handler
 from flask.ext.cors import cross_origin
 import json
-from . import app, db, q
-from .models import Experiment, ExperimentSerializer, FileExperiment
-from rq import Queue
+import csv
+import StringIO
+import io
 
+from . import app, db
+from .forms import RegisterForm, CronotiposForm
+from .models import User, Experiment, ExperimentSerializer, Cronotipos
+from .tools import UnicodeWriter
 
 @app.route('/experiments/', methods=['GET'])
 @cross_origin(headers=['Content-Type'])
@@ -63,40 +74,6 @@ def get_experiment(experiment):
     experiments = db.session.query(Experiment)\
         .filter(Experiment.experiment_name
                 == experiment)
-    def generate():
-        for row in experiments:
-            yield jsonify(ExperimentSerializer(row).data)
+    return jsonify({"experiments":
+                    ExperimentSerializer(experiments, many=True).data}), 200
 
-
-@app.route('/experiments/file/<experiment>', methods=['GET'])
-@cross_origin(headers=['Content-Type'])
-def get_experiment(experiment):
-    experiments = db.session.query(Experiment)\
-        .filter(Experiment.experiment_name
-                == experiment)
-
-    def generate():
-        for row in experiments:
-            yield jsonify(ExperimentSerializer(row).data)
-
-
-# @app.route('/experiments/file/<experiment>', methods=['GET'])
-# @cross_origin(headers=['Content-Type'])
-# def get_experiment_file(experiment):
-#     res = q.enqueue(generate_file, experiment)
-#     return render_template("celery_tasks.html", experiment=experiment)
-
-# def generate_file(experiment):
-#     experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
-
-#     file_experiment = FileExperiment()
-#     file_experiment.experiment_name = experiment
-#     db.session.add(experiment)
-#     db.session.commit()
-
-
-# @app.route('/experiments/file/get/<file_id>', methods=['GET'])
-# @cross_origin(headers=['Content-Type'])
-# def download_file(experiment):
-#     res = q.enqueue(generate_file, experiment)
-#     return render_template("celery_tasks.html", experiment=experiment)

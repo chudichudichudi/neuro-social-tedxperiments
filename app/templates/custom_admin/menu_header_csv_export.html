@@ -1,5 +1,0 @@
-{% extends 'admin/list.html' %}
-{% block model_menu_bar %}
-    {{ super() }}
-    <a id="exportButton" href="{{ request.path ~ 'export?' ~ request.query_string }}">Export CSV</a>
-{% endblock %}
