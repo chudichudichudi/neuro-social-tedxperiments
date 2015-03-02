@@ -63,19 +63,40 @@ def get_experiment(experiment):
     experiments = db.session.query(Experiment)\
         .filter(Experiment.experiment_name
                 == experiment)
-    return jsonify({"experiments":
-                    ExperimentSerializer(experiments, many=True).data}), 200
+    def generate():
+        for row in experiments:
+            yield jsonify(ExperimentSerializer(row).data)
 
 
 @app.route('/experiments/file/<experiment>', methods=['GET'])
 @cross_origin(headers=['Content-Type'])
-def get_experiment_file(experiment):
-    res = q.enqueue(generate_file, experiment)
-    return render_template("celery_tasks.html", experiment=experiment)
+def get_experiment(experiment):
+    experiments = db.session.query(Experiment)\
+        .filter(Experiment.experiment_name
+                == experiment)
 
-def generate_file(experiment):
-    experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
-    file_experiment = FileExperiment()
-    file_experiment.experiment_name = experiment
-    db.session.add(experiment)
-    db.session.commit()
+    def generate():
+        for row in experiments:
+            yield jsonify(ExperimentSerializer(row).data)
+
+
+# @app.route('/experiments/file/<experiment>', methods=['GET'])
+# @cross_origin(headers=['Content-Type'])
+# def get_experiment_file(experiment):
+#     res = q.enqueue(generate_file, experiment)
+#     return render_template("celery_tasks.html", experiment=experiment)
+
+# def generate_file(experiment):
+#     experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
+
+#     file_experiment = FileExperiment()
+#     file_experiment.experiment_name = experiment
+#     db.session.add(experiment)
+#     db.session.commit()
+
+
+# @app.route('/experiments/file/get/<file_id>', methods=['GET'])
+# @cross_origin(headers=['Content-Type'])
+# def download_file(experiment):
+#     res = q.enqueue(generate_file, experiment)
+#     return render_template("celery_tasks.html", experiment=experiment)
