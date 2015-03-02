@@ -2,7 +2,7 @@
 from datetime import datetime
 from collections import defaultdict
 from flask import render_template, redirect, request, current_app, session, \
-    flash, jsonify, send_file
+    flash, jsonify, send_file, Response
 from flask.ext.security import LoginForm, current_user, login_required, \
     login_user, roles_required
 from flask.ext.social.utils import get_provider_or_404
@@ -77,3 +77,14 @@ def get_experiment(experiment):
     return jsonify({"experiments":
                     ExperimentSerializer(experiments, many=True).data}), 200
 
+
+@app.route('/experiments/file/<experiment>', methods=['GET'])
+@cross_origin(headers=['Content-Type'])
+def get_experiment_file(experiment):
+    experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
+
+    def generate():
+        for exp in experiments:
+            yield json.dumps(ExperimentSerializer(exp).data)
+
+    return Response(generate(), mimetype='text/csv')

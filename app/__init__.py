@@ -9,6 +9,7 @@ from flask.ext.social import Social, SQLAlchemyConnectionDatastore, \
     login_failed
 from flask.ext.admin import Admin, AdminIndexView, expose
 from flask.ext import login
+from flask.ext.admin.contrib.sqla import ModelView
 
 
 from flask.ext.social.utils import get_connection_values_from_oauth_response
@@ -42,6 +43,7 @@ admin = Admin(app, url='/its_a_secret')
 admin.add_view(models.CronotiposAdminView(models.Cronotipos, db.session))
 admin.add_view(models.UsersAdminView(models.User, db.session))
 admin.add_view(models.CustomModelView(models.Role, db.session))
+admin.add_view(ModelView(models.Experiment, db.session))
 
 
 from flask.ext.social.views import connect_handler
