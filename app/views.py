@@ -2,13 +2,13 @@
 from datetime import datetime
 from collections import defaultdict
 from flask import render_template, redirect, request, current_app, session, \
-    flash, jsonify, send_file, Response
+    flash, jsonify, send_file, Response, stream_with_context, json
 from flask.ext.security import LoginForm, current_user, login_required, \
     login_user, roles_required
 from flask.ext.social.utils import get_provider_or_404
 from flask.ext.social.views import connect_handler
 from flask.ext.cors import cross_origin
-import json
+
 import csv
 import StringIO
 import io
@@ -84,7 +84,9 @@ def get_experiment_file(experiment):
     experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
 
     def generate():
+        yield '{  "experiments": ['
         for exp in experiments:
-            yield json.dumps(ExperimentSerializer(exp).data)
+            yield ',' + json.dumps(ExperimentSerializer(exp).data)
+        yield ']}'
 
-    return Response(generate(), mimetype='text/csv')
+    return Response(stream_with_context(generate()), mimetype='text/csv')
