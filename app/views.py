@@ -79,13 +79,25 @@ def get_experiment(experiment):
 @app.route('/experiments/file/<experiment>', methods=['GET'])
 @cross_origin(headers=['Content-Type'])
 def get_experiment_file(experiment):
-    experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment).yield_per(5)
+    experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
 
     def generate():
         yield '{  "experiments": ['
-        for exp in experiments[:-1]:
+        for exp in page_query(db.session.query(Experiment).filter(Experiment.experiment_name == experiment)):
             yield json.dumps(exp.serialize) + ','
         yield json.dumps(experiments[-1].serialize)
         yield ']}'
 
     return Response(stream_with_context(generate()), mimetype='text/csv')
+
+
+def page_query(q):
+    offset = 0
+    while True:
+        r = False
+        for elem in q.limit(1000).offset(offset):
+            r = True
+            yield elem
+        offset += 1000
+        if not r:
+            break
