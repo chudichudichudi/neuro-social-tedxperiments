@@ -79,7 +79,7 @@ def get_experiment(experiment):
 @app.route('/experiments/file/<experiment>', methods=['GET'])
 @cross_origin(headers=['Content-Type'])
 def get_experiment_file(experiment):
-    experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
+    experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment).yield_per(5)
 
     def generate():
         yield '{  "experiments": ['
