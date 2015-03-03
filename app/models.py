@@ -79,6 +79,15 @@ class Experiment(db.Model):
     experiment_log = db.Column(db.String)
     experiment_name = db.Column(db.String)
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'test_subject': self.test_subject,
+            'experiment_log': self.experiment_log,
+            'experiment_name': self.experiment_name
+        }
+
 
 class ExperimentSerializer(Serializer):
     class Meta:

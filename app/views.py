@@ -71,11 +71,9 @@ def append_log():
 @app.route('/experiments/<experiment>', methods=['GET'])
 @cross_origin(headers=['Content-Type'])
 def get_experiment(experiment):
-    experiments = db.session.query(Experiment)\
-        .filter(Experiment.experiment_name
-                == experiment)
-    return jsonify({"experiments":
-                    ExperimentSerializer(experiments, many=True).data}), 200
+    experiments = db.session.query(Experiment).filter(Experiment.experiment_name == experiment)
+    res = {"experiments": [exp.serialize for exp in experiments]}
+    return jsonify(res), 200
 
 
 @app.route('/experiments/file/<experiment>', methods=['GET'])
@@ -86,7 +84,7 @@ def get_experiment_file(experiment):
     def generate():
         yield '{  "experiments": ['
         for exp in experiments:
-            yield ',' + json.dumps(ExperimentSerializer(exp).data)
+            yield  json.dumps(ExperimentSerializer(exp).data)
         yield ']}'
 
     return Response(stream_with_context(generate()), mimetype='text/csv')
