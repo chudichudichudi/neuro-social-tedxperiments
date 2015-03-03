@@ -84,7 +84,7 @@ def get_experiment_file(experiment):
     def generate():
         yield '{  "experiments": ['
         for exp in page_query(db.session.query(Experiment).filter(Experiment.experiment_name == experiment)):
-            yield json.dumps(exp.serialize) + ','
+            yield json.dumps(exp.serialize) + ',\n'
         yield json.dumps(experiments[-1].serialize)
         yield ']}'
 
