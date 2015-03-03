@@ -83,9 +83,13 @@ def get_experiment_file(experiment):
 
     def generate():
         yield '{  "experiments": ['
+        first = True
         for exp in page_query(db.session.query(Experiment).filter(Experiment.experiment_name == experiment)):
-            yield json.dumps(exp.serialize) + ',\n'
-        yield json.dumps(experiments[-1].serialize)
+            if first:
+                yield json.dumps(exp.serialize)
+                first = False
+            else:
+                yield ',\n' + json.dumps(exp.serialize)
         yield ']}'
 
     return Response(stream_with_context(generate()), mimetype='text/csv')
