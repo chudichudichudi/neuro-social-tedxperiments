@@ -83,8 +83,9 @@ def get_experiment_file(experiment):
 
     def generate():
         yield '{  "experiments": ['
-        for exp in experiments:
-            yield  json.dumps(ExperimentSerializer(exp).data)
+        for exp in experiments[:-1]:
+            yield json.dumps(exp.serialize) + ','
+        yield json.dumps(experiments[-1].serialize)
         yield ']}'
 
     return Response(stream_with_context(generate()), mimetype='text/csv')
