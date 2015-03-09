@@ -107,7 +107,12 @@ class UsersAdminView(CustomModelView):
 
 class CronotiposAdminView(CustomModelView):
     column_list = ('id',
-                   'user_id',
+                   'mail_up',
+                   'fecha_nacimiento',
+                   'genero',
+                   'turno_analisis',
+                   'porque_elegiste_turno',
+                   'trabajas',
                    'pregunta_1',
                    'pregunta_2',
                    'pregunta_3',
@@ -137,13 +142,19 @@ class CronotiposAdminView(CustomModelView):
                    'pregunta_27',
                    'result',
                    'result_type',
-                   'date')
+                   'date',
+                   'comments')
 
 
 class Cronotipos(db.Model):
     __tablename__ = 'cronotipos'
     id = db.Column('id', db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    mail_up = db.Column(db.String)
+    fecha_nacimiento = db.Column(db.String)
+    genero = db.Column(db.String)
+    turno_analisis = db.Column(db.String)
+    porque_elegiste_turno = db.Column(db.String)
+    trabajas = db.Column(db.String)
     pregunta_1 = db.Column(db.String)
     pregunta_2 = db.Column(db.String)
     pregunta_3 = db.Column(db.String)
@@ -174,6 +185,7 @@ class Cronotipos(db.Model):
     result = db.Column(db.String)
     result_type = db.Column(db.String)
     date = db.Column(db.DateTime)
+    comments = db.Column(db.String)
 
     def get_crono_type_human(self, crono_result):
         if crono_result >= 70 and crono_result <= 86:

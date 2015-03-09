@@ -3,9 +3,11 @@
 from flask import current_app
 from flask.ext.wtf import Form
 from wtforms import TextField, PasswordField, ValidationError, \
-    RadioField, FormField, SelectField, IntegerField, HiddenField
+    RadioField, FormField, SelectField, IntegerField, HiddenField, DateField, StringField
 from wtforms.validators import Required, Email, Length, Regexp, EqualTo, \
-    Optional, NumberRange
+    Optional, NumberRange, Required
+from wtforms.widgets.core import Select, HTMLString, html_params
+from wtforms.widgets import TextArea
 
 
 class UniqueUser(object):
@@ -123,22 +125,71 @@ class HourFormPregunta18(Form):
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
 
+class NacimientoForm(Form):
+    def __init__(self, *args, **kwargs):
+        kwargs['csrf_enabled'] = False
+        super(NacimientoForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        locales = ['es_ES', 'es']
+
+    mes = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(1, 13)]
+    anio = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(1910, 2015)]
+    anio.insert(0, (u'empty', u'--'))
+    mes.insert(0, (u'empty', u'--'))
+    mes_field = SelectField(u'Mes:', choices=mes)
+    anio_field = SelectField(u'Año:', choices=anio)
+
+
+class PorqueElegisteElTurnoForm(Form):
+    def __init__(self, *args, **kwargs):
+        kwargs['csrf_enabled'] = False
+        super(PorqueElegisteElTurnoForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        locales = ['es_ES', 'es']
+
+    choice_field = RadioField(u'Turno en el que cursas ANÁLISIS MATEMÁTICO.',
+                             choices=[(u'horario_de_trabajo', u'Por compatibilidad con mi horario de trabajo'),
+                                      (u'me_siento_mejor', u'Porque es el horario en el que me siento mejor'),
+                                      (u'mas_comodo_otras_actividades', u'Porque me queda más cómodo por mis otras actividades no laborales'),
+                                      (u'otros', u'Otros')])
+    others_field = TextField(u'Aclaración')
+
+
 class CronotiposForm(Form):
     class Meta:
         locales = ['es_ES', 'es']
-    pregunta_1 = FormField(HourForm,
-                           label=u'1 - Me acuesto a las ... (Ejemplo 22:00)')
+
+    # mail_up = db.Column(db.String)
+    # fecha_nacimiento = db.Column(db.String)
+    # genero = db.Column(db.String)
+    # turno_analisis = db.Column(db.String)
+    # porque_elegiste_turno = = db.Column(db.String)
+    # trabajas = db.Column(db.String)
+
+    genero = RadioField(u'Genero (Según tu DNI).', choices=[('Femenino', 'Femenino'),('Masculino', 'Masculino')])
+    fecha_nacimiento = FormField(NacimientoForm, label=u'Mes y Año de nacimiento')
+
+    email = TextField(u'Dirección de email de UP', [Required(), Email()])
+    turno_analisis = RadioField(u'Turno en el que cursas ANÁLISIS MATEMÁTICO.', choices=[(u'manana', u'Mañana'),('Tarde', 'Tarde'),('Noche', 'Noche')])
+    porque_elegiste_turno = FormField(PorqueElegisteElTurnoForm, label=u'¿Por qué elegiste ese turno? *')
+    trabajas = RadioField(u'¿Trabajás?', choices=[('Si', 'Si'),('No', 'No')])
+
+
+
+    pregunta_1 = FormField(HourForm, label=u'1 - Me acuesto a las ... (Ejemplo 22:00)')
 
     #pregunta_2 = FormField(HourForm, label=u'2 - Necesito ... minutos para quedarme dormido')
     minute_choices2 = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
     minute_choices2.insert(0, (u'empty', u'--'))
 
-    pregunta_2 = SelectField(u'2 - Necesito ... minutos para quedarme dormido', choices=minute_choices2)
-    
+    pregunta_2 = SelectField(u'2 - Tardo ... minutos para quedarme dormido', choices=minute_choices2)
+
 
     pregunta_3 = FormField(HourForm, label=u'3 - Me despierto a las ... (Ejemplo 22:00)')
 
-    pregunta_4 = RadioField(u'4 - Indique qué tan buena es la calidad de su sueño en los días hábiles (Ejemplo: 1 Muy Mala, 10 Excelente)', choices=[('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'),('6', '6'),('7', '7'),('8', '8'),('9', '9'),('10', '10')])
+    pregunta_4 = RadioField(u'4 - ¿Cuán bien dormís en los días libres? (Ejemplo: 1 Muy Mala, 10 Excelente)', choices=[('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'),('6', '6'),('7', '7'),('8', '8'),('9', '9'),('10', '10')])
 
     pregunta_5 = FormField(HourForm, label=u'5 - Me acuesto a las ... (Ejemplo 22:00)')
 
@@ -246,4 +297,4 @@ class CronotiposForm(Form):
                                       (u'B', u'Más mañanera que vespertina'),
                                       (u'C', u'Más vespertina que mañanera'),
                                       (u'D', u'Definitivamente vespertina')])
-
+    comments = StringField(u'Comentarios Libres', widget=TextArea())

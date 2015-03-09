@@ -25,7 +25,7 @@ def cronotipos():
     form = CronotiposForm(csrf_enabled=False)
     if form.validate_on_submit():
         return redirect('/cronotipos_results')
-    return render_template('cronotipos.html', form=CronotiposForm())
+    return render_template('cronotipos.html', form=CronotiposForm(csrf_enabled=False))
 
 @app.route('/cronotipos/csv')
 def cronotipos_csv():
@@ -56,7 +56,22 @@ def cronotipos_results():
     form = CronotiposForm(csrf_enabled=False)
     if form.validate():
         crono = Cronotipos()
-        crono.user_id = current_user.get_id()
+
+        crono.mail_up               = form.email.data
+        crono.fecha_nacimiento      = form.fecha_nacimiento.data['mes_field'] + u'/' + form.fecha_nacimiento.data['anio_field']
+        crono.genero                = form.genero.data
+        crono.turno_analisis        = form.turno_analisis.data
+        crono.porque_elegiste_turno = form.porque_elegiste_turno.data['choice_field'] + u'aclaracion:' + form.porque_elegiste_turno.data['others_field']
+        crono.trabajas              = form.trabajas.data
+
+
+        # crono.mail_up               = form.email
+        # crono.fecha_nacimiento      = form.fecha_nacimiento.data['mes_field'] + u'/' + form.fecha_nacimiento.data['anio_field']
+        # crono.genero                = form.genero.data
+        # crono.turno_analisis        = form.turno_analisis.data
+        # crono.porque_elegiste_turno = form.porque_elegiste_turno.data['choice_field'] + u'aclaracion:' + form.porque_elegiste_turno.data['others_field']
+        # crono.trabajas              = form.trabajas.data
+
         crono.pregunta_1 = form.pregunta_1.data['hours_field'] + u':' + form.pregunta_1.data['minutes_field']
         #crono.pregunta_2 = form.pregunta_2.data['hours_field'] + u':' + form.pregunta_2.data['minutes_field']
         crono.pregunta_2 = form.pregunta_2.data
@@ -88,18 +103,12 @@ def cronotipos_results():
         crono.pregunta_25 = form.pregunta_25.data['hours_field'] + u':' + form.pregunta_25.data['minutes_field']
         crono.pregunta_26 = form.pregunta_26.data['hours_field'] + u':' + form.pregunta_26.data['minutes_field']
         crono.pregunta_27 = form.pregunta_27.data
+        crono.comments = form.comments.data
         crono.result = crono.process_data()
         crono.result_type = crono.get_crono_type(crono.process_data())
         crono.date = datetime.now()
         db.session.add(crono)
         db.session.commit()
-        return render_template('cronotipos_results.html',
-                               crono_result=crono.get_crono_type_human(crono.process_data()),
-                               crono_chart=crono_dict)
+        return render_template('cronotipos_results.html')
     flash(u'Por favor completa todos los campos')
     return render_template('cronotipos.html', form=form)
-
-
-@app.route('/consentimiento_cronotipos', methods=('GET', 'POST'))
-def consentimiento_cronotipos():
-    return render_template('consentimiento_cronotipos.html')

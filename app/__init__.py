@@ -19,12 +19,6 @@ from .helpers import Flask
 import uuid
 
 
-class CustomAdminIndexView(AdminIndexView):
-    @expose('/')
-    def index(self):
-        if not login.current_user.is_authenticated():
-            return redirect(url_for('/'))
-        return super(CustomAdminIndexView, self).index()
 
 
 app = Flask(__name__)
@@ -40,8 +34,6 @@ migrate = Migrate(app, db)
 from . import assets, models, views
 admin = Admin(app, url='/its_a_secret')
 admin.add_view(models.CronotiposAdminView(models.Cronotipos, db.session))
-admin.add_view(models.UsersAdminView(models.User, db.session))
-admin.add_view(models.CustomModelView(models.Role, db.session))
 
 
 from flask.ext.social.views import connect_handler
