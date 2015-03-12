@@ -29,16 +29,6 @@
   </div>
 {% endmacro %}
 
-
-
-<!-- 
-choice_field = RadioField(u'Turno en el que cursas ANÁLISIS MATEMÁTICO.',
-                         choices=[(u'horario_de_trabajo', u'Por compatibilidad con mi horario de trabajo'),
-                                  (u'me_siento_mejor', u'Porque es el horario en el que me siento mejor'),
-                                  (u'mas_comodo_otras_actividades', u'Porque me queda más cómodo por mis otras actividades no laborales')])
-others_field = TextField('Email') -->
-
-
 {% macro render_date(field) %}
   <div class="row-fluid cronotipos_form" >
     <div class="span3">&nbsp;</div>
@@ -159,8 +149,7 @@ others_field = TextField('Email') -->
   {% endfor %}        
 {% endif %}
 
-
-<div clas="row-fluid" style="padding-left: 30px; padding-right: 30px;">
+<div class="row-fluid" id="consentimiento" style="padding-left: 30px; padding-right: 30px;">
   <h1>Bienvenido</h1>
   <p class="lead">Este es un cuestionario para averiguar las preferencias diarias y los habitos de sueños individuales en seres humanos.</p>
   <p>Por favor, lea la siguiente información antes de decidir participar de este experimento:</p>
@@ -197,107 +186,130 @@ others_field = TextField('Email') -->
   </div>
 </div>
 
-
-<form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" method="POST">
-  {{ form.hidden_tag() }}
-
-  <div class="row-fluid">
-    <div class="span3">&nbsp;</div>
-    <div class="span6">
-      <h2>Datos Personales</h2>
-    </div>
-    <div class="span3">&nbsp;</div>
-  </div>
-
-  {{ render_radio_horizontal(form.genero) }}
-  {{ render_date(form.fecha_nacimiento) }}
-  {{ render_row(form.email) }}
-  {{ render_radio_horizontal(form.turno_analisis) }}
-
-  {{ render_porque_elegiste(form.porque_elegiste_turno) }}
-
-  {{ render_radio_horizontal(form.trabajas) }}
-
-
-
-  <div class="row-fluid">
-    <div class="span3">&nbsp;</div>
-    <div class="span6">
-      <h2>¿Cómo es un <b>DÍA HÁBIL</b> tuyo?</h2>
-      <p>Los días en que trabajás y/o estudiás</p>
+<div class="row-fluid centered-text">
+  <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <button class="btn btn-default" type="submit" id="boton_continuar">Continuar</button>        
       </div>
-    <div class="span3">&nbsp;</div>
-  </div>
-  
-  {{ render_hour_field(form.pregunta_1) }}
-  {{ render_minutes_field(form.pregunta_2) }}
-  {{ render_hour_field(form.pregunta_3) }}
-  {{ render_radio(form.pregunta_4) }}
+      <div class="span3">&nbsp;</div>
+</div>
 
-  
-  <div class="row-fluid">
-    <div class="span3">&nbsp;</div>
-    <div class="span6">
-      <h2>¿Cómo es un <b>DÍA LIBRE</b> tuyo?</h2>
-      <p>Los días en que NO trabajás NI estudiás.</p>
+<div id="formulario">
+  <form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="row-fluid">
+      <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <h2>Datos Personales</h2>
+      </div>
+      <div class="span3">&nbsp;</div>
     </div>
-    <div class="span3">&nbsp;</div>
-  </div>
 
-  
-  {{ render_hour_field(form.pregunta_5) }}
-  {{ render_minutes_field(form.pregunta_6) }}
-  {{ render_hour_field(form.pregunta_7) }}
-  {{ render_radio(form.pregunta_8) }}
+    {{ render_radio_horizontal(form.genero) }}
+    {{ render_date(form.fecha_nacimiento) }}
+    {{ render_row(form.email) }}
+    {{ render_radio_horizontal(form.turno_analisis) }}
 
-  
-  <div class="row-fluid">
-    <div class="span3">&nbsp;</div>
-    <div class="span6">
-      <h2>SEGUNDA PARTE</h2>
-      <ul>
-        <li>Responda todas las preguntas en orden.</li>
-        <li>Lea primero detenidamente cada una de las opciones, esto le garantizará una mayor comprensión de la pregunta y su significado.</li>
-        <li>Responda cada pregunta en forma independiente de las demás. No vuelva atrás a chequear las respuestas dadas anteriormente.</li>
-        <li>Seleccione sólo una respuesta.</li>
-      </ul>
+    {{ render_porque_elegiste(form.porque_elegiste_turno) }}
+
+    {{ render_radio_horizontal(form.trabajas) }}
+
+
+
+    <div class="row-fluid">
+      <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <h2>¿Cómo es un <b>DÍA HÁBIL</b> tuyo?</h2>
+        <p>Los días en que trabajás y/o estudiás</p>
+        </div>
+      <div class="span3">&nbsp;</div>
     </div>
-    <div class="span3">&nbsp;</div>
-  </div>
-  
-  {{ render_hour_field(form.pregunta_9) }}
-  {{ render_hour_field(form.pregunta_10) }}
-  {{ render_radio_horizontal(form.pregunta_11) }}
-  {{ render_radio_horizontal(form.pregunta_12) }}
-  {{ render_radio_horizontal(form.pregunta_13) }}
-  {{ render_radio_horizontal(form.pregunta_14) }}
-  {{ render_radio_horizontal(form.pregunta_15) }}
-  {{ render_radio_horizontal(form.pregunta_16) }}
-  {{ render_radio_horizontal(form.pregunta_17) }}
-  {{ render_hour_field(form.pregunta_18) }}
-  {{ render_radio_horizontal(form.pregunta_19) }}
-  {{ render_radio_horizontal(form.pregunta_20) }}
-  {{ render_radio_horizontal(form.pregunta_21) }}
-  {{ render_radio_horizontal(form.pregunta_22) }}
-  {{ render_radio_horizontal(form.pregunta_23) }}
-  {{ render_radio_horizontal(form.pregunta_24) }}
-  {{ render_hour_field(form.pregunta_25) }}
-  {{ render_hour_field(form.pregunta_26) }}
-  {{ render_radio_horizontal(form.pregunta_27) }}
-
-  {{ render_row(form.comments) }}
-
-  <div class="centered-text">
     
-      <button type="submit" class="btn btn-primary btn-large centered">Terminar</button>
+    {{ render_hour_field(form.pregunta_1) }}
+    {{ render_minutes_field(form.pregunta_2) }}
+    {{ render_hour_field(form.pregunta_3) }}
+    {{ render_radio(form.pregunta_4) }}
+
     
-  </div>
-</form>
+    <div class="row-fluid">
+      <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <h2>¿Cómo es un <b>DÍA LIBRE</b> tuyo?</h2>
+        <p>Los días en que NO trabajás NI estudiás.</p>
+      </div>
+      <div class="span3">&nbsp;</div>
+    </div>
+
+    
+    {{ render_hour_field(form.pregunta_5) }}
+    {{ render_minutes_field(form.pregunta_6) }}
+    {{ render_hour_field(form.pregunta_7) }}
+    {{ render_radio(form.pregunta_8) }}
+
+    
+    <div class="row-fluid">
+      <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <h2>SEGUNDA PARTE</h2>
+        <ul>
+          <li>Responda todas las preguntas en orden.</li>
+          <li>Lea primero detenidamente cada una de las opciones, esto le garantizará una mayor comprensión de la pregunta y su significado.</li>
+          <li>Responda cada pregunta en forma independiente de las demás. No vuelva atrás a chequear las respuestas dadas anteriormente.</li>
+          <li>Seleccione sólo una respuesta.</li>
+        </ul>
+      </div>
+      <div class="span3">&nbsp;</div>
+    </div>
+    
+    {{ render_hour_field(form.pregunta_9) }}
+    {{ render_hour_field(form.pregunta_10) }}
+    {{ render_radio_horizontal(form.pregunta_11) }}
+    {{ render_radio_horizontal(form.pregunta_12) }}
+    {{ render_radio_horizontal(form.pregunta_13) }}
+    {{ render_radio_horizontal(form.pregunta_14) }}
+    {{ render_radio_horizontal(form.pregunta_15) }}
+    {{ render_radio_horizontal(form.pregunta_16) }}
+    {{ render_radio_horizontal(form.pregunta_17) }}
+    {{ render_hour_field(form.pregunta_18) }}
+    {{ render_radio_horizontal(form.pregunta_19) }}
+    {{ render_radio_horizontal(form.pregunta_20) }}
+    {{ render_radio_horizontal(form.pregunta_21) }}
+    {{ render_radio_horizontal(form.pregunta_22) }}
+    {{ render_radio_horizontal(form.pregunta_23) }}
+    {{ render_radio_horizontal(form.pregunta_24) }}
+    {{ render_hour_field(form.pregunta_25) }}
+    {{ render_hour_field(form.pregunta_26) }}
+    {{ render_radio_horizontal(form.pregunta_27) }}
+
+    {{ render_row(form.comments) }}
+
+    <div class="centered-text">
+      
+        <button type="submit" class="btn btn-primary btn-large centered">Terminar</button>
+      
+    </div>
+  </form>
+</div>
 <script type="text/javascript">
 $(function () {
   $.each($('option[value="empty"]'), function (i, val) {
     $(val).attr('disabled', 'disabled');
   });
+  
+  {% if not form.errors %}
+    $('#formulario').hide();
+  {% else %}
+    $('#consentimiento').hide();
+    $('#boton_continuar').hide();
+  {% endif %}
+
+  $('#boton_continuar').click(function () {
+    $('#boton_continuar').hide();
+    $('#consentimiento').hide();
+    $('#formulario').show();
+  });
 });
 </script>
+
 {% endblock %}
