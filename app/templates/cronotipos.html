@@ -1,3 +1,9 @@
+<style type="text/css">
+  #otros * {
+    display: inline-block;
+  }
+</style>
+
 {% macro render_porque_elegiste(field) %}
   <div class="row-fluid cronotipos_form" >
     <div class="span3">&nbsp;</div>
@@ -11,18 +17,14 @@
             {{ subfield }}
           </td>
           <td>
-            {{ subfield.label }}
+            {% if loop.last %}   
+              <div class="display: inline-block;" id="otros">{{ subfield.label }}: {{ field.others_field }}</div>
+            {% else %}   
+              {{ subfield.label }}
+            {% endif %}   
           </td>
         </tr>
         {% endfor %}    
-        <tr>
-          <td style="padding: 0px 10px;">
-            {{ field.others_field.label }}
-          </td>
-          <td>
-            {{ field.others_field }}
-          </td>
-        </tr>
       </table>
     </div>
     <div class="span3">&nbsp;</div>
@@ -125,6 +127,15 @@
   </div>
 {% endmacro %}
 
+
+{% macro render_mail_up(field) %}
+  <div class="row-fluid">
+    <div class="span3">&nbsp;</div>
+    <div class="span6">{{ field.label }}{{ field }}@palermo.edu</div>
+    <div class="span3">&nbsp;</div>
+  </div>
+{% endmacro %}
+
 {% from '_macros.html' import render_field %}
 
 {% extends '/layouts/boilerplate.html' %}
@@ -208,7 +219,7 @@
 
     {{ render_radio_horizontal(form.genero) }}
     {{ render_date(form.fecha_nacimiento) }}
-    {{ render_row(form.email) }}
+    {{ render_mail_up(form.email) }}
     {{ render_radio_horizontal(form.turno_analisis) }}
 
     {{ render_porque_elegiste(form.porque_elegiste_turno) }}
@@ -247,21 +258,7 @@
     {{ render_hour_field(form.pregunta_7) }}
     {{ render_radio(form.pregunta_8) }}
 
-    
-    <div class="row-fluid">
-      <div class="span3">&nbsp;</div>
-      <div class="span6">
-        <h2>SEGUNDA PARTE</h2>
-        <ul>
-          <li>Responda todas las preguntas en orden.</li>
-          <li>Lea primero detenidamente cada una de las opciones, esto le garantizará una mayor comprensión de la pregunta y su significado.</li>
-          <li>Responda cada pregunta en forma independiente de las demás. No vuelva atrás a chequear las respuestas dadas anteriormente.</li>
-          <li>Seleccione sólo una respuesta.</li>
-        </ul>
-      </div>
-      <div class="span3">&nbsp;</div>
-    </div>
-    
+        
     {{ render_hour_field(form.pregunta_9) }}
     {{ render_hour_field(form.pregunta_10) }}
     {{ render_radio_horizontal(form.pregunta_11) }}
