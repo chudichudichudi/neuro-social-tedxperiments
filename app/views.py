@@ -77,11 +77,18 @@ def cronotipos_results():
         crono.pregunta_2 = form.pregunta_2.data
         crono.pregunta_3 = form.pregunta_3.data['hours_field'] + u':' + form.pregunta_3.data['minutes_field']
         crono.pregunta_4 = form.pregunta_4.data
+
+        crono.pregunta_duermo_siesta_dia_habil = form.pregunta_duermo_siesta_dia_habil.data
+        crono.pregunta_cuanto_duermo_siesta_dia_habil = form.pregunta_cuanto_duermo_siesta_dia_habil.data
+
         crono.pregunta_5 = form.pregunta_5.data['hours_field'] + u':' + form.pregunta_5.data['minutes_field']
         # crono.pregunta_6 = form.pregunta_6.data['hours_field'] + u':' + form.pregunta_6.data['minutes_field']
         crono.pregunta_6 = form.pregunta_6.data
         crono.pregunta_7 = form.pregunta_7.data['hours_field'] + u':' + form.pregunta_7.data['minutes_field']
         crono.pregunta_8 = form.pregunta_8.data
+        crono.pregunta_duermo_siesta_dia_libre = form.pregunta_duermo_siesta_dia_libre.data
+        crono.pregunta_cuanto_duermo_siesta_dia_libre = form.pregunta_cuanto_duermo_siesta_dia_libre.data
+
         crono.pregunta_9 = form.pregunta_9.data['hours_field'] + u':' + form.pregunta_9.data['minutes_field']
         crono.pregunta_10 = form.pregunta_10.data['hours_field'] + u':' + form.pregunta_10.data['minutes_field']
         crono.pregunta_11 = form.pregunta_11.data

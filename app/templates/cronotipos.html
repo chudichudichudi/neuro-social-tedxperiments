@@ -2,6 +2,8 @@
   #otros * {
     display: inline-block;
   }
+
+
 </style>
 
 {% macro render_porque_elegiste(field) %}
@@ -68,7 +70,7 @@
 {% endmacro %}
 
 
-{% macro render_radio(radio_field) %}
+{% macro render_radio(radio_field, first_label, last_label) %}
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
     <div class="span6">
@@ -76,17 +78,46 @@
       <table>
         <tr>
           {% for subfield in radio_field %}   
-            <td style="padding: 0px 10px;">
-              {{ subfield }}
-            </td>
+
+
+            {% if loop.first and first_label %}   
+              <td style="padding: 0px 10px;">
+                &nbsp;
+              </td>
+            {% endif %}
+              <td style="padding: 0px 10px;">
+                {{ subfield }}
+              </td>
+            
+
+            {% if loop.last and last_label %}   
+              <td style="padding: 0px 10px;">
+                
+              </td>
+            {% endif %}
+
+            
           {% endfor %}    
         </tr>
         
         <tr>
-          {% for subfield in radio_field %}   
+          {% for subfield in radio_field %}
+            {% if loop.first and first_label %}   
+              <td style="padding: 0px 10px;">
+                {{ first_label }}
+              </td>
+            {% endif %}
+
             <td style="padding: 0px 10px;">
               {{ subfield.label }}
             </td>
+
+            {% if loop.last and last_label %}   
+              <td style="padding: 0px 10px;">
+                {{ last_label }}
+              </td>
+            {% endif %}
+
           {% endfor %}  
         </tr>
       </table>
@@ -103,6 +134,7 @@
       {{radio_field.label }}
       <table>
         {% for subfield in radio_field %}   
+
         <tr>
           <td style="padding: 0px 10px;">
             {{ subfield }}
@@ -143,7 +175,7 @@
 {% block body_class %}main{% endblock %}
 
 {% block layout %}
-<div class="page-header centered-text">
+<div class="page-header centered-text" id="top">
   <h1>Cuestionario de preferencias diarias y hábitos de sueño</h1>
   <p>Todos los datos ingresados serán confidenciales y tratados de manera anónima.</p>
 </div>
@@ -160,7 +192,7 @@
   {% endfor %}        
 {% endif %}
 
-<div class="row-fluid" id="consentimiento" style="padding-left: 30px; padding-right: 30px;">
+<div class="row-fluid" id="consentimiento" style="padding-left: 30px; padding-right: 30px; width:initial!important;">
   <h1>Bienvenido</h1>
   <p class="lead">Este es un cuestionario para averiguar las preferencias diarias y los habitos de sueños individuales en seres humanos.</p>
   <p>Por favor, lea la siguiente información antes de decidir participar de este experimento:</p>
@@ -168,16 +200,16 @@
     <div class="my-boxed-inner" style="height: 100px;">
       <p><b>¿Cuál es el objetivo de esta encuesta?</b> El objetivo de esta investigación es estudiar las preferencias diarias y hábitos de sueño individuales en seres humanos.</p>
 
-      <p><b>¿Qué tendré que hacer si decido participar?</b>  Deberá completar una serie de preguntas relacionadas con sus hábitos de sueño y sus preferencias diarias.</p>
+      <p><b>¿Qué tendré que hacer si decido participar?</b>Deberá completar una serie de preguntas relacionadas con sus hábitos de sueño y sus preferencias diarias.</p>
 
-      <p><b>¿Cuánto tiempo requiere el experimento?</b>El experimento puede completarse en aproximadamente <b>5 minutos</b>.</p>
+      <p><b>¿Cuánto tiempo requiere la encuesta?</b>Puede completarse en aproximadamente <b>5 minutos</b>(incluyendo todas las tareas y las preguntas accesorias).</p>
 
       <p><b>¿De qué manera será utilizada la información que yo comparta con ustedes?</b>
       La información que usted nos brinde no será compartida con nadie y será tratada de manera confidencial y anónima.</p>
 
-      <p><b>Si abandono una vez el experimento, ¿puedo volver a hacerlo en otro momento?</b> No. Debido a las características de la investigación, cada participante tiene solo una oportunidad para participar.</p>
+      <p><b>Si abandono una vez la encuesta, ¿puedo volver a hacerla en otro momento?</b>No. Debido a las características de la investigación, cada participante tiene solo una oportunidad para participar.</p>
 
-      <p><b>¿Qué ocurre si me arrepiento y deseo abandonar el experimento antes de completarlo?</b>  Su participación en esta investigación es completamente voluntaria y puede abandonarlo en el momento que desee (cerrando el programa que está utilizando para navegar por internet).</p>
+      <p><b>¿Qué ocurre si me arrepiento y deseo abandonar antes de completar las preguntas?</b>Su participación en esta investigación es completamente voluntaria y puede abandonarlo en el momento que desee (cerrando el programa que está utilizando para navegar por internet).</p>
 
       <p><b>¿Cuáles son los riesgos asociados a la participación en esta investigación?</b> No esperamos ningún riesgo asociado a su participación. Aún así, recuerde que su participación es voluntaria y que podrá abandonar la encuesta cuando lo desee.</p>     
 
@@ -197,97 +229,143 @@
   </div>
 </div>
 
-<div class="row-fluid centered-text">
+<div class="row-fluid  centered-text" id="div_boton_continuar_a_1">
   <div class="span3">&nbsp;</div>
       <div class="span6">
-        <button class="btn btn-default" type="submit" id="boton_continuar">Continuar</button>        
+        <button class="btn btn-default" type="button" id="boton_continuar_a_1">Continuar</button>        
       </div>
       <div class="span3">&nbsp;</div>
 </div>
 
-<div id="formulario">
-  <form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" method="POST">
-    {{ form.hidden_tag() }}
+<form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" id="formulario_cronos" method="POST">
+  <div id="formulario_parte_1">
+      {{ form.hidden_tag() }}
 
-    <div class="row-fluid">
-      <div class="span3">&nbsp;</div>
-      <div class="span6">
-        <h2>Datos Personales</h2>
-      </div>
-      <div class="span3">&nbsp;</div>
-    </div>
-
-    {{ render_radio_horizontal(form.genero) }}
-    {{ render_date(form.fecha_nacimiento) }}
-    {{ render_mail_up(form.email) }}
-    {{ render_radio_horizontal(form.turno_analisis) }}
-
-    {{ render_porque_elegiste(form.porque_elegiste_turno) }}
-
-    {{ render_radio_horizontal(form.trabajas) }}
-
-
-
-    <div class="row-fluid">
-      <div class="span3">&nbsp;</div>
-      <div class="span6">
-        <h2>¿Cómo es un <b>DÍA HÁBIL</b> tuyo?</h2>
-        <p>Los días en que trabajás y/o estudiás</p>
+      <div class="row-fluid">
+        <div class="span3">&nbsp;</div>
+        <div class="span6">
+          <h2>Datos Personales</h2>
         </div>
-      <div class="span3">&nbsp;</div>
-    </div>
-    
-    {{ render_hour_field(form.pregunta_1) }}
-    {{ render_minutes_field(form.pregunta_2) }}
-    {{ render_hour_field(form.pregunta_3) }}
-    {{ render_radio(form.pregunta_4) }}
-
-    
-    <div class="row-fluid">
-      <div class="span3">&nbsp;</div>
-      <div class="span6">
-        <h2>¿Cómo es un <b>DÍA LIBRE</b> tuyo?</h2>
-        <p>Los días en que NO trabajás NI estudiás.</p>
+        <div class="span3">&nbsp;</div>
       </div>
-      <div class="span3">&nbsp;</div>
-    </div>
 
-    
-    {{ render_hour_field(form.pregunta_5) }}
-    {{ render_minutes_field(form.pregunta_6) }}
-    {{ render_hour_field(form.pregunta_7) }}
-    {{ render_radio(form.pregunta_8) }}
+      {{ render_radio_horizontal(form.genero) }}
+      {{ render_date(form.fecha_nacimiento) }}
+      {{ render_mail_up(form.email) }}
+      {{ render_radio_horizontal(form.turno_analisis) }}
 
+      {{ render_porque_elegiste(form.porque_elegiste_turno) }}
+
+      {{ render_radio_horizontal(form.trabajas) }}
+
+
+  </div>
+
+  <div class="row-fluid  centered-text" id="div_boton_continuar_a_2">
+    <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <button class="btn btn-default" type="button" id="boton_continuar_a_2">Continuar</button>        
+      </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+
+  <div id="formulario_parte_2">
+      <div class="row-fluid">
+        <div class="span3">&nbsp;</div>
+        <div class="span6">
+          <h2>¿Cómo es un <b>DÍA HÁBIL</b> tuyo?</h2>
+          <p>Los días en que trabajás y/o estudiás</p>
+          </div>
+        <div class="span3">&nbsp;</div>
+      </div>
+      
+      {{ render_hour_field(form.pregunta_1) }}
+      {{ render_minutes_field(form.pregunta_2) }}
+      {{ render_hour_field(form.pregunta_3) }}
+      {{ render_radio(form.pregunta_4, 'Muy Mal', 'Excelente') }}
+      {{ render_radio(form.pregunta_duermo_siesta_dia_habil) }}
+      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_habil) }}
+      
+      <div class="row-fluid">
+        <div class="span3">&nbsp;</div>
+        <div class="span6">
+          <h2>¿Cómo es un <b>DÍA LIBRE</b> tuyo?</h2>
+          <p>Los días en que NO trabajás NI estudiás.</p>
+        </div>
+        <div class="span3">&nbsp;</div>
+      </div>
+
+      
+      {{ render_hour_field(form.pregunta_5) }}
+      {{ render_minutes_field(form.pregunta_6) }}
+      {{ render_hour_field(form.pregunta_7) }}
+      {{ render_radio(form.pregunta_8, 'Muy Mal', 'Excelente') }}
+      {{ render_radio(form.pregunta_duermo_siesta_dia_libre) }}
+      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_libre) }}
+
+  </div>
+
+  <div class="row-fluid  centered-text" id="div_boton_continuar_a_3">
+    <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <button class="btn btn-default" type="button" id="boton_continuar_a_3">Continuar</button>        
+      </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+
+  <div id="formulario_parte_3">
+      {{ render_hour_field(form.pregunta_9) }}
+      {{ render_hour_field(form.pregunta_10) }}
+      {{ render_radio_horizontal(form.pregunta_11) }}
+      {{ render_radio_horizontal(form.pregunta_12) }}
+      {{ render_radio_horizontal(form.pregunta_13) }}
+      {{ render_radio_horizontal(form.pregunta_14) }}
+  </div>
+
+  <div class="row-fluid  centered-text" id="div_boton_continuar_a_4" >
+    <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <button class="btn btn-default" type="button" id="boton_continuar_a_4">Continuar</button>        
+      </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+
+  <div id="formulario_parte_4">
+      {{ render_radio_horizontal(form.pregunta_15) }}
+      {{ render_radio_horizontal(form.pregunta_16) }}
+      {{ render_radio_horizontal(form.pregunta_17) }}
+      {{ render_hour_field(form.pregunta_18) }}
+      {{ render_radio_horizontal(form.pregunta_19) }}
+      {{ render_radio_horizontal(form.pregunta_20) }}
+  </div>
+
+  <div class="row-fluid  centered-text" id="div_boton_continuar_a_5">
+    <div class="span3">&nbsp;</div>
+      <div class="span6">
+        <button class="btn btn-default" type="button" id="boton_continuar_a_5">Continuar</button>        
+      </div>
+    <div class="span3">&nbsp;</div>
+  </div>
+
+  <div id="formulario_parte_5">
+
+      {{ render_radio_horizontal(form.pregunta_21) }}
+      {{ render_radio_horizontal(form.pregunta_22) }}
+      {{ render_radio_horizontal(form.pregunta_23) }}
+      {{ render_radio_horizontal(form.pregunta_24) }}
+      {{ render_hour_field(form.pregunta_25) }}
+      {{ render_hour_field(form.pregunta_26) }}
+      {{ render_radio_horizontal(form.pregunta_27) }}
+
+      {{ render_row(form.comments) }}
+
+      <div class="centered-text">
         
-    {{ render_hour_field(form.pregunta_9) }}
-    {{ render_hour_field(form.pregunta_10) }}
-    {{ render_radio_horizontal(form.pregunta_11) }}
-    {{ render_radio_horizontal(form.pregunta_12) }}
-    {{ render_radio_horizontal(form.pregunta_13) }}
-    {{ render_radio_horizontal(form.pregunta_14) }}
-    {{ render_radio_horizontal(form.pregunta_15) }}
-    {{ render_radio_horizontal(form.pregunta_16) }}
-    {{ render_radio_horizontal(form.pregunta_17) }}
-    {{ render_hour_field(form.pregunta_18) }}
-    {{ render_radio_horizontal(form.pregunta_19) }}
-    {{ render_radio_horizontal(form.pregunta_20) }}
-    {{ render_radio_horizontal(form.pregunta_21) }}
-    {{ render_radio_horizontal(form.pregunta_22) }}
-    {{ render_radio_horizontal(form.pregunta_23) }}
-    {{ render_radio_horizontal(form.pregunta_24) }}
-    {{ render_hour_field(form.pregunta_25) }}
-    {{ render_hour_field(form.pregunta_26) }}
-    {{ render_radio_horizontal(form.pregunta_27) }}
-
-    {{ render_row(form.comments) }}
-
-    <div class="centered-text">
-      
-        <button type="submit" class="btn btn-primary btn-large centered">Terminar</button>
-      
-    </div>
-  </form>
-</div>
+          <button type="submit" class="btn btn-primary btn-large centered">Terminar</button>
+        
+      </div>
+  </div>
+</form>
 <script type="text/javascript">
 $(function () {
   $.each($('option[value="empty"]'), function (i, val) {
@@ -295,16 +373,73 @@ $(function () {
   });
   
   {% if not form.errors %}
-    $('#formulario').hide();
+    $('#formulario_parte_1').hide();
+    $('#formulario_parte_2').hide();
+    $('#formulario_parte_3').hide();
+    $('#formulario_parte_4').hide();
+    $('#formulario_parte_5').hide();
+    $('#div_boton_continuar_a_2').hide();
+    $('#div_boton_continuar_a_3').hide();
+    $('#div_boton_continuar_a_4').hide();
+    $('#div_boton_continuar_a_5').hide();
+    
   {% else %}
     $('#consentimiento').hide();
-    $('#boton_continuar').hide();
+    $('#div_boton_continuar_a_1').hide();
+    $('#div_boton_continuar_a_2').hide();
+    $('#div_boton_continuar_a_3').hide();
+    $('#div_boton_continuar_a_4').hide();
+    $('#div_boton_continuar_a_5').hide();
   {% endif %}
 
-  $('#boton_continuar').click(function () {
-    $('#boton_continuar').hide();
+  $('#boton_continuar_a_1').click(function () {
+    $('#div_boton_continuar_a_1').hide();
+    $('#div_boton_continuar_a_2').show();
     $('#consentimiento').hide();
-    $('#formulario').show();
+    $('#formulario_parte_1').show();
+    $('html, body').animate({
+        scrollTop: $("#top").offset().top
+    }, 150);
+    
+  });
+
+  $('#boton_continuar_a_2').click(function () {
+    $('#div_boton_continuar_a_2').hide();
+    $('#div_boton_continuar_a_3').show();
+    $('#formulario_parte_1').hide();
+    $('#formulario_parte_2').show();
+    $('html, body').animate({
+        scrollTop: $("#top").offset().top
+    }, 150);
+  });
+
+  $('#boton_continuar_a_3').click(function () {
+    $('#div_boton_continuar_a_3').hide();
+    $('#div_boton_continuar_a_4').show();
+    $('#formulario_parte_2').hide();
+    $('#formulario_parte_3').show();
+    $('html, body').animate({
+        scrollTop: $("#top").offset().top
+    }, 150);
+  });
+
+  $('#boton_continuar_a_4').click(function () {
+    $('#div_boton_continuar_a_4').hide();
+    $('#div_boton_continuar_a_5').show();
+    $('#formulario_parte_3').hide();
+    $('#formulario_parte_4').show();
+    $('html, body').animate({
+        scrollTop: $("#top").offset().top
+    }, 150);
+  });
+
+  $('#boton_continuar_a_5').click(function () {
+    $('#div_boton_continuar_a_5').hide();
+    $('#formulario_parte_4').hide();
+    $('#formulario_parte_5').show();
+    $('html, body').animate({
+        scrollTop: $("#top").offset().top
+    }, 150);
   });
 });
 </script>

@@ -117,10 +117,14 @@ class CronotiposAdminView(CustomModelView):
                    'pregunta_2',
                    'pregunta_3',
                    'pregunta_4',
+                   'pregunta_duermo_siesta_dia_habil',
+                   'pregunta_cuanto_duermo_siesta_dia_habil',
                    'pregunta_5',
                    'pregunta_6',
                    'pregunta_7',
                    'pregunta_8',
+                   'pregunta_duermo_siesta_dia_libre',
+                   'pregunta_cuanto_duermo_siesta_dia_libre',
                    'pregunta_9',
                    'pregunta_10',
                    'pregunta_11',
@@ -159,10 +163,14 @@ class Cronotipos(db.Model):
     pregunta_2 = db.Column(db.String)
     pregunta_3 = db.Column(db.String)
     pregunta_4 = db.Column(db.String)
+    pregunta_duermo_siesta_dia_habil = db.Column(db.String)
+    pregunta_cuanto_duermo_siesta_dia_habil = db.Column(db.String)
     pregunta_5 = db.Column(db.String)
     pregunta_6 = db.Column(db.String)
     pregunta_7 = db.Column(db.String)
     pregunta_8 = db.Column(db.String)
+    pregunta_duermo_siesta_dia_libre = db.Column(db.String)
+    pregunta_cuanto_duermo_siesta_dia_libre = db.Column(db.String)
     pregunta_9 = db.Column(db.String)
     pregunta_10 = db.Column(db.String)
     pregunta_11 = db.Column(db.String)
