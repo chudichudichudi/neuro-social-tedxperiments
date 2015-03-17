@@ -3,20 +3,56 @@
     display: inline-block;
   }
 
+input.parsley-success,
+select.parsley-success,
+textarea.parsley-success {
+  color: #468847;
+  background-color: #DFF0D8;
+  border: 1px solid #D6E9C6;
+}
+
+input.parsley-error,
+select.parsley-error,
+textarea.parsley-error {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border: 1px solid #EED3D7;
+}
+.error_wrapper { 
+  display: none
+}
+.parsley-errors-list {
+  margin: 2px 0 3px;
+  padding: 0;
+  list-style-type: none;
+  font-size: 0.9em;
+  line-height: 0.9em;
+  opacity: 0;
+
+  transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
+}
+
+.parsley-errors-list.filled {
+  opacity: 1;
+}
+
 
 </style>
 
-{% macro render_porque_elegiste(field) %}
+{% macro render_porque_elegiste(field, params={}) %}
   <div class="row-fluid cronotipos_form" >
     <div class="span3">&nbsp;</div>
     <div class="span6">
 
-    {{field.label }}
+    {{ field.label }}
       <table>
         {% for subfield in field.choice_field %}   
         <tr>
           <td style="padding: 0px 10px;">
-            {{ subfield }}
+            {{ subfield( **params ) }}
           </td>
           <td>
             {% if loop.last %}   
@@ -33,12 +69,12 @@
   </div>
 {% endmacro %}
 
-{% macro render_date(field) %}
+{% macro render_date(field, params={}) %}
   <div class="row-fluid cronotipos_form" >
     <div class="span3">&nbsp;</div>
     <div class="span6">
       {{ field.label }}
-      Mes: {{ field.mes_field }} Año: {{ field.anio_field}}
+      Mes: {{ field.mes_field( **params ) }} Año: {{ field.anio_field( **params ) }}
     </div>
     <div class="span3">&nbsp;</div>
   </div>
@@ -46,31 +82,31 @@
 
 
 
-{% macro render_hour_field(field) %}
+{% macro render_hour_field(field, params={}) %}
   <div class="row-fluid cronotipos_form" >
     <div class="span3">&nbsp;</div>
     <div class="span6">
       {{ field.label }}
-      {{ field.hours_field }} : {{ field.minutes_field}}
+      {{ field.hours_field( **params ) }} : {{ field.minutes_field( **params )}}
     </div>
     <div class="span3">&nbsp;</div>
   </div>
 {% endmacro %}
 
 
-{% macro render_minutes_field(field) %}
+{% macro render_minutes_field(field, params={}) %}
   <div class="row-fluid cronotipos_form" >
     <div class="span3">&nbsp;</div>
     <div class="span6">
       {{ field.label }}
-      {{ field }}
+      {{ field( **params ) }}
     </div>
     <div class="span3">&nbsp;</div>
   </div>
 {% endmacro %}
 
 
-{% macro render_radio(radio_field, first_label, last_label) %}
+{% macro render_radio(radio_field, first_label, last_label, params={}) %}
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
     <div class="span6">
@@ -86,7 +122,7 @@
               </td>
             {% endif %}
               <td style="padding: 0px 10px;">
-                {{ subfield }}
+                {{ subfield( **params ) }}
               </td>
             
 
@@ -126,7 +162,7 @@
   </div>
 {% endmacro %}
 
-{% macro render_radio_horizontal(radio_field) %}
+{% macro render_radio_horizontal(radio_field, params={}) %}
   
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
@@ -137,7 +173,7 @@
 
         <tr>
           <td style="padding: 0px 10px;">
-            {{ subfield }}
+            {{ subfield( **params ) }}
           </td>
           <td>
             {{ subfield.label }}
@@ -151,24 +187,22 @@
   
 {% endmacro %}
 
-{% macro render_row(field) %}
+{% macro render_row(field, params={}) %}
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
-    <div class="span6">{{ field.label }}{{ field }}</div>
+    <div class="span6">{{ field.label }}{{ field( **params ) }}</div>
     <div class="span3">&nbsp;</div>
   </div>
 {% endmacro %}
 
 
-{% macro render_mail_up(field) %}
+{% macro render_mail_up(field, params={}) %}
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
-    <div class="span6">{{ field.label }}{{ field }}@palermo.edu</div>
+    <div class="span6">{{ field.label }}{{ field( **params ) }}@palermo.edu</div>
     <div class="span3">&nbsp;</div>
   </div>
 {% endmacro %}
-
-{% from '_macros.html' import render_field %}
 
 {% extends '/layouts/boilerplate.html' %}
 
@@ -237,7 +271,7 @@
       <div class="span3">&nbsp;</div>
 </div>
 
-<form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" id="formulario_cronos" method="POST">
+<form class="well form-horizontal" action="{{ url_for('cronotipos_results') }}" id="formulario_cronos" method="POST"  data-parsley-validate>
   <div id="formulario_parte_1">
       {{ form.hidden_tag() }}
 
@@ -249,14 +283,14 @@
         <div class="span3">&nbsp;</div>
       </div>
 
-      {{ render_radio_horizontal(form.genero) }}
-      {{ render_date(form.fecha_nacimiento) }}
-      {{ render_mail_up(form.email) }}
-      {{ render_radio_horizontal(form.turno_analisis) }}
+      {{ render_radio_horizontal(form.genero, {'required':True, 'data-parsley-group':'block1' }) }}
+      {{ render_date(form.fecha_nacimiento, {'required':True, 'data-parsley-group':'block1' }) }}
+      {{ render_mail_up(form.email, {'required':True, 'data-parsley-group':'block1' }) }}
+      {{ render_radio_horizontal(form.turno_analisis, {'required':True, 'data-parsley-group':'block1' }) }}
 
-      {{ render_porque_elegiste(form.porque_elegiste_turno) }}
+      {{ render_porque_elegiste(form.porque_elegiste_turno, {'required':True, 'data-parsley-group':'block1' } )}}
 
-      {{ render_radio_horizontal(form.trabajas) }}
+      {{ render_radio_horizontal(form.trabajas, {'required':True, 'data-parsley-group':'block1' }) }}
 
 
   </div>
@@ -279,12 +313,12 @@
         <div class="span3">&nbsp;</div>
       </div>
       
-      {{ render_hour_field(form.pregunta_1) }}
-      {{ render_minutes_field(form.pregunta_2) }}
-      {{ render_hour_field(form.pregunta_3) }}
-      {{ render_radio(form.pregunta_4, 'Muy Mal', 'Excelente') }}
-      {{ render_radio(form.pregunta_duermo_siesta_dia_habil) }}
-      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_habil) }}
+      {{ render_hour_field(form.pregunta_1, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_minutes_field(form.pregunta_2, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_hour_field(form.pregunta_3, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio(form.pregunta_4, 'Muy Mal', 'Excelente', {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio(form.pregunta_duermo_siesta_dia_habil,'','',{'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_habil, {'required':True, 'data-parsley-group':'block2' }) }}
       
       <div class="row-fluid">
         <div class="span3">&nbsp;</div>
@@ -296,12 +330,12 @@
       </div>
 
       
-      {{ render_hour_field(form.pregunta_5) }}
-      {{ render_minutes_field(form.pregunta_6) }}
-      {{ render_hour_field(form.pregunta_7) }}
-      {{ render_radio(form.pregunta_8, 'Muy Mal', 'Excelente') }}
-      {{ render_radio(form.pregunta_duermo_siesta_dia_libre) }}
-      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_libre) }}
+      {{ render_hour_field(form.pregunta_5, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_minutes_field(form.pregunta_6, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_hour_field(form.pregunta_7, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio(form.pregunta_8, 'Muy Mal', 'Excelente', {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio(form.pregunta_duermo_siesta_dia_libre, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_libre, {'required':True, 'data-parsley-group':'block2' }) }}
 
   </div>
 
@@ -314,12 +348,12 @@
   </div>
 
   <div id="formulario_parte_3">
-      {{ render_hour_field(form.pregunta_9) }}
-      {{ render_hour_field(form.pregunta_10) }}
-      {{ render_radio_horizontal(form.pregunta_11) }}
-      {{ render_radio_horizontal(form.pregunta_12) }}
-      {{ render_radio_horizontal(form.pregunta_13) }}
-      {{ render_radio_horizontal(form.pregunta_14) }}
+      {{ render_hour_field(form.pregunta_9, {'required':True, 'data-parsley-group':'block3' }) }}
+      {{ render_hour_field(form.pregunta_10, {'required':True, 'data-parsley-group':'block3' }) }}
+      {{ render_radio_horizontal(form.pregunta_11, {'required':True, 'data-parsley-group':'block3' }) }}
+      {{ render_radio_horizontal(form.pregunta_12, {'required':True, 'data-parsley-group':'block3' }) }}
+      {{ render_radio_horizontal(form.pregunta_13, {'required':True, 'data-parsley-group':'block3' }) }}
+      {{ render_radio_horizontal(form.pregunta_14, {'required':True, 'data-parsley-group':'block3' }) }}
   </div>
 
   <div class="row-fluid  centered-text" id="div_boton_continuar_a_4" >
@@ -331,12 +365,12 @@
   </div>
 
   <div id="formulario_parte_4">
-      {{ render_radio_horizontal(form.pregunta_15) }}
-      {{ render_radio_horizontal(form.pregunta_16) }}
-      {{ render_radio_horizontal(form.pregunta_17) }}
-      {{ render_hour_field(form.pregunta_18) }}
-      {{ render_radio_horizontal(form.pregunta_19) }}
-      {{ render_radio_horizontal(form.pregunta_20) }}
+      {{ render_radio_horizontal(form.pregunta_15, {'required':True, 'data-parsley-group':'block4' }) }}
+      {{ render_radio_horizontal(form.pregunta_16, {'required':True, 'data-parsley-group':'block4' }) }}
+      {{ render_radio_horizontal(form.pregunta_17, {'required':True, 'data-parsley-group':'block4' }) }}
+      {{ render_hour_field(form.pregunta_18, {'required':True, 'data-parsley-group':'block4' }) }}
+      {{ render_radio_horizontal(form.pregunta_19, {'required':True, 'data-parsley-group':'block4' }) }}
+      {{ render_radio_horizontal(form.pregunta_20, {'required':True, 'data-parsley-group':'block4' }) }}
   </div>
 
   <div class="row-fluid  centered-text" id="div_boton_continuar_a_5">
@@ -349,25 +383,25 @@
 
   <div id="formulario_parte_5">
 
-      {{ render_radio_horizontal(form.pregunta_21) }}
-      {{ render_radio_horizontal(form.pregunta_22) }}
-      {{ render_radio_horizontal(form.pregunta_23) }}
-      {{ render_radio_horizontal(form.pregunta_24) }}
-      {{ render_hour_field(form.pregunta_25) }}
-      {{ render_hour_field(form.pregunta_26) }}
-      {{ render_radio_horizontal(form.pregunta_27) }}
+      {{ render_radio_horizontal(form.pregunta_21, {'required':True, 'data-parsley-group':'block5' }) }}
+      {{ render_radio_horizontal(form.pregunta_22, {'required':True, 'data-parsley-group':'block5' }) }}
+      {{ render_radio_horizontal(form.pregunta_23, {'required':True, 'data-parsley-group':'block5' }) }}
+      {{ render_radio_horizontal(form.pregunta_24, {'required':True, 'data-parsley-group':'block5' }) }}
+      {{ render_hour_field(form.pregunta_25, {'required':True, 'data-parsley-group':'block5' }) }}
+      {{ render_hour_field(form.pregunta_26, {'required':True, 'data-parsley-group':'block5' }) }}
+      {{ render_radio_horizontal(form.pregunta_27, {'required':True, 'data-parsley-group':'block5' }) }}
 
       {{ render_row(form.comments) }}
 
       <div class="centered-text">
         
-          <button type="submit" class="btn btn-primary btn-large centered">Terminar</button>
+          <button type="submit" class="btn btn-primary btn-large centered" id="boton_terminar">Terminar</button>
         
       </div>
   </div>
 </form>
 <script type="text/javascript">
-$(function () {
+$(document).ready(function () {
   $.each($('option[value="empty"]'), function (i, val) {
     $(val).attr('disabled', 'disabled');
   });
@@ -393,6 +427,7 @@ $(function () {
   {% endif %}
 
   $('#boton_continuar_a_1').click(function () {
+
     $('#div_boton_continuar_a_1').hide();
     $('#div_boton_continuar_a_2').show();
     $('#consentimiento').hide();
@@ -404,6 +439,11 @@ $(function () {
   });
 
   $('#boton_continuar_a_2').click(function () {
+    if (false === $('#formulario_cronos').parsley().validate('block1')) {
+      alert('Por favor completá todos los campos.');
+      return;
+    }
+      
     $('#div_boton_continuar_a_2').hide();
     $('#div_boton_continuar_a_3').show();
     $('#formulario_parte_1').hide();
@@ -414,6 +454,10 @@ $(function () {
   });
 
   $('#boton_continuar_a_3').click(function () {
+    if (false === $('#formulario_cronos').parsley().validate('block2')) {
+      alert('Por favor completá todos los campos.');
+      return;
+    }
     $('#div_boton_continuar_a_3').hide();
     $('#div_boton_continuar_a_4').show();
     $('#formulario_parte_2').hide();
@@ -424,6 +468,10 @@ $(function () {
   });
 
   $('#boton_continuar_a_4').click(function () {
+    if (false === $('#formulario_cronos').parsley().validate('block3')) {
+      alert('Por favor completá todos los campos.');
+      return;
+    }
     $('#div_boton_continuar_a_4').hide();
     $('#div_boton_continuar_a_5').show();
     $('#formulario_parte_3').hide();
@@ -434,6 +482,10 @@ $(function () {
   });
 
   $('#boton_continuar_a_5').click(function () {
+    if (false === $('#formulario_cronos').parsley().validate('block4')) {
+      alert('Por favor completá todos los campos.');
+      return;
+    }
     $('#div_boton_continuar_a_5').hide();
     $('#formulario_parte_4').hide();
     $('#formulario_parte_5').show();
@@ -441,6 +493,24 @@ $(function () {
         scrollTop: $("#top").offset().top
     }, 150);
   });
+
+  $('#boton_terminar').click(function () {
+    if (false === $('#formulario_cronos').parsley().validate('block5')) {
+      alert('Por favor completá todos los campos.');
+      return false;
+    }
+    return true;
+  });
+
+  $("#formulario_cronos" ).submit(function( event ) {
+    if (false === $('#formulario_cronos').parsley().validate('block5')) {
+      alert('Por favor completá todos los campos.');
+      event.preventDefault();
+    }
+    return true;
+  
+  });
+  
 });
 </script>
 

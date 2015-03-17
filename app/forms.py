@@ -72,8 +72,8 @@ class HourForm(Form):
         locales = ['es_ES', 'es']
     hour_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 24)]
     minute_choices = [(unicode('%02d' % (x * 5)), unicode('%02d' % (x * 5))) for x in range(0, 12)]
-    minute_choices.insert(0, (u'empty', u'--'))
-    hour_choices.insert(0, (u'empty', u'--'))
+    minute_choices.insert(0, (u'', u'--'))
+    hour_choices.insert(0, (u'', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
@@ -87,8 +87,8 @@ class HourFormPregunta9(Form):
         locales = ['es_ES', 'es']
     hour_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(5, 13)]
     minute_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
-    minute_choices.insert(0, (u'empty', u'--'))
-    hour_choices.insert(0, (u'empty', u'--'))
+    minute_choices.insert(0, (u'', u'--'))
+    hour_choices.insert(0, (u'', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
@@ -102,8 +102,8 @@ class MeAcuestoALasForm(Form):
         locales = ['es_ES', 'es']
     hour_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(19, 24)] + [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 19)]
     minute_choices = [(unicode('%02d' % (x * 5)), unicode('%02d' % (x * 5))) for x in range(0, 12)]
-    minute_choices.insert(0, (u'empty', u'--'))
-    hour_choices.insert(0, (u'empty', u'--'))
+    minute_choices.insert(0, (u'', u'--'))
+    hour_choices.insert(0, (u'', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
@@ -117,8 +117,8 @@ class MeDespiertoALasForm(Form):
         locales = ['es_ES', 'es']
     hour_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(04, 24)] + [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(00, 04)]
     minute_choices = [(unicode('%02d' % (x * 5)), unicode('%02d' % (x * 5))) for x in range(0, 12)]
-    minute_choices.insert(0, (u'empty', u'--'))
-    hour_choices.insert(0, (u'empty', u'--'))
+    minute_choices.insert(0, (u'', u'--'))
+    hour_choices.insert(0, (u'', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
@@ -130,11 +130,11 @@ class HourFormPregunta10(Form):
 
     class Meta:
         locales = ['es_ES', 'es']
-    hour_choices = [(u'empty', u'--'), (u'20', u'20'), (u'21', u'21'),
+    hour_choices = [(u'', u'--'), (u'20', u'20'), (u'21', u'21'),
                     (u'22', u'22'), (u'23', u'23'), (u'00', u'00'), (u'01', u'01'),
                     (u'02', u'02'), (u'03', u'03')]
     minute_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
-    minute_choices.insert(0, (u'empty', u'--'))
+    minute_choices.insert(0, (u'', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
@@ -146,11 +146,11 @@ class HourFormPregunta18(Form):
 
     class Meta:
         locales = ['es_ES', 'es']
-    hour_choices = [(u'empty', u'--'), (u'20', u'20'), (u'21', u'21'),
+    hour_choices = [(u'', u'--'), (u'20', u'20'), (u'21', u'21'),
                     (u'22', u'22'), (u'23', u'23'), (u'00', u'00'), (u'01', u'01'),
                     (u'02', u'02'), (u'03', u'03')]
     minute_choices = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(0, 60)]
-    minute_choices.insert(0, (u'empty', u'--'))
+    minute_choices.insert(0, (u'', u'--'))
     hours_field = SelectField(u'Horas:', choices=hour_choices)
     minutes_field = SelectField(u'Minutos:', choices=minute_choices)
 
@@ -165,8 +165,8 @@ class NacimientoForm(Form):
 
     mes = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(1, 13)]
     anio = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(1910, 2015)]
-    anio.insert(0, (u'empty', u'--'))
-    mes.insert(0, (u'empty', u'--'))
+    anio.insert(0, (u'', u'--'))
+    mes.insert(0, (u'', u'--'))
     mes_field = SelectField(u'Mes:', choices=mes)
     anio_field = SelectField(u'Año:', choices=anio)
 
@@ -221,7 +221,7 @@ class CronotiposForm(Form):
                        ('60', '60'),
                        ('90', '90'),
                        ('120', '120')]
-    minute_choices2.insert(0, (u'empty', u'--'))
+    minute_choices2.insert(0, (u'', u'--'))
 
     pregunta_2 = SelectField(u'Tardo ... minutos para quedarme dormido', choices=minute_choices2)
 
@@ -232,7 +232,7 @@ class CronotiposForm(Form):
 
     pregunta_duermo_siesta_dia_habil = RadioField(u'En tus días hábiles ¿dormis siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
 
-    pregunta_cuanto_duermo_siesta_dia_habil = RadioField(u'Si dormis, ¿cuánto tiempo dormís siesta?', 
+    pregunta_cuanto_duermo_siesta_dia_habil = RadioField(u'Si dormis, ¿cuánto tiempo dormís siesta?',
                     choices=[(u'no_duermo', u'No duermo siesta.'),
                              ('5_a_30', 'de 5 a 30 minutos.'),
                              ('31_a_60', 'de 31 a 60 minutos.'),
@@ -262,7 +262,7 @@ class CronotiposForm(Form):
 
     pregunta_duermo_siesta_dia_libre = RadioField(u'En tus días libres ¿dormis siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
 
-    pregunta_cuanto_duermo_siesta_dia_libre = RadioField(u'Si dormis, ¿cuánto tiempo dormís siesta?', 
+    pregunta_cuanto_duermo_siesta_dia_libre = RadioField(u'Si dormis, ¿cuánto tiempo dormís siesta?',
                     choices=[(u'no_duermo', u'No duermo siesta.'),
                              ('5_a_30', 'de 5 a 30 minutos.'),
                              ('31_a_60', 'de 31 a 60 minutos.'),
