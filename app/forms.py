@@ -164,7 +164,7 @@ class NacimientoForm(Form):
         locales = ['es_ES', 'es']
 
     mes = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(1, 13)]
-    anio = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(1910, 2015)]
+    anio = [(unicode('%02d' % x), unicode('%02d' % x)) for x in range(1910, 2000)]
     anio.insert(0, (u'', u'--'))
     mes.insert(0, (u'', u'--'))
     mes_field = SelectField(u'Mes:', choices=mes)
@@ -198,12 +198,12 @@ class CronotiposForm(Form):
     # porque_elegiste_turno = = db.Column(db.String)
     # trabajas = db.Column(db.String)
 
-    genero = RadioField(u'Género (según tu DNI).', choices=[('Femenino', 'Femenino'),('Masculino', 'Masculino')])
+    genero = RadioField(u'Género (según tu DNI)', choices=[('Femenino', 'Femenino'),('Masculino', 'Masculino')])
     fecha_nacimiento = FormField(NacimientoForm, label=u'Mes y año de nacimiento')
 
     email = TextField(u'Dirección de email de UP', [Required()])
     turno_analisis = RadioField(u'Turno en el que cursás ANÁLISIS MATEMÁTICO', choices=[(u'manana', u'Mañana'),('Tarde', 'Tarde'),('Noche', 'Noche')])
-    porque_elegiste_turno = FormField(PorqueElegisteElTurnoForm, label=u'¿Por qué elegiste ese turno? *')
+    porque_elegiste_turno = FormField(PorqueElegisteElTurnoForm, label=u'¿Por qué elegiste ese turno?')
     trabajas = RadioField(u'¿Trabajás?', choices=[('Si', 'Si'),('No', 'No')])
 
 
@@ -223,16 +223,16 @@ class CronotiposForm(Form):
                        ('120', '120')]
     minute_choices2.insert(0, (u'', u'--'))
 
-    pregunta_2 = SelectField(u'Tardo ... minutos para quedarme dormido', choices=minute_choices2)
+    pregunta_2 = SelectField(u'Tardo ... minutos para quedarme dormido (Ejemplo: 05 para 5 minutos)', choices=minute_choices2)
 
 
     pregunta_3 = FormField(MeDespiertoALasForm, label=u'Me despierto a las ... (Ejemplo 08:05)')
 
     pregunta_4 = RadioField(u'¿Cuán bien dormís en los días hábiles?', choices=[('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'),('6', '6'),('7', '7'),('8', '8'),('9', '9'),('10', '10')])
 
-    pregunta_duermo_siesta_dia_habil = RadioField(u'En tus días hábiles ¿dormis siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
+    pregunta_duermo_siesta_dia_habil = RadioField(u'En tus días hábiles, ¿dormís siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
 
-    pregunta_cuanto_duermo_siesta_dia_habil = RadioField(u'Si dormis, ¿cuánto tiempo dormís siesta?',
+    pregunta_cuanto_duermo_siesta_dia_habil = RadioField(u'Si dormís, ¿cuánto tiempo dormís siesta?',
                     choices=[(u'no_duermo', u'No duermo siesta.'),
                              ('5_a_30', 'de 5 a 30 minutos.'),
                              ('31_a_60', 'de 31 a 60 minutos.'),
@@ -248,7 +248,7 @@ class CronotiposForm(Form):
 
     pregunta_7 = FormField(MeDespiertoALasForm, label=u'Me despierto a las ... (Ejemplo 08:00)')
 
-    pregunta_8 = RadioField(u'¿Cuán bien dormís en los días libres? (Ejemplo: 1 Muy Mala, 10 Excelente)',
+    pregunta_8 = RadioField(u'¿Cuán bien dormís en los días libres?',
                             choices=[('1', '1'),
                                      ('2', '2'),
                                      ('3', '3'),
@@ -260,9 +260,9 @@ class CronotiposForm(Form):
                                      ('9', '9'),
                                      ('10', '10')])
 
-    pregunta_duermo_siesta_dia_libre = RadioField(u'En tus días libres ¿dormis siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
+    pregunta_duermo_siesta_dia_libre = RadioField(u'En tus días libres, ¿dormís siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
 
-    pregunta_cuanto_duermo_siesta_dia_libre = RadioField(u'Si dormis, ¿cuánto tiempo dormís siesta?',
+    pregunta_cuanto_duermo_siesta_dia_libre = RadioField(u'Si dormís, ¿cuánto tiempo dormís siesta?',
                     choices=[(u'no_duermo', u'No duermo siesta.'),
                              ('5_a_30', 'de 5 a 30 minutos.'),
                              ('31_a_60', 'de 31 a 60 minutos.'),
@@ -271,10 +271,10 @@ class CronotiposForm(Form):
                              ])
 
     pregunta_9 = FormField(MeDespiertoALasForm,
-                           label=u'Si pudieras planear libremente tu día, ¿a qué hora te levantarías? (Ejemplo 07:30)', )
+                           label=u'Si pudieras planear libremente tu día, ¿a qué hora te <b>levantarías</b>? (Ejemplo 07:30)', )
 
     pregunta_10 = FormField(MeAcuestoALasForm,
-                            label=u'Si pudieras planear libremente tu día, ¿a qué hora te acostarías? (Ejemplo 21:50)')
+                            label=u'Si pudieras planear libremente tu día, ¿a qué hora te <b>acostarías</b>? (Ejemplo 21:50)')
 
 
     pregunta_11 = RadioField(u'Si tenés que levantarte a una hora específica en la mañana, ¿cuánto dependés de un reloj despertador?', choices=[('A', u'Nada'),('B', u'Poco'),('C', u'Bastante'),('D', u'Mucho')])
@@ -307,7 +307,7 @@ class CronotiposForm(Form):
                                       ('B', u'Menos de 1 hora más tarde'),
                                       ('C', u'Entre 1 y 2 horas más tarde'),
                                       ('D', u'Más de 2 horas más tarde')])
-    pregunta_17 = RadioField(u'Un amigo te invita a hacer ejercicio o practicar un deporte entre las 7 y las 8 de la mañana. ¿Cómo crees que sería tu rendimiento?',
+    pregunta_17 = RadioField(u'Un amigo te invita a hacer ejercicio o practicar un deporte entre las 7 y las 8 de la mañana. ¿Cómo crees que será tu rendimiento?',
                              choices=[('A', u'Muy bueno'),
                                       ('B', u'Razonable'),
                                       ('C', u'Pobre'),
@@ -321,7 +321,7 @@ class CronotiposForm(Form):
                                       ('B', u'11:00 a 13:00'),
                                       ('C', u'15:00 a 17:00 '),
                                       ('D', u'19:00 a 21:00')])
-    pregunta_20 = RadioField(u'Si te vas a dormir a las 23:00, ¿qué nivel de cansancio o sueño sentirías?',
+    pregunta_20 = RadioField(u'Si te fueras a dormir a las 23:00, ¿qué nivel de cansancio o sueño sentirías?',
                              choices=[('A', u'Nada', ),
                                       ('B', u'Poco'),
                                       ('C', u'Bastante'),
@@ -342,12 +342,12 @@ class CronotiposForm(Form):
                  (u'B', u'11:00 a 13:00'),
                  (u'C', u'15:00 a 17:00'),
                  (u'D', u'19:00 a 21:00')])
-    pregunta_24 = RadioField(u'Un amigo te invita a hacer ejercicio o practicar un deporte entre las 22 y las 23 horas. ¿Cómo creés que sería tu rendimiento?',
+    pregunta_24 = RadioField(u'Un amigo te invita a hacer ejercicio o practicar un deporte entre las 22 y las 23 horas. ¿Cómo creés que será tu rendimiento?',
         choices=[(u'A', u'Muy bueno'),
                  (u'B', u'Razonable'),
                  (u'C', u'Pobre'),
                  (u'D', u'Malo')])
-    pregunta_25 = FormField(HourForm, u'Si pudieras elegir los horarios de tu trabajo, el cual es realmente entretenido y se te paga de acuerdo a tu rendimiento, suponiendo que trabajás 5 HORAS CORRIDAS, ¿a qué hora elegirías EMPEZAR? (Ejemplo: 15:45)')
+    pregunta_25 = FormField(HourForm, u'Imaginá que tenés un trabajo realmente entretenido por el cual se te paga de acuerdo a tu rendimiento. Suponiendo que trabajás 5 HORAS CORRIDAS, si pudieras elegir los horarios de tu trabajo, ¿a qué hora elegirías EMPEZAR? (Ejemplo: 15:45)')
     pregunta_26 = FormField(HourForm, u'¿A qué hora del día te sentís mejor habitualmente (más fresco, más activo, más despierto, más capaz, etc.)? (Ejemplo: 22:15)')
     pregunta_27 = RadioField(u'Si tuvieras que definirte como un tipo de persona “matutina (mañanera)” o “vespertina (nocturna)”, ¿cómo te definirías?',
                              choices=[(u'A', u'Definitivamente mañanera'),

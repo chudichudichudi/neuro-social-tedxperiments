@@ -228,22 +228,21 @@ textarea.parsley-error {
 
 <div class="row-fluid" id="consentimiento" style="padding-left: 30px; padding-right: 30px; width:initial!important;">
   <h1>Bienvenido</h1>
-  <p class="lead">Este es un cuestionario para averiguar las preferencias diarias y los habitos de sueños individuales en seres humanos.</p>
-  <p>Por favor, lea la siguiente información antes de decidir participar de este experimento:</p>
+  <p class="lead">Este es un cuestionario para averiguar las preferencias diarias y los hábitos de sueños individuales en seres humanos.</p>
+  <p>Por favor, lea la siguiente información antes de decidir participar de esta investigación:</p>
   <div class="my-boxed-outer">
     <div class="my-boxed-inner" style="height: 100px;">
       <p><b>¿Cuál es el objetivo de esta encuesta?</b> El objetivo de esta investigación es estudiar las preferencias diarias y hábitos de sueño individuales en seres humanos.</p>
 
-      <p><b>¿Qué tendré que hacer si decido participar?</b>Deberá completar una serie de preguntas relacionadas con sus hábitos de sueño y sus preferencias diarias.</p>
+      <p><b>¿Qué tendré que hacer si decido participar?</b> Deberá completar una serie de preguntas relacionadas con sus hábitos de sueño y sus preferencias diarias.</p>
 
-      <p><b>¿Cuánto tiempo requiere la encuesta?</b>Puede completarse en aproximadamente <b>5 minutos</b>(incluyendo todas las tareas y las preguntas accesorias).</p>
+      <p><b>¿Cuánto tiempo requiere la encuesta?</b> Puede completarse en aproximadamente <b>5 minutos</b> (incluyendo todas las tareas y las preguntas accesorias).</p>
 
-      <p><b>¿De qué manera será utilizada la información que yo comparta con ustedes?</b>
-      La información que usted nos brinde no será compartida con nadie y será tratada de manera confidencial y anónima.</p>
+      <p><b>¿De qué manera será utilizada la información que yo comparta con ustedes?</b> La información que usted nos brinde no será compartida con nadie y será tratada de manera confidencial y anónima.</p>
 
-      <p><b>Si abandono una vez la encuesta, ¿puedo volver a hacerla en otro momento?</b>No. Debido a las características de la investigación, cada participante tiene solo una oportunidad para participar.</p>
+      <p><b>Si abandono una vez la encuesta, ¿puedo volver a hacerla en otro momento?</b> No. Debido a las características de la investigación, cada participante tiene sólo una oportunidad para participar.</p>
 
-      <p><b>¿Qué ocurre si me arrepiento y deseo abandonar antes de completar las preguntas?</b>Su participación en esta investigación es completamente voluntaria y puede abandonarlo en el momento que desee (cerrando el programa que está utilizando para navegar por internet).</p>
+      <p><b>¿Qué ocurre si me arrepiento y deseo abandonar antes de completar las preguntas?</b> Su participación en esta investigación es completamente voluntaria y puede abandonarlo en el momento que desee (cerrando el programa que está utilizando para navegar por internet).</p>
 
       <p><b>¿Cuáles son los riesgos asociados a la participación en esta investigación?</b> No esperamos ningún riesgo asociado a su participación. Aún así, recuerde que su participación es voluntaria y que podrá abandonar la encuesta cuando lo desee.</p>     
 
@@ -334,7 +333,7 @@ textarea.parsley-error {
       {{ render_minutes_field(form.pregunta_6, {'required':True, 'data-parsley-group':'block2' }) }}
       {{ render_hour_field(form.pregunta_7, {'required':True, 'data-parsley-group':'block2' }) }}
       {{ render_radio(form.pregunta_8, 'Muy Mal', 'Excelente', {'required':True, 'data-parsley-group':'block2' }) }}
-      {{ render_radio(form.pregunta_duermo_siesta_dia_libre, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio(form.pregunta_duermo_siesta_dia_libre,'','',{'required':True, 'data-parsley-group':'block2' }) }}
       {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_libre, {'required':True, 'data-parsley-group':'block2' }) }}
 
   </div>
