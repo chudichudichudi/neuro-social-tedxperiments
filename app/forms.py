@@ -238,7 +238,7 @@ class CronotiposForm(Form):
                              ('31_a_60', 'de 31 a 60 minutos.'),
                              ('61_a_90', 'de 61 a 90 minutos.'),
                              ('91_a_120', 'de 91 a 120 minutos.')
-                             ])
+                             ],validators=[Optional()])
 
 
     pregunta_5 = FormField(MeAcuestoALasForm, label=u'Me acuesto a las ... (Ejemplo 22:00)')
@@ -268,7 +268,7 @@ class CronotiposForm(Form):
                              ('31_a_60', 'de 31 a 60 minutos.'),
                              ('61_a_90', 'de 61 a 90 minutos.'),
                              ('91_a_120', 'de 91 a 120 minutos.')
-                             ])
+                             ],validators=[Optional()])
 
     pregunta_9 = FormField(MeDespiertoALasForm,
                            label=u'Si pudieras planear libremente tu día, ¿a qué hora te <b>levantarías</b>? (Ejemplo 07:30)', )

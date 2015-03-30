@@ -25,7 +25,20 @@
   <script>
   window.ParsleyConfig = {
     errorsWrapper: '<div class="error_wrapper"></div>',
-    errorTemplate: '<span></span>'
+    errorTemplate: '<span></span>',
+    validators: {
+      mailpalermo: {
+        fn: function (value, requirement) {
+          return  value.indexOf(requirement) > 1;
+        },
+        priority: 32
+      }
+    },
+    i18n: {
+      es: {
+        mailpalermo: 'El email tiene que ser de la universidad de palermo %s'
+      }
+    }
   };
 
 
@@ -37,7 +50,6 @@
   <script type="text/javascript">
     window.ParsleyValidator.setLocale('es');
   </script>
-  
 </head>
 <body class="{% block body_class %}{% endblock %}">
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->

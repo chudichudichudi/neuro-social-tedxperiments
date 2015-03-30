@@ -278,13 +278,15 @@ textarea.parsley-error {
         <div class="span3">&nbsp;</div>
         <div class="span6">
           <h2>Datos Personales</h2>
+          <h3>Parte 1 de 5</h3>
         </div>
         <div class="span3">&nbsp;</div>
       </div>
 
       {{ render_radio_horizontal(form.genero, {'required':True, 'data-parsley-group':'block1' }) }}
       {{ render_date(form.fecha_nacimiento, {'required':True, 'data-parsley-group':'block1' }) }}
-      {{ render_mail_up(form.email, {'required':True, 'data-parsley-group':'block1' }) }}
+      {{ render_mail_up(form.email, {'required':True, 'data-parsley-group':'block1', 'data-parsley-mailpalermo': 'palermo.edu',
+'data-parsley-type':'email' }) }}
       {{ render_radio_horizontal(form.turno_analisis, {'required':True, 'data-parsley-group':'block1' }) }}
 
       {{ render_porque_elegiste(form.porque_elegiste_turno, {'required':True, 'data-parsley-group':'block1' } )}}
@@ -307,6 +309,7 @@ textarea.parsley-error {
         <div class="span3">&nbsp;</div>
         <div class="span6">
           <h2>¿Cómo es un <b>DÍA HÁBIL</b> tuyo?</h2>
+          <h3>Parte 2 de 5</h3>
           <p>Los días en que trabajás y/o estudiás</p>
           </div>
         <div class="span3">&nbsp;</div>
@@ -317,7 +320,7 @@ textarea.parsley-error {
       {{ render_hour_field(form.pregunta_3, {'required':True, 'data-parsley-group':'block2' }) }}
       {{ render_radio(form.pregunta_4, 'Muy Mal', 'Excelente', {'required':True, 'data-parsley-group':'block2' }) }}
       {{ render_radio(form.pregunta_duermo_siesta_dia_habil,'','',{'required':True, 'data-parsley-group':'block2' }) }}
-      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_habil, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_habil, {'data-parsley-group':'block2' }) }}
       
       <div class="row-fluid">
         <div class="span3">&nbsp;</div>
@@ -334,7 +337,7 @@ textarea.parsley-error {
       {{ render_hour_field(form.pregunta_7, {'required':True, 'data-parsley-group':'block2' }) }}
       {{ render_radio(form.pregunta_8, 'Muy Mal', 'Excelente', {'required':True, 'data-parsley-group':'block2' }) }}
       {{ render_radio(form.pregunta_duermo_siesta_dia_libre,'','',{'required':True, 'data-parsley-group':'block2' }) }}
-      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_libre, {'required':True, 'data-parsley-group':'block2' }) }}
+      {{ render_radio_horizontal(form.pregunta_cuanto_duermo_siesta_dia_libre, {'data-parsley-group':'block2' }) }}
 
   </div>
 
@@ -347,6 +350,14 @@ textarea.parsley-error {
   </div>
 
   <div id="formulario_parte_3">
+      <div class="row-fluid">
+        <div class="span3">&nbsp;</div>
+        <div class="span6">
+          <h3>Parte 3 de 5</h3>
+        </div>
+        <div class="span3">&nbsp;</div>
+      </div>
+      
       {{ render_hour_field(form.pregunta_9, {'required':True, 'data-parsley-group':'block3' }) }}
       {{ render_hour_field(form.pregunta_10, {'required':True, 'data-parsley-group':'block3' }) }}
       {{ render_radio_horizontal(form.pregunta_11, {'required':True, 'data-parsley-group':'block3' }) }}
@@ -364,6 +375,13 @@ textarea.parsley-error {
   </div>
 
   <div id="formulario_parte_4">
+      <div class="row-fluid">
+        <div class="span3">&nbsp;</div>
+        <div class="span6">
+          <h3>Parte 4 de 5</h3>
+        </div>
+        <div class="span3">&nbsp;</div>
+      </div>
       {{ render_radio_horizontal(form.pregunta_15, {'required':True, 'data-parsley-group':'block4' }) }}
       {{ render_radio_horizontal(form.pregunta_16, {'required':True, 'data-parsley-group':'block4' }) }}
       {{ render_radio_horizontal(form.pregunta_17, {'required':True, 'data-parsley-group':'block4' }) }}
@@ -381,7 +399,13 @@ textarea.parsley-error {
   </div>
 
   <div id="formulario_parte_5">
-
+      <div class="row-fluid">
+        <div class="span3">&nbsp;</div>
+        <div class="span6">
+          <h3>Parte 5 de 5</h3>
+        </div>
+        <div class="span3">&nbsp;</div>
+      </div>
       {{ render_radio_horizontal(form.pregunta_21, {'required':True, 'data-parsley-group':'block5' }) }}
       {{ render_radio_horizontal(form.pregunta_22, {'required':True, 'data-parsley-group':'block5' }) }}
       {{ render_radio_horizontal(form.pregunta_23, {'required':True, 'data-parsley-group':'block5' }) }}
