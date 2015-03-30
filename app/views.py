@@ -5,7 +5,7 @@ from flask import render_template, redirect, request, current_app, session, \
     flash, jsonify, send_file
 from flask.ext.security import LoginForm, current_user, login_required, \
     login_user, roles_required
-import csv
+import unicodecsv
 import StringIO
 
 from . import app, db
@@ -30,7 +30,7 @@ def cronotipos():
 @app.route('/cronotipos/csv')
 def cronotipos_csv():
     buffer = StringIO.StringIO()
-    outcsv = csv.writer(buffer)
+    outcsv = unicodecsv.writer(buffer, encoding='utf-8')
     records = Cronotipos.query.all()
     columns_names = Cronotipos.__mapper__.columns
 
