@@ -201,7 +201,7 @@ class CronotiposForm(Form):
     genero = RadioField(u'Género (según tu DNI)', choices=[('Femenino', 'Femenino'),('Masculino', 'Masculino')])
     fecha_nacimiento = FormField(NacimientoForm, label=u'Mes y año de nacimiento')
 
-    email = TextField(u'Dirección de email de UP', [Required()])
+    email = TextField(u'Dirección de email de UP (Ejemplo martin@palermo.edu)', [Required()])
     turno_analisis = RadioField(u'Turno en el que cursás ANÁLISIS MATEMÁTICO', choices=[(u'manana', u'Mañana'),('Tarde', 'Tarde'),('Noche', 'Noche')])
     porque_elegiste_turno = FormField(PorqueElegisteElTurnoForm, label=u'¿Por qué elegiste ese turno?')
     trabajas = RadioField(u'¿Trabajás?', choices=[('Si', 'Si'),('No', 'No')])
@@ -233,8 +233,7 @@ class CronotiposForm(Form):
     pregunta_duermo_siesta_dia_habil = RadioField(u'En tus días hábiles, ¿dormís siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
 
     pregunta_cuanto_duermo_siesta_dia_habil = RadioField(u'Si dormís, ¿cuánto tiempo dormís siesta?',
-                    choices=[(u'no_duermo', u'No duermo siesta.'),
-                             ('5_a_30', 'de 5 a 30 minutos.'),
+                    choices=[('5_a_30', 'de 5 a 30 minutos.'),
                              ('31_a_60', 'de 31 a 60 minutos.'),
                              ('61_a_90', 'de 61 a 90 minutos.'),
                              ('91_a_120', 'de 91 a 120 minutos.')
@@ -263,8 +262,7 @@ class CronotiposForm(Form):
     pregunta_duermo_siesta_dia_libre = RadioField(u'En tus días libres, ¿dormís siesta cuando podés?', choices=[(u'Sí', u'Sí'),('No', 'No')])
 
     pregunta_cuanto_duermo_siesta_dia_libre = RadioField(u'Si dormís, ¿cuánto tiempo dormís siesta?',
-                    choices=[(u'no_duermo', u'No duermo siesta.'),
-                             ('5_a_30', 'de 5 a 30 minutos.'),
+                    choices=[('5_a_30', 'de 5 a 30 minutos.'),
                              ('31_a_60', 'de 31 a 60 minutos.'),
                              ('61_a_90', 'de 61 a 90 minutos.'),
                              ('91_a_120', 'de 91 a 120 minutos.')

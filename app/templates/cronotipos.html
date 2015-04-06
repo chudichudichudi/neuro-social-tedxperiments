@@ -199,7 +199,7 @@ textarea.parsley-error {
 {% macro render_mail_up(field, params={}) %}
   <div class="row-fluid">
     <div class="span3">&nbsp;</div>
-    <div class="span6">{{ field.label }}{{ field( **params ) }}@palermo.edu</div>
+    <div class="span6">{{ field.label }}{{ field( **params ) }}</div>
     <div class="span3">&nbsp;</div>
   </div>
 {% endmacro %}
@@ -228,11 +228,11 @@ textarea.parsley-error {
 
 <div class="row-fluid" id="consentimiento" style="padding-left: 30px; padding-right: 30px; width:initial!important;">
   <h1>Bienvenido</h1>
-  <p class="lead">Este es un cuestionario para averiguar las preferencias diarias y los hábitos de sueños individuales en seres humanos.</p>
-  <p>Por favor, lea la siguiente información antes de decidir participar de esta investigación:</p>
+  <!-- <p class="lead">Este es un cuestionario para averiguar las preferencias diarias y los hábitos de sueños individuales en seres humanos.</p> -->
+  <p>Por favor, lea la siguiente información antes de decidir participar:</p>
   <div class="my-boxed-outer">
     <div class="my-boxed-inner" style="height: 100px;">
-      <p><b>¿Cuál es el objetivo de esta encuesta?</b> El objetivo de esta investigación es estudiar las preferencias diarias y hábitos de sueño individuales en seres humanos.</p>
+      <p><b>¿Cuál es el objetivo de esta encuesta?</b> El objetivo de esta encuesta es estudiar las preferencias diarias y hábitos de sueño individuales en seres humanos.</p>
 
       <p><b>¿Qué tendré que hacer si decido participar?</b> Deberá completar una serie de preguntas relacionadas con sus hábitos de sueño y sus preferencias diarias.</p>
 
@@ -278,9 +278,8 @@ textarea.parsley-error {
         <div class="span3">&nbsp;</div>
         <div class="span6">
           <h2>Datos Personales</h2>
-          <h3>Parte 1 de 5</h3>
         </div>
-        <div class="span3">&nbsp;</div>
+        <div class="span3"><h3>Parte 1 de 5</h3></div>
       </div>
 
       {{ render_radio_horizontal(form.genero, {'required':True, 'data-parsley-group':'block1' }) }}
@@ -309,10 +308,9 @@ textarea.parsley-error {
         <div class="span3">&nbsp;</div>
         <div class="span6">
           <h2>¿Cómo es un <b>DÍA HÁBIL</b> tuyo?</h2>
-          <h3>Parte 2 de 5</h3>
           <p>Los días en que trabajás y/o estudiás</p>
           </div>
-        <div class="span3">&nbsp;</div>
+        <div class="span3"><h3>Parte 2 de 5</h3></div>
       </div>
       
       {{ render_hour_field(form.pregunta_1, {'required':True, 'data-parsley-group':'block2' }) }}
@@ -352,12 +350,9 @@ textarea.parsley-error {
   <div id="formulario_parte_3">
       <div class="row-fluid">
         <div class="span3">&nbsp;</div>
-        <div class="span6">
-          <h3>Parte 3 de 5</h3>
-        </div>
-        <div class="span3">&nbsp;</div>
+        <div class="span6">&nbsp;</div>
+        <div class="span3"><h3>Parte 3 de 5</h3></div>
       </div>
-      
       {{ render_hour_field(form.pregunta_9, {'required':True, 'data-parsley-group':'block3' }) }}
       {{ render_hour_field(form.pregunta_10, {'required':True, 'data-parsley-group':'block3' }) }}
       {{ render_radio_horizontal(form.pregunta_11, {'required':True, 'data-parsley-group':'block3' }) }}
@@ -378,9 +373,9 @@ textarea.parsley-error {
       <div class="row-fluid">
         <div class="span3">&nbsp;</div>
         <div class="span6">
-          <h3>Parte 4 de 5</h3>
+          &nbsp;
         </div>
-        <div class="span3">&nbsp;</div>
+        <div class="span3"><h3>Parte 4 de 5</h3></div>
       </div>
       {{ render_radio_horizontal(form.pregunta_15, {'required':True, 'data-parsley-group':'block4' }) }}
       {{ render_radio_horizontal(form.pregunta_16, {'required':True, 'data-parsley-group':'block4' }) }}
@@ -402,9 +397,9 @@ textarea.parsley-error {
       <div class="row-fluid">
         <div class="span3">&nbsp;</div>
         <div class="span6">
-          <h3>Parte 5 de 5</h3>
+          &nbsp;
         </div>
-        <div class="span3">&nbsp;</div>
+        <div class="span3"><h3>Parte 5 de 5</h3></div>
       </div>
       {{ render_radio_horizontal(form.pregunta_21, {'required':True, 'data-parsley-group':'block5' }) }}
       {{ render_radio_horizontal(form.pregunta_22, {'required':True, 'data-parsley-group':'block5' }) }}
@@ -425,6 +420,7 @@ textarea.parsley-error {
 </form>
 <script type="text/javascript">
 $(document).ready(function () {
+  document.forms['formulario_cronos'].reset();
   $.each($('option[value="empty"]'), function (i, val) {
     $(val).attr('disabled', 'disabled');
   });
